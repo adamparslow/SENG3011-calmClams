@@ -1,14 +1,16 @@
 import requests
 import re
 from bs4 import BeautifulSoup
+from word2number import w2n
 import time
 
 BASE_URL = 'http://outbreaks.globalincidentmap.com/eventdetail.php?ID='
 starting_index = 30000
-ending_index = starting_index + 5
+ending_index = starting_index + 500
 
 
 for i in range(starting_index, ending_index):
+    print(BASE_URL + str(i))
     event_page = requests.get(BASE_URL + str(i))
     event_soup = BeautifulSoup(event_page.text, 'html.parser')
 
@@ -27,9 +29,9 @@ for i in range(starting_index, ending_index):
     short_description = descriptions[0].text.strip()
     long_description = descriptions[1].text.strip()
     
-    print("Disease: {}\nDate: {}\nLocation: {}, {}\nLat/Long: {},{}\nLink: {}\nShort: {}\n Long: {}".format(event_type, date, country, city, latitude, longitude, url, short_description, long_description))
+    print("Disease: {}\nDate: {}\nLocation: {}, {}\nLat/Long: {},{}\nLink: {}\nShort: {}\n Long: {}\n\n".format(event_type, date, country, city, latitude, longitude, url, short_description, long_description))
 
-    time.sleep(5)    
+    time.sleep(3)    
 
 
 """
