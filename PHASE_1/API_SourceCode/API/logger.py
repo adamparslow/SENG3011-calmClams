@@ -2,7 +2,7 @@ import logging
 from flask import request
 
 
-def user_log(accessed_time):
+def get_user_log(accessed_time):
     log = {
             "team_name": "CalmClams",
             "accessed_time": str(accessed_time),
