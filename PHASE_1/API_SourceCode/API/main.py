@@ -1,6 +1,6 @@
 from flask import Flask
 
-from PHASE_1.API_SourceCode.API.disease_reports import DISEASE_REPORTS_BLUEPRINT
+from API.disease_reports import DISEASE_REPORTS_BLUEPRINT
 
 APP = Flask(__name__)
 
