@@ -1,10 +1,16 @@
-import React from "react";
+import React from 'react';
+import client from './Components/apolloClient/client';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { ExchangeRates } from './Components/apolloClient/queries';
 
-export default function App() {
-  return (
-    <div className="App">
-      <h1>Hello World!</h1>
-      <h2>Chuck our service in here!</h2>
+const App = () => (
+  <ApolloProvider client={client}>
+    <div>
+      <h2>Placeholder for an entire website!</h2>
+      {/* Exchange Rates is an example of using apollo */}
+      <ExchangeRates/>
     </div>
-  );
-}
+  </ApolloProvider>
+)
+
+export default App;
