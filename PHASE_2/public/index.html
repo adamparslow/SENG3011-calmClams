@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+      .scriptLoadError {
+        display: flex;
+        align-content: center;
+        background-color: #0747A6;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.42857142857143;
+        letter-spacing: -.005em;
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+      }
+      .scriptLoadError .container {
+        color: #FFFFFF;
+        margin: 0 auto;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+      }
+      .scriptLoadError .content {
+        background: #FFFFFF;
+        border-radius: 3px;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        color: #172B4D;
+        padding: 48px;
+        width: 400px;
+      }
+      .scriptLoadError .content{
+        margin-top: 48px;
+      }
+      .scriptLoadError .content p:first-child{
+        margin-top: 0;
+      }
+      .scriptLoadError .content a {
+        text-decoration: none;
+        color: #0052CC;
+      }
+      .scriptLoadError .logo {
+        margin-top: 48px;
+        margin-bottom: 0;
+        font-size: 40px;
+        line-height: 48px;
+      }
+      .scriptLoadError .heading {
+        color: #DEEBFF;
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 28px;
+        margin-top: 48px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <noscript>
+        <div class="scriptLoadError">
+          <div class="container">
+            <div class="heading">JavaScript is disabled</div>
+            <div class="content">
+              <p>You should enable JavaScript to work with this page.</p>
+            </div>
+          </div>
+        </div>
+      </noscript>
+      <div id="javaScriptLoadError" style="display: none;">
+        <div class="scriptLoadError">
+          <div class="container">
+            <div class="heading">JavaScript load error</div>
+            <div class="content">
+              <p>We tried to load scripts but something went wrong.</p>
+              <p>Please make sure that your network settings allow you to download scripts from the following domain:</p>
+              <p><b>%PUBLIC_URL%</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.onload = function () {
+        if (document.getElementById("javaScriptLoadError")) {
+          document.getElementById("javaScriptLoadError").style.display = "block";
+        }
+      }
+    </script>
+  </body>
+</html>
