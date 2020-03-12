@@ -17,3 +17,8 @@ def log_api_request(process_time):
     logging.basicConfig(filename='requests.log', level=logging.DEBUG)
     logging.info("Endpoint accessed: " + str(request.endpoint))
     logging.info("Process time: " + str(process_time) + "ns")
+
+
+def log_error(parameter):
+    logging.basicConfig(filename='requests.log', level=logging.DEBUG)
+    logging.error("Bad Request: " + str(parameter))

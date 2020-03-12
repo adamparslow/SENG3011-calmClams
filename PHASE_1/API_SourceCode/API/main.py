@@ -3,7 +3,7 @@ from flask_pymongo import PyMongo
 from API.disease_reports import DISEASE_REPORTS_BLUEPRINT
 
 APP = Flask(__name__)
-APP.config["MONGO_URI"] = "mongodb://35.244.107.108:27017/"
+APP.config["MONGO_URI"] = "http://35.244.107.108:27017/"
 mongo = PyMongo(APP)
 
 APP.register_blueprint(DISEASE_REPORTS_BLUEPRINT)
