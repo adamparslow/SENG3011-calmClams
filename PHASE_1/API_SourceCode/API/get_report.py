@@ -1,8 +1,7 @@
-from API.main import mongo
 from bson.json_util import dumps
 
 
-def get_report(parameter):
+def get_report(parameter, database):
     start_date = parameter.get("start_date")
     end_date = parameter.get("end_date")
     key_terms = parameter.get("key_terms")
@@ -16,7 +15,7 @@ def get_report(parameter):
         "key_terms": key_terms,
         "location": location
     }
-    results = list(mongo.db.disease_reports.find(query))
+    results = list(database.db.disease_reports.find(query))
 
     if len(results) == 0:
         return None
