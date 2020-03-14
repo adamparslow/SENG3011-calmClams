@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_pymongo import PyMongo
-from API.disease_reports import DISEASE_REPORTS_BLUEPRINT
+from disease_reports import DISEASE_REPORTS_BLUEPRINT
 
 APP = Flask(__name__)
 APP.config["MONGO_URI"] = "http://35.244.107.108:27017/"

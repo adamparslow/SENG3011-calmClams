@@ -1,4 +1,4 @@
-from API.main import mongo
+from main import mongo
 from bson.json_util import dumps
 
 

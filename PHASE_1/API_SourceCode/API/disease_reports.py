@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from http import HTTPStatus
-from API.logger import log_api_request, get_user_log, log_error
-from API.get_report import get_report
+from logger import log_api_request, get_user_log, log_error
+from get_report import get_report
 from datetime import datetime
 import time
 
