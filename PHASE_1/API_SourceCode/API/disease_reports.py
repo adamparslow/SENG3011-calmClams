@@ -13,13 +13,14 @@ def disease_reports():
     accessed_time = datetime.now()
     request_start_time = time.perf_counter_ns()
 
-    parameter = request.json
+    parameter = request.get_json()
     report = get_report(parameter, current_app.db)
 
     if report is None:
         log_error(parameter)
         return jsonify({"invalid_request": "lol"}), HTTPStatus.BAD_REQUEST
 
+    print(time)
     request_end_time = time.perf_counter_ns()
     log_api_request(request_end_time - request_start_time)
     return jsonify("PARAMETER", parameter, "USER LOG", get_user_log(accessed_time), "RESULTS", report)
