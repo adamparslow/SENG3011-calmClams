@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from http import HTTPStatus
 from logger import log_api_request, get_user_log, log_error
 from get_report import get_report
@@ -14,7 +14,7 @@ def disease_reports():
     request_start_time = time.perf_counter_ns()
 
     parameter = request.json
-    report = get_report(parameter)
+    report = get_report(parameter, current_app.db)
 
     if report is None:
         log_error(parameter)

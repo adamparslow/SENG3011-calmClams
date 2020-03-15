@@ -5,6 +5,7 @@ from disease_reports import DISEASE_REPORTS_BLUEPRINT
 APP = Flask(__name__)
 APP.config["MONGO_URI"] = "http://35.244.107.108:27017/"
 mongo = PyMongo(APP)
+APP.db = mongo
 
 APP.register_blueprint(DISEASE_REPORTS_BLUEPRINT)
 
