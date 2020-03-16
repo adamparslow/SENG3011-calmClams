@@ -23,4 +23,4 @@ def disease_reports():
     print(time)
     request_end_time = time.perf_counter_ns()
     log_api_request(request_end_time - request_start_time)
-    return jsonify("PARAMETER", parameter, "USER LOG", get_user_log(accessed_time), "RESULTS", report)
+    return jsonify(parameter, get_user_log(accessed_time), report)
