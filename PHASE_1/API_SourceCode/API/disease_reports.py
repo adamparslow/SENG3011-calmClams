@@ -20,7 +20,6 @@ def disease_reports():
         log_error(parameter)
         return jsonify({"invalid_request": "lol"}), HTTPStatus.BAD_REQUEST
 
-    print(time)
     request_end_time = time.perf_counter_ns()
     log_api_request(request_end_time - request_start_time)
     return jsonify(parameter, get_user_log(accessed_time), report)
