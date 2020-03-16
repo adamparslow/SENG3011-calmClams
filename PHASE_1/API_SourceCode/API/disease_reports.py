@@ -13,7 +13,7 @@ def disease_reports():
     accessed_time = datetime.now()
     request_start_time = time.perf_counter_ns()
 
-    parameter = request.get_json()
+    parameter = request.args
     report = get_report(parameter, current_app.db)
 
     if report is None:
