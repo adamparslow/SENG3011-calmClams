@@ -7,9 +7,7 @@ def get_report(parameter, database):
     key_terms = parameter.get("key_terms")
     location = parameter.get("location")
 
-    # hard coded response
-    if key_terms == "test":
-        return dumps(test_result)
+    return dumps(test_result)
 
     # probably more processing required
 
