@@ -25,7 +25,7 @@ def get_report(parameter, database):
     return dumps(results)
 
 
-test_result = {
+test_result = [{
     "url": "https://www.who.int/csr/don/17-january-2020-novel-coronavirus-japan-exchina/en/",
     "date_of_publication": "2020-01-17 xx:xx:xx",
     "headline": "Novel Coronavirus – Japan (ex-China)",
@@ -51,4 +51,4 @@ test_result = {
             ]
         }
     ]
-}
+}]
