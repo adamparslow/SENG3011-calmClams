@@ -3,11 +3,29 @@ import re
 from bs4 import BeautifulSoup
 from word2number import w2n
 import time
+import os
 import json
 
 BASE_URL = 'http://outbreaks.globalincidentmap.com/eventdetail.php?ID='
-starting_index = 101
-ending_index = starting_index + 36000
+LOWEST_RECORD_NUMBER = 37
+INDEX_FILE = "last_record_scraped.txt"
+
+
+if (not os.path.exists(INDEX_FILE)):
+    print("{} does not exist. Creating one...".format(INDEX_FILE))
+    index_file = open("last_record_scraped.txt", "w")
+    index_file.write(LOWEST_RECORD_NUMBER)
+    index_file.close()
+
+index_file = open(INDEX_FILE, "r")
+latest_index = int(index_file.readline())
+index_file.close()
+
+starting_index = latest_index + 1
+ending_index = starting_index + 500
+dead_count = 0
+dead_threshold = 2
+
 
 short_description_header = re.compile(r'\[.*?\][A-Z\s]* [:-]+ ')
 leading_trailing_quotes = re.compile(r'"(.*)"')
@@ -27,9 +45,14 @@ def clean(string):
     string.replace('  ', ' ')
     return string.strip().encode('ascii', 'ignore').decode('ascii')
 
-for i in range(starting_index, ending_index, 99):
+print("Scraping records from {} to {}".format(starting_index, ending_index))
+for i in range(starting_index, ending_index, 1):
+    if (dead_count >= dead_threshold):
+        print("{} records in a row have been empty. Stopping now".format(dead_threshold))
+        break
+        
     time.sleep(5)
-    print("")    
+    print("")
     print(BASE_URL + str(i))
     event_page = requests.get(BASE_URL + str(i))
     event_soup = BeautifulSoup(event_page.text, 'html.parser')
@@ -46,6 +69,8 @@ for i in range(starting_index, ending_index, 99):
 
     # if there is no data then just continue
     if (url == ""):
+        dead_count = dead_count + 1
+        print("Found no content for record {}".format(i))
         continue
 
     description = clean(event_soup.find_all('tr', {'class': 'tdtext'})[0].text)
@@ -67,6 +92,16 @@ for i in range(starting_index, ending_index, 99):
            }]
            }
     print(json.dumps(ret, indent=4, sort_keys=True))
+
+    dead_count = 0
+    latest_index = i
+
+
+print("Last record parsed was {}".format(latest_index))
+
+index_file = open("last_record_scraped.txt", "w")
+index_file.write(str(latest_index))
+index_file.close()
 
 
 """
