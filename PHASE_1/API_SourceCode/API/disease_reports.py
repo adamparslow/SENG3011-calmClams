@@ -17,11 +17,11 @@ def disease_reports():
     report = get_report(parameter, current_app.db)
 
     if report is None:
-        log_error(parameter)
+        # log_error(parameter)
         return jsonify({"invalid_request": "lol"}), HTTPStatus.BAD_REQUEST
 
     request_end_time = time.perf_counter_ns()
-    log_api_request(request_end_time - request_start_time)
+    # log_api_request(request_end_time - request_start_time)
     return jsonify({
         "parameter": parameter,
         "user_log": get_user_log(accessed_time),
