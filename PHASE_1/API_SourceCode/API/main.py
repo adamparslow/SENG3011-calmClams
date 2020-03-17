@@ -10,4 +10,4 @@ APP.db = mongo
 APP.register_blueprint(DISEASE_REPORTS_BLUEPRINT)
 
 if __name__ == "__main__":
-    APP.run(host="127.0.0.1", port=5000)
+    APP.run(host="0.0.0.0")
