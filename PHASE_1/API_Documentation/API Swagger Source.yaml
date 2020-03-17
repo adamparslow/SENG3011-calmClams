@@ -25,13 +25,13 @@ paths:
           description: The earliest date for which records will be searched.
           required: true
           schema:
-            $ref: '#/components/schemas/Date'
+            $ref: '#/components/schemas/Date-Query'
         - name: end_date
           in: query
           description: The latest date for which records will be searched.
           required: true
           schema:
-            $ref: '#/components/schemas/Date'
+            $ref: '#/components/schemas/Date-Query'
         - name: key_terms
           in: query
           description: A comma-separated sequence of terms to search records for. If omitted, all valid records will be returned.
@@ -43,10 +43,11 @@ paths:
               type: string
         - name: location
           in: query
-          description: The location(s) for which records will be searched. # TODO
+          description: The location for which records will be searched.
           required: true
           schema:
             type: string
+            example: Wuhan, Hubei Province
       responses:
         '200':
           description: Valid result(s) returned.
@@ -124,14 +125,19 @@ components:
         - $ref: '#/components/schemas/Date-Range'
     Date-Exact:
       type: string
-      description: A date in yyyy-MM-ddTHH:mm:ss format. Segments other than the year may be replaced by 'x' to match all values.
+      description: A date in yyyy-MM-dd HH:mm:ss format. Segments other than the year may be replaced by 'x' for unknown values.
       pattern: '^(\d{4})-(\d\d|xx)-(\d\d|xx) (\d\d|xx):(\d\d|xx):(\d\d|xx)$'
-      example: '2015-02-15T08:45:10'
+      example: '2015-02-15 08:45:10'
     Date-Range:
       type: string
       description: A date range described in the form "<start_date> to <end_date>", where the two dates have the form described in the Date-Exact schema. The start date must be before the end date. If the 'x' wildcard is used for either dates, all possible dates matched by the start date must be before all possible dates matched by the end date.
       pattern: '^(\d{4})-(\d\d|xx)-(\d\d|xx) (\d\d|xx):(\d\d|xx):(\d\d|xx) to (\d{4})-(\d\d|xx)-(\d\d|xx) (\d\d|xx):(\d\d|xx):(\d\d|xx)$'
-      example: '2015-02-015T08:45:10 to 2015-11-01T19:37:12'
+      example: '2015-02-15 08:45:10 to 2015-11-01 19:37:12'
+    Date-Query:
+      type: string
+      description: "A date in yyyy-MM-ddTHH:mm:ss format. Segments other than the year may be replaced by 'x' to match all values. Note that unlike the Date-Exact schema, Date-Queries have a 'T' separating the date and time rather than a space (see the requirements for details: https://webcms3.cse.unsw.edu.au/static/uploads/course/SENG3011/20T1/4549c6fabd3561b84ad0b29f05b0bb7a07e28a4b2153e6ad8300ca8971de5030/AnalyticsPlatformEpidemics_v_8_3.pdf)."
+      pattern: '^(\d{4})-(\d\d|xx)-(\d\d|xx)T(\d\d|xx):(\d\d|xx):(\d\d|xx)$'
+      example: '2015-02-15T08:45:10'
     Disease:
       type: string
       description: The name of a disease.
@@ -245,11 +251,18 @@ components:
         parameter:
           type: object
           properties:
+            start_date:
+              $ref: '#/components/schemas/Date-Query'
+            end_date:
+              $ref: '#/components/schemas/Date-Query'
             key_terms:
               type: array
               items:
                 type: string
                 example: Anthrax
+            location:
+              type: string
+              example: Wuhan, Hubei Province
         user_log:
           type: object
           properties:
