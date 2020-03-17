@@ -97,7 +97,7 @@ index_file = open(INDEX_FILE, "r")
 latest_index = int(index_file.readline()) # Keep track of what we have successfully read. Write this number to file 
 index_file.close()
 
-starting_index = 33966#latest_index + 1 # Start from the record we couldn't read last time
+starting_index = 20320#latest_index + 1 # Start from the record we couldn't read last time
 ending_index = starting_index + 500
 dead_count = 0
 dead_threshold = 50
@@ -146,16 +146,17 @@ for i in range(starting_index, ending_index, 1):
         continue
 
     if (event_type in IGNORED_EVENTS):
+        print("Ignoring event {}".format(event_type))
         dead_count = 0
         latest_index = i
         continue
 
-
     description = clean(event_soup.find_all('tr', {'class': 'tdtext'})[0].text)
-
 
     diseases = []
     syndromes = []
+
+    # Find the actual subtype mentioned
     if (event_type == "H7N9 / H5N1 / H5N2 / H7N1 / H7N3 / H7N7 / H5N8"):
         article = requests.get(url)
         influenzas = ["influenza a/" + x.lower() for x in re.findall(r'H\dN\d', description + article.text, re.IGNORECASE)]
@@ -169,17 +170,27 @@ for i in range(starting_index, ending_index, 1):
                 diseases = ["influenza a/h5n1"]
             else:
                 syndromes = ["Influenza-like illness"]
+
+    # Seperate this event into Ebola or Marburg
+    elif (event_type == "Ebola / Marburg"):
+        ebola = re.findall(r'ebola', description, re.IGNORECASE)
+        marburg = re.findall(r'marburg', description, re.IGNORECASE)
+        if (len(ebola) > 0):
+            diseases.append("ebola haemorrhagic fever")
+        if (len(marburg) > 0):
+            diseases.append("marburg virus disease")
+        
     elif (event_type in DISEASE_TRANSLATIONS):
-        diseases = [DISEASE_TRANSLATIONS[event_type]]
+        diseases = [DISEASE_TRANSLATIONS[event_type]] # one to one translations
     elif (event_type in SYNDROME_TRANSLATIONS):
-        syndromes = [SYNDROME_TRANSLATIONS[event_type]]
-    else:
-        print("ERROR: Could not translate {}".format(event_type))
-        continue
+        syndromes = [SYNDROME_TRANSLATIONS[event_type]] # one to one translations
 
     if (len(diseases + syndromes) == 0):
-        print("ERROR: event type translation failed for {}\ndiseases={} syndromes={}".format(event_type, diseases, syndromes))
+        print("ERROR: event type translation failed for {}\nurl={}".format(event_type, BASE_URL + str(i)))
         continue
+
+    diseases = list(set(diseases)) # no duplicates
+    syndromes = list(set(syndromes)) # no duplicates
 
     
     #print("Disease: {}\nDate: {}\nLocation: {}, {}\nLat/Long: {},{}\nLink: {}\nShort: {}\n Long: {}\n\n".format(event_type, date, country, city, latitude, longitude, url, short_description, long_description))
