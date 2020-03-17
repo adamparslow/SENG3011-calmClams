@@ -25,5 +25,5 @@ def disease_reports():
     return jsonify({
         "parameter": parameter,
         "user_log": get_user_log(accessed_time),
-        "report": report
+        "articles": report
         })
