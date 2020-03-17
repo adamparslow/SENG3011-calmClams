@@ -55,8 +55,6 @@ Uncategorised yet
     "Anthrax": "", #"anthrax cutaneous" "anthrax gastrointestinous" "anthrax inhalation"
     "Ebola / Marburg": "", # "ebola haemorrhagic fever" "marburg virus disease"
     "General News": "", # not actually that general...
-    "H7N9 / H5N1 / H5N2 / H7N1 / H7N3 / H7N7 / H5N8": "", #that's specific
-
 """
 
 
@@ -77,6 +75,17 @@ IGNORED_EVENTS = [
     "Typhoid / Typhus", # maybe salmonella?
 ]
 
+
+ALLOWED_INFLUENZA = {
+    "influenza a/h5n1",
+    "influenza a/h7n9",
+    "influenza a/h9n2",
+    "influenza a/h1n1",
+    "influenza a/h1n2",
+    "influenza a/h3n5",
+    "influenza a/h3n2",
+    "influenza a/h2n2",
+}
 
 if (not os.path.exists(INDEX_FILE)):
     print("{} does not exist. Creating one...".format(INDEX_FILE))
@@ -147,7 +156,20 @@ for i in range(starting_index, ending_index, 1):
 
     diseases = []
     syndromes = []
-    if (event_type in DISEASE_TRANSLATIONS):
+    if (event_type == "H7N9 / H5N1 / H5N2 / H7N1 / H7N3 / H7N7 / H5N8"):
+        article = requests.get(url)
+        influenzas = ["influenza a/" + x.lower() for x in re.findall(r'H\dN\d', description + article.text, re.IGNORECASE)]
+        diseases = list(ALLOWED_INFLUENZA.intersection(influenzas))
+        if (len(diseases) == 0):
+            swine = re.findall(r'swine', description + article.text, re.IGNORECASE)
+            avian = re.findall(r'avian', description + article.text, re.IGNORECASE)
+            if (len(swine) > 0):
+                diseases = ["influenza a/h1n1"]
+            elif (len(avian) > 0):
+                diseases = ["influenza a/h5n1"]
+            else:
+                syndromes = ["Influenza-like illness"]
+    elif (event_type in DISEASE_TRANSLATIONS):
         diseases = [DISEASE_TRANSLATIONS[event_type]]
     elif (event_type in SYNDROME_TRANSLATIONS):
         syndromes = [SYNDROME_TRANSLATIONS[event_type]]
@@ -156,9 +178,10 @@ for i in range(starting_index, ending_index, 1):
         continue
 
     if (len(diseases + syndromes) == 0):
-        print("ERROR: event type translation failed for {}".format(evetn_type))
+        print("ERROR: event type translation failed for {}\ndiseases={} syndromes={}".format(event_type, diseases, syndromes))
         continue
 
+    
     #print("Disease: {}\nDate: {}\nLocation: {}, {}\nLat/Long: {},{}\nLink: {}\nShort: {}\n Long: {}\n\n".format(event_type, date, country, city, latitude, longitude, url, short_description, long_description))
 
     ret = {"date_of_publication": date,
