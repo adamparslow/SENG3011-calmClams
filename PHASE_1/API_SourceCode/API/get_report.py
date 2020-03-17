@@ -7,7 +7,7 @@ def get_report(parameter, database):
     key_terms = parameter.get("key_terms")
     location = parameter.get("location")
 
-    return dumps(test_result)
+    return test_result
 
     # probably more processing required
 
@@ -22,7 +22,7 @@ def get_report(parameter, database):
     if len(results) == 0:
         return None
 
-    return dumps(results)
+    return results
 
 
 test_result = [{
