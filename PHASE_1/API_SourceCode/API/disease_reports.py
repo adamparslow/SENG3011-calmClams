@@ -14,7 +14,7 @@ def disease_reports():
     request_start_time = time.perf_counter_ns()
 
     parameter = request.args
-    report = get_report(parameter, current_app.db)
+    report = get_report(parameter, current_app.collection)
 
     if report is None:
         # log_error(parameter)
