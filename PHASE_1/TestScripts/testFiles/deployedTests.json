@@ -1,0 +1,434 @@
+{
+	"info": {
+		"_postman_id": "1a6f038b-8441-43f4-b38b-aee8b7cb406b",
+		"name": "Local",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Incorrect Route",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "99462dd8-a7bc-404f-b3f5-2c7675981114",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://calmclams.appspot.com/disease_reports/wrongpage",
+					"protocol": "http",
+					"host": [
+						"calmclams",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"disease_reports",
+						"wrongpage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Missing Key Terms",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
+						"exec": [
+							"",
+							"const expObj = [",
+							"];",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Articles value is as expected\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.articles).to.eql(expObj);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "calmclams.appspot.com/disease_reports?start_date=2015-02-015T08:45:10&end_date=2015-11-01T19:37:12&key_terms=Brucellosis,Anthrax&location=sydney",
+					"host": [
+						"calmclams",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"disease_reports"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2015-02-015T08:45:10"
+						},
+						{
+							"key": "end_date",
+							"value": "2015-11-01T19:37:12"
+						},
+						{
+							"key": "key_terms",
+							"value": "Brucellosis,Anthrax"
+						},
+						{
+							"key": "location",
+							"value": "sydney"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Missing Start Date",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "calmclams.appspot.com/disease_reports?end_date=2015-11-01T19:37:12&key_terms=Brucellosis,Anthrax&location=sydney",
+					"host": [
+						"calmclams",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"disease_reports"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2015-02-015T08:45:10",
+							"disabled": true
+						},
+						{
+							"key": "end_date",
+							"value": "2015-11-01T19:37:12"
+						},
+						{
+							"key": "key_terms",
+							"value": "Brucellosis,Anthrax"
+						},
+						{
+							"key": "location",
+							"value": "sydney"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NormalRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
+						"exec": [
+							"",
+							"const expObj = [",
+							"];",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Articles value is as expected\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.articles).to.eql(expObj);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "calmclams.appspot.com/disease_reports?start_date=2015-02-015T08:45:10&end_date=2015-11-01T19:37:12&key_terms=Brucellosis,Anthrax&location=sydney",
+					"host": [
+						"calmclams",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"disease_reports"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2015-02-015T08:45:10"
+						},
+						{
+							"key": "end_date",
+							"value": "2015-11-01T19:37:12"
+						},
+						{
+							"key": "key_terms",
+							"value": "Brucellosis,Anthrax"
+						},
+						{
+							"key": "location",
+							"value": "sydney"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "End date before start date",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "calmclams.appspot.com/disease_reports?start_date=2015-11-01T19:37:12&end_date=2015-02-015T08:45:10&key_terms=Brucellosis,Anthrax&location=sydney",
+					"host": [
+						"calmclams",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"disease_reports"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2015-11-01T19:37:12"
+						},
+						{
+							"key": "end_date",
+							"value": "2015-02-015T08:45:10"
+						},
+						{
+							"key": "key_terms",
+							"value": "Brucellosis,Anthrax"
+						},
+						{
+							"key": "location",
+							"value": "sydney"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {",
+							"    pm.response.to.have.status(405);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "calmclams.appspot.com/disease_reports?start_date=2015-02-015T08:45:10&end_date=2015-11-01T19:37:12&key_terms=Brucellosis,Anthrax&location=sydney",
+					"host": [
+						"calmclams",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"disease_reports"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2015-02-015T08:45:10"
+						},
+						{
+							"key": "end_date",
+							"value": "2015-11-01T19:37:12"
+						},
+						{
+							"key": "key_terms",
+							"value": "Brucellosis,Anthrax"
+						},
+						{
+							"key": "location",
+							"value": "sydney"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Missing End Date",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "calmclams.appspot.com/disease_reports?start_date=2015-02-015T08:45:10&key_terms=Brucellosis,Anthrax&location=sydney",
+					"host": [
+						"calmclams",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"disease_reports"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2015-02-015T08:45:10"
+						},
+						{
+							"key": "end_date",
+							"value": "2015-11-01T19:37:12",
+							"disabled": true
+						},
+						{
+							"key": "key_terms",
+							"value": "Brucellosis,Anthrax"
+						},
+						{
+							"key": "location",
+							"value": "sydney"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Missing location",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
+						"exec": [
+							"",
+							"const expObj = [",
+							"];",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Articles value is as expected\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.articles).to.eql(expObj);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "calmclams.appspot.com/disease_reports?start_date=2015-02-015T08:45:10&end_date=2015-11-01T19:37:12&key_terms=Brucellosis,Anthrax&location=sydney",
+					"host": [
+						"calmclams",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"disease_reports"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2015-02-015T08:45:10"
+						},
+						{
+							"key": "end_date",
+							"value": "2015-11-01T19:37:12"
+						},
+						{
+							"key": "key_terms",
+							"value": "Brucellosis,Anthrax"
+						},
+						{
+							"key": "location",
+							"value": "sydney"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
