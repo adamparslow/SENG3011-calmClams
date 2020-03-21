@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_pymongo import PyMongo
 from disease_reports import DISEASE_REPORTS_BLUEPRINT
-from endpoint import GRAPHQL_BLUEPRINT
+from gql_endpoint import GRAPHQL_BLUEPRINT
 
 APP = Flask(__name__)
 APP.config["MONGO_URI"] = "mongodb://admin:admin@cluster0-zhnwq.gcp.mongodb.net/test?retryWrites=true&w=majority"
