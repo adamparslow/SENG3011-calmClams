@@ -98,30 +98,26 @@ index_file = open(INDEX_FILE, "r")
 latest_index = int(index_file.readline()) # Keep track of what we have successfully read. Write this number to file 
 index_file.close()
 
-
-# 2359
-
 starting_index = latest_index + 1 # Start from the record we couldn't read last time
-ending_index = starting_index + 5000
+ending_index = starting_index + 10000
 dead_count = 0
 dead_threshold = 20
 
 
 # MongoDB stuff
 client = MongoClient('mongodb+srv://admin:admin@cluster0-zhnwq.gcp.mongodb.net/test?retryWrites=true&w=majority')
-db = client["disease_reports"]["alpha"]
-
-short_description_header = re.compile(r'\[.*?\][A-Z\s]* [:-]+ ')
-leading_trailing_quotes = re.compile(r'"(.*)"')
+db = client["disease_reports"]["beta"]
 
 # removes white space and unicode characters
 def clean(string):
     string = re.sub(r'\r', r'', string)
     string = re.sub(r'\n\n', r'\n', string)
     string = re.sub(r'\n\n', r'\n', string)
-    string = short_description_header.sub(r' ', string)
-    string = leading_trailing_quotes.sub(r'\1', string)
+    string = re.sub(r'\[.*?[:-]+ *', r' ', string)
+    string = re.sub(r'\[.*?\] *', r' ', string)
     string = re.sub(r'^\.', r'', string)
+    string = re.sub(r'\"', r'', string)
+    string = re.sub(r'\'', r'', string)
     string.replace('  ', ' ')
     string.replace('  ', ' ')
     return string.strip().encode('ascii', 'ignore').decode('ascii')
@@ -131,8 +127,8 @@ for i in range(starting_index, ending_index, 1):
     if (dead_count >= dead_threshold):
         print("{} records in a row have been empty. Stopping now".format(dead_threshold))
         break
-        
-    time.sleep(5)
+
+    time.sleep(4)
     print("")
     print(BASE_URL + str(i))
     event_page = requests.get(BASE_URL + str(i))
@@ -155,12 +151,14 @@ for i in range(starting_index, ending_index, 1):
         continue
     dead_count = 0 # there was content. reset the counter
 
-    if (event_type in IGNORED_EVENTS):
-        print("Ignoring event {}".format(event_type))
-        latest_index = i
+    description = clean(event_soup.find_all('tr', {'class': 'tdtext'})[0].text)
+    if (len(description) > 1000):
+        print("Ignoring id {} description too long".format(i))
         continue
 
-    description = clean(event_soup.find_all('tr', {'class': 'tdtext'})[0].text)
+    if ("GlobalIncidentMap.com" in description):
+        print("Ignoring id {} since it has been update".format(i))
+        continue
 
     diseases = []
     syndromes = []
@@ -168,7 +166,7 @@ for i in range(starting_index, ending_index, 1):
     # Find the actual subtype mentioned
     if (event_type == "H7N9 / H5N1 / H5N2 / H7N1 / H7N3 / H7N7 / H5N8"):
         try:
-            article = requests.get(url)
+            article = requests.get(url, timeout=10)
         except Exception as e:
             print("Error while requesting the article\nurl={}".format(url))
             print(e)
@@ -209,10 +207,20 @@ for i in range(starting_index, ending_index, 1):
     diseases = list(set(diseases)) # no duplicates
     syndromes = list(set(syndromes)) # no duplicates
 
+
+    split = description.split('\n')
+    if ("Update - " in split[0] or "Google" in split[0]):
+        headline = clean(split[1].strip())
+        main_text = clean('\n'.join(split[0:]).strip())
+    else:
+        headline = clean(split[0].strip())
+        main_text = clean('\n'.join(split[1:]).strip())
+
     ret = {"_id": i,
            "date_of_publication": date,
            "url": url,
-           "main_text": description,
+           "headline": headline,
+           "main_text": main_text,
            "reports": [{
                 "event_date": date,
                 "locations":[{
