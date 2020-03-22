@@ -29,13 +29,22 @@ def get_report(parameter, database):
                 ]
             }
             query_list.append(term_query)
+    
+    if location:
+        print(">>> " + str(location))
+        query_list.append({
+                "$or": [
+                    {"reports.locations.country": {"$regex": location, "$options": "i"}},
+                    {"reports.locations.location": {"$regex": location, "$options": "i"}}
+                ]
+            })
+    if start_date or key_terms or location:
+        query = {"$and": query_list}
+        results = list(database.find(query))
+        print("Number of results: ", len(results))
 
-    query = {"$and": query_list}
+        if len(results) == 0:
+            return None
 
-    results = list(database.find(query))
-    print("Number of results: ", len(results))
-
-    if len(results) == 0:
-        return None
-
-    return results
+        return results
+    return None
