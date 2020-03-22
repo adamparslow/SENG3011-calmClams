@@ -6,7 +6,7 @@ import dns
 APP = Flask(__name__)
 client = MongoClient('mongodb+srv://admin:admin@cluster0-zhnwq.gcp.mongodb.net/test?retryWrites=true&w=majority')
 db = client["disease_reports"]
-collection = db["alpha"]
+collection = db["beta"]
 APP.collection = collection
 
 APP.register_blueprint(DISEASE_REPORTS_BLUEPRINT)

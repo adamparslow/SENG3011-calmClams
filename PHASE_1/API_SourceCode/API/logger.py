@@ -1,5 +1,5 @@
-import logging
 from flask import request
+from json import dumps
 
 
 def get_user_log(accessed_time):
@@ -14,11 +14,9 @@ def get_user_log(accessed_time):
 # end_point, process_time_taken, resource_utilization
 # write any monitoring data to a log file
 def log_api_request(process_time):
-    logging.basicConfig(filename='requests.log', level=logging.DEBUG)
-    logging.info("Endpoint accessed: " + str(request.endpoint))
-    logging.info("Process time: " + str(process_time) + "ns")
+    print("Endpoint accessed: " + str(request.endpoint))
+    print("Process time: " + str(process_time) + "ns")
 
 
-def log_error(parameter):
-    logging.basicConfig(filename='requests.log', level=logging.DEBUG)
-    logging.error("Bad Request: " + str(parameter))
+def log_error(accessed_time, parameter):
+    print("Bad Request: " + dumps(parameter) + " at: " + str(accessed_time))
