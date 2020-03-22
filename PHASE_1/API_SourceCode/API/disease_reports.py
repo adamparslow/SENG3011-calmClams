@@ -17,15 +17,15 @@ def disease_reports():
     try:
         report = get_report(parameter, current_app.collection)
     except ValueError:
-        log_error(accessed_time, parameter)
+        log_error(accessed_time, parameter, HTTPStatus.BAD_REQUEST)
         return "400 Bad Request", HTTPStatus.BAD_REQUEST
 
     if report is None:
-        log_error(accessed_time, parameter)
+        log_error(accessed_time, parameter, HTTPStatus.NOT_FOUND)
         return "404 Not Found", HTTPStatus.NOT_FOUND
 
     request_end_time = time.perf_counter_ns()
-    log_api_request(request_end_time - request_start_time)
+    log_api_request(request_end_time - request_start_time, accessed_time, parameter)
     return jsonify({
         "parameter": parameter,
         "user_log": get_user_log(accessed_time),

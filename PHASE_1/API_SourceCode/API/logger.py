@@ -11,12 +11,15 @@ def get_user_log(accessed_time):
     return log
 
 
-# end_point, process_time_taken, resource_utilization
-# write any monitoring data to a log file
-def log_api_request(process_time):
+def log_api_request(process_time, accessed_time, parameter):
     print("Endpoint accessed: " + str(request.endpoint))
+    print("Time accessed: " + str(accessed_time))
+    print("Parameter used: " + dumps(parameter))
     print("Process time: " + str(process_time) + "ns")
 
 
-def log_error(accessed_time, parameter):
-    print("Bad Request: " + dumps(parameter) + " at: " + str(accessed_time))
+def log_error(accessed_time, parameter, error_code):
+    print("Endpoint accessed: " + str(request.endpoint))
+    print("Time accessed: " + str(accessed_time))
+    print("Parameter used: " + dumps(parameter))
+    print("An error occurred with error code: ", error_code.value)
