@@ -7,6 +7,7 @@ import os
 import json
 from pymongo import MongoClient
 import dns # required for connecting with SRV
+from datetime import datetime
 
 BASE_URL = 'http://outbreaks.globalincidentmap.com/eventdetail.php?ID='
 LOWEST_RECORD_NUMBER = 37
@@ -128,7 +129,7 @@ for i in range(starting_index, ending_index, 1):
         print("{} records in a row have been empty. Stopping now".format(dead_threshold))
         break
 
-    time.sleep(4)
+    time.sleep(3)
     print("")
     print(BASE_URL + str(i))
     event_page = requests.get(BASE_URL + str(i))
@@ -136,12 +137,6 @@ for i in range(starting_index, ending_index, 1):
 
     details = event_soup.find_all('td', {'class': 'tdline'})
 
-    event_type = clean(details[1].text)
-    date = clean(details[3].text)
-    country = clean(details[5].text)
-    city = clean(details[7].text)
-    latitude = clean(details[9].text)
-    longitude = clean(details[11].text)
     url = clean(details[13].text)
 
     # if there is no data then just continue
@@ -150,6 +145,13 @@ for i in range(starting_index, ending_index, 1):
         print("Found no content for record {}".format(i))
         continue
     dead_count = 0 # there was content. reset the counter
+
+    event_type = clean(details[1].text)
+    date = datetime.strptime(clean(details[3].text), "%Y-%m-%d %H:%M:%S")
+    country = clean(details[5].text)
+    city = clean(details[7].text)
+    latitude = clean(details[9].text)
+    longitude = clean(details[11].text)
 
     description = clean(event_soup.find_all('tr', {'class': 'tdtext'})[0].text)
     if (len(description) > 1000):
@@ -215,6 +217,8 @@ for i in range(starting_index, ending_index, 1):
     else:
         headline = clean(split[0].strip())
         main_text = clean('\n'.join(split[1:]).strip())
+
+    
 
     ret = {"_id": i,
            "date_of_publication": date,
