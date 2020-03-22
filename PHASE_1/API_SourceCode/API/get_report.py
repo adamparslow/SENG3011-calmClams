@@ -10,13 +10,15 @@ def get_report(parameter, database):
 
     query_list = []
 
-    if start_date and end_date:
-        start_date = datetime.strptime(unquote(start_date).strip("\\\""), "%Y-%m-%d %H:%M:%S")  # TODO catch format errors
-        end_date = datetime.strptime(unquote(end_date).strip("\\\""), "%Y-%m-%d %H:%M:%S")      # TODO catch format errors
-        query_list.append({"date_of_publication": {"$gte": start_date, "$lte": end_date}})
+    if not start_date or not end_date:
+        return None
+
+    start_date = datetime.strptime(unquote(start_date).strip("\\\""), "%Y-%m-%d %H:%M:%S")
+    end_date = datetime.strptime(unquote(end_date).strip("\\\""), "%Y-%m-%d %H:%M:%S")
+    query_list.append({"date_of_publication": {"$gte": start_date, "$lte": end_date}})
 
     if key_terms:
-        key_terms = unquote(key_terms).replace(" ", "").split(",")                              # TODO catch errors?
+        key_terms = unquote(key_terms).replace(" ", "").split(",")
         for term in key_terms:
             term_query = {
                 "$or": [
@@ -25,7 +27,7 @@ def get_report(parameter, database):
                 ]
             }
             query_list.append(term_query)
-    
+
     if location:                                                                                # TODO catch errors?
         query_list.append({
                 "$or": [
