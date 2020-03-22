@@ -17,7 +17,7 @@ def get_report(parameter, database):
     print(end_date)
     query = {
         "$and": [
-            {"articles.date_of_publication": {"$gte": start_date, "$lte": end_date}},
+            {"date_of_publication": {"$gte": start_date, "$lte": end_date}},
             #{"key_terms": key_terms},
             #{"location": location}
         ]
