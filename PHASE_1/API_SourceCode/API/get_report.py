@@ -21,7 +21,7 @@ def get_report(parameter, database):
         for term in key_terms:
             term_query = {
                 "$or": [
-                    {"headline": {"$regex": term}},
+                    {"headline": {"$regex": term, "$options": "i"}},
                     {"main_text": {"$regex": term, "$options": "i"}}
                 ]
             }
