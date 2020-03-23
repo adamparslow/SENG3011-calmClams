@@ -9,12 +9,11 @@ def get_report(parameter, database):
     location = parameter.get("location")
 
     query_list = []
-
     if not start_date or not end_date:
         return None
 
-    start_date = datetime.strptime(unquote(start_date).strip("\\\""), "%Y-%m-%dT%H:%M:%S")
-    end_date = datetime.strptime(unquote(end_date).strip("\\\""), "%Y-%m-%dT%H:%M:%S")
+    start_date = datetime.strptime(unquote(start_date.replace("T", " ")).strip("\\\""), "%Y-%m-%d %H:%M:%S")
+    end_date = datetime.strptime(unquote(end_date.replace("T", " ")).strip("\\\""), "%Y-%m-%d %H:%M:%S")
     query_list.append({"date_of_publication": {"$gte": start_date, "$lte": end_date}})
 
     if key_terms:
