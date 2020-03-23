@@ -10,10 +10,13 @@ def get_report(parameter, database):
 
     query_list = []
     if not start_date or not end_date:
-        return None
+        raise ValueError
 
     start_date = datetime.strptime(unquote(start_date.replace("T", " ")).strip("\\\""), "%Y-%m-%d %H:%M:%S")
     end_date = datetime.strptime(unquote(end_date.replace("T", " ")).strip("\\\""), "%Y-%m-%d %H:%M:%S")
+    if end_date < start_date:
+        raise ValueError
+
     query_list.append({"date_of_publication": {"$gte": start_date, "$lte": end_date}})
 
     if key_terms:
