@@ -4,8 +4,10 @@ beautifulsoup4==4.8.2
 certifi==2019.11.28
 chardet==3.0.4
 Click==7.0
+dnspython==1.16.0
 Flask==1.1.1
 Flask-GraphQL==2.0.1
+Flask-MonitoringDashboard==3.0.9
 Flask-PyMongo==2.3.0
 graphene==2.1.8
 graphene-mongo==0.2.11
