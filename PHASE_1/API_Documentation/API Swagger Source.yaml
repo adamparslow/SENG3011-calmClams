@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: |
-    This is the documentation for the SENG3011 API for the CalmClams group. This API allows users to search for and access reports for disease outbreaks by time, location or key terms. Results are returned to the user as a JSON string in a consistent form for ease of use, described in the API-Response schema.
+    This is the documentation for the SENG3011 API for the CalmClams group. This API allows users to search for and access reports for disease outbreaks by time, location or key terms. Results are returned to the user as a JSON string in a consistent form for ease of use, described in the API-Response schema. This university project is intended to be able to contribute to the automated EpiWATCH epidemics detection system, which uses openly available data sources to produce outbreak alerts, analyses on serious or unusual outbreaks, and regular digests.
   version: "1.0.0"
   title: SENG3011 - CalmClams
 externalDocs:
@@ -48,8 +48,8 @@ paths:
               type: string
         - name: location
           in: query
-          description: 'The geographical location for which records will be searched. The API will try to find any records that are relevant to this location. Example values: "Sydney", "Wuhan", "Punjab"'
-          required: true
+          description: 'The geographical location for which records will be searched. The API will try to find any records that are relevant to this location. If omitted, all valid records will be returned. Example values: "Sydney", "Wuhan", "Punjab"'
+          required: false
           schema:
             type: string
             example: Punjab
@@ -244,7 +244,11 @@ components:
         location:
           type: string
           description: Location details apart from the country, e.g. Province, city, etc.
-          example: Wuhan, Hubei Province
+          example: Wuhan
+        coords:
+          type: string
+          description: The coordinates for this location. Provided in addition to spec-required properties for user convenience.
+          example: 31.147, 75.341
         geonames_id:
           type: number
           description: The ID that represents this location in the geonames database.
