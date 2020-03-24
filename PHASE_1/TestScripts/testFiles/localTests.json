@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1a6f038b-8441-43f4-b38b-aee8b7cb406b",
+		"_postman_id": "6258145b-f91f-4dc6-b33d-0acecf64ed5a",
 		"name": "Local",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -40,15 +40,37 @@
 			"response": []
 		},
 		{
-			"name": "Missing Key Terms",
+			"name": "Normal Request",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
 						"exec": [
-							"",
 							"const expObj = [",
+							"    {",
+							"        \"_id\": 18683,",
+							"        \"date_of_publication\": \"2015-01-20 18:01:xx\",",
+							"        \"headline\": \"27 cases in Hyderabad, 1 death in Punjab\",",
+							"        \"main_text\": \"While an outbreak of swineful  has claimed one life in Punjab, as many as 27 people in Telanganas capital Hyderabad have tested positive for the H1N1 virus, and their treatment is underway at the Gandhi Hospital here, while 35 cases are under observation for suspected influenza.\\nRead Full Article At :: http://www.ddinews.gov.in/National/National%20-%20Headlines/Pages/Swineflu27casesinHyderabad,1deathinPunjab.aspx\",",
+							"        \"reports\": [",
+							"            {",
+							"                \"diseases\": [",
+							"                    \"influenza a/h1n1\"",
+							"                ],",
+							"                \"event_date\": \"2015-01-20 18:01:xx\",",
+							"                \"locations\": [",
+							"                    {",
+							"                        \"coords\": \"31.147, 75.341\",",
+							"                        \"country\": \"India\",",
+							"                        \"location\": \"Punjab\"",
+							"                    }",
+							"                ],",
+							"                \"syndromes\": []",
+							"            }",
+							"        ],",
+							"        \"url\": \"http://www.ddinews.gov.in/National/National%20-%20Headlines/Pages/Swineflu27casesinHyderabad,1deathinPunjab.aspx\"",
+							"    }",
 							"];",
 							"",
 							"pm.test(\"Status code is 200\", function () {",
@@ -58,57 +80,6 @@
 							"pm.test(\"Articles value is as expected\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.articles).to.eql(expObj);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:5000/disease_reports?start_date=2015-02-015T08:45:10&end_date=2015-11-01T19:37:12&key_terms=Brucellosis,Anthrax&location=sydney",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"disease_reports"
-					],
-					"query": [
-						{
-							"key": "start_date",
-							"value": "2015-02-015T08:45:10"
-						},
-						{
-							"key": "end_date",
-							"value": "2015-11-01T19:37:12"
-						},
-						{
-							"key": "key_terms",
-							"value": "Brucellosis,Anthrax"
-						},
-						{
-							"key": "location",
-							"value": "sydney"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Missing Start Date",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
-						"exec": [
-							"pm.test(\"Status code is 400\", function () {",
-							"    pm.response.to.have.status(400);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -119,7 +90,8 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000/disease_reports?end_date=2015-11-01T19:37:12&key_terms=Brucellosis,Anthrax&location=sydney",
+					"raw": "http://localhost:5000/disease_reports?start_date=2015-01-01T00:00:00&end_date=2018-01-23T19:37:12&key_terms=swineflu&location=punjab",
+					"protocol": "http",
 					"host": [
 						"localhost"
 					],
@@ -130,80 +102,19 @@
 					"query": [
 						{
 							"key": "start_date",
-							"value": "2015-02-015T08:45:10",
-							"disabled": true
+							"value": "2015-01-01T00:00:00"
 						},
 						{
 							"key": "end_date",
-							"value": "2015-11-01T19:37:12"
+							"value": "2018-01-23T19:37:12"
 						},
 						{
 							"key": "key_terms",
-							"value": "Brucellosis,Anthrax"
+							"value": "swineflu"
 						},
 						{
 							"key": "location",
-							"value": "sydney"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "NormalRequest",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
-						"exec": [
-							"",
-							"const expObj = [",
-							"];",
-							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"Articles value is as expected\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.articles).to.eql(expObj);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:5000/disease_reports?start_date=2015-02-015T08:45:10&end_date=2015-11-01T19:37:12&key_terms=Brucellosis,Anthrax&location=sydney",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"disease_reports"
-					],
-					"query": [
-						{
-							"key": "start_date",
-							"value": "2015-02-015T08:45:10"
-						},
-						{
-							"key": "end_date",
-							"value": "2015-11-01T19:37:12"
-						},
-						{
-							"key": "key_terms",
-							"value": "Brucellosis,Anthrax"
-						},
-						{
-							"key": "location",
-							"value": "sydney"
+							"value": "punjab"
 						}
 					]
 				}
@@ -230,7 +141,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000/disease_reports?start_date=2015-11-01T19:37:12&end_date=2015-02-015T08:45:10&key_terms=Brucellosis,Anthrax&location=sydney",
+					"raw": "localhost:5000/disease_reports?start_date=2018-01-23T19:37:12&end_date=2015-01-01T00:00:00&key_terms=swineflu&location=punjab",
 					"host": [
 						"localhost"
 					],
@@ -241,19 +152,19 @@
 					"query": [
 						{
 							"key": "start_date",
-							"value": "2015-11-01T19:37:12"
+							"value": "2018-01-23T19:37:12"
 						},
 						{
 							"key": "end_date",
-							"value": "2015-02-015T08:45:10"
+							"value": "2015-01-01T00:00:00"
 						},
 						{
 							"key": "key_terms",
-							"value": "Brucellosis,Anthrax"
+							"value": "swineflu"
 						},
 						{
 							"key": "location",
-							"value": "sydney"
+							"value": "punjab"
 						}
 					]
 				}
@@ -280,7 +191,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000/disease_reports?start_date=2015-02-015T08:45:10&end_date=2015-11-01T19:37:12&key_terms=Brucellosis,Anthrax&location=sydney",
+					"raw": "localhost:5000/disease_reports?start_date=2015-01-01T00:00:00&end_date=2018-01-23T19:37:12&key_terms=swineflu&location=punjab",
 					"host": [
 						"localhost"
 					],
@@ -291,19 +202,19 @@
 					"query": [
 						{
 							"key": "start_date",
-							"value": "2015-02-015T08:45:10"
+							"value": "2015-01-01T00:00:00"
 						},
 						{
 							"key": "end_date",
-							"value": "2015-11-01T19:37:12"
+							"value": "2018-01-23T19:37:12"
 						},
 						{
 							"key": "key_terms",
-							"value": "Brucellosis,Anthrax"
+							"value": "swineflu"
 						},
 						{
 							"key": "location",
-							"value": "sydney"
+							"value": "punjab"
 						}
 					]
 				}
@@ -318,7 +229,7 @@
 					"script": {
 						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
+							"pm.test(\"Status code is 400\", function () {",
 							"    pm.response.to.have.status(400);",
 							"});"
 						],
@@ -330,7 +241,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000/disease_reports?start_date=2015-02-015T08:45:10&key_terms=Brucellosis,Anthrax&location=sydney",
+					"raw": "localhost:5000/disease_reports?start_date=2015-01-01T00:00:00&key_terms=swineflu&location=punjab",
 					"host": [
 						"localhost"
 					],
@@ -341,20 +252,20 @@
 					"query": [
 						{
 							"key": "start_date",
-							"value": "2015-02-015T08:45:10"
+							"value": "2015-01-01T00:00:00"
 						},
 						{
 							"key": "end_date",
-							"value": "2015-11-01T19:37:12",
+							"value": "2018-01-23T19:37:12",
 							"disabled": true
 						},
 						{
 							"key": "key_terms",
-							"value": "Brucellosis,Anthrax"
+							"value": "swineflu"
 						},
 						{
 							"key": "location",
-							"value": "sydney"
+							"value": "punjab"
 						}
 					]
 				}
@@ -362,15 +273,709 @@
 			"response": []
 		},
 		{
-			"name": "Missing location",
+			"name": "Missing Start Date",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
 						"exec": [
-							"",
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/disease_reports?end_date=2018-01-23T19:37:12&key_terms=swineflu&location=punjab",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"disease_reports"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2015-01-01T00:00:00",
+							"disabled": true
+						},
+						{
+							"key": "end_date",
+							"value": "2018-01-23T19:37:12"
+						},
+						{
+							"key": "key_terms",
+							"value": "swineflu"
+						},
+						{
+							"key": "location",
+							"value": "punjab"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Missing Key Terms",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
+						"exec": [
 							"const expObj = [",
+							"    {",
+							"            \"_id\": 18683,",
+							"            \"date_of_publication\": \"2015-01-20 18:01:xx\",",
+							"            \"headline\": \"27 cases in Hyderabad, 1 death in Punjab\",",
+							"            \"main_text\": \"While an outbreak of swineful  has claimed one life in Punjab, as many as 27 people in Telanganas capital Hyderabad have tested positive for the H1N1 virus, and their treatment is underway at the Gandhi Hospital here, while 35 cases are under observation for suspected influenza.\\nRead Full Article At :: http://www.ddinews.gov.in/National/National%20-%20Headlines/Pages/Swineflu27casesinHyderabad,1deathinPunjab.aspx\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-01-20 18:01:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.ddinews.gov.in/National/National%20-%20Headlines/Pages/Swineflu27casesinHyderabad,1deathinPunjab.aspx\"",
+							"        },",
+							"        {",
+							"            \"_id\": 19005,",
+							"            \"date_of_publication\": \"2015-02-09 23:06:xx\",",
+							"            \"headline\": \"Swine flu: Punjab, Haryana death toll rises to 23\",",
+							"            \"main_text\": \"Punjabs nodal officer Dr Deepak Bhatia said that the H1N1 virus has claimed 12 lives till date in the state.\\nRead the full article:\\nhttp://www.financialexpress.com/article/lifestyle/health/swine-flu-punjab-haryana-death-toll-rises-to-23/40901/\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-02-09 23:06:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.financialexpress.com/article/lifestyle/health/swine-flu-punjab-haryana-death-toll-rises-to-23/40901/\"",
+							"        },",
+							"        {",
+							"            \"_id\": 19286,",
+							"            \"date_of_publication\": \"2015-02-23 00:29:xx\",",
+							"            \"headline\": \"4 DIE OF SWINE FLU, TOLL REACHES TO 33 IN PUNJAB\",",
+							"            \"main_text\": \"Swine flu has claimed four more lives in Punjab, taking the death toll to 33 in the state, while in neighbouring Haryana the virus has claimed 20 lives so far this year, officials said on Monday.\\nRead the full article:\\nhttp://www.dailypioneer.com/state-editions/chandigarh/4-die-of-swine-flu-toll-reaches-to-33-in-punjab.html\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-02-23 00:29:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.dailypioneer.com/state-editions/chandigarh/4-die-of-swine-flu-toll-reaches-to-33-in-punjab.html\"",
+							"        },",
+							"        {",
+							"            \"_id\": 19319,",
+							"            \"date_of_publication\": \"2015-02-24 18:48:xx\",",
+							"            \"headline\": \"2 more succumb to H1N1, toll touches 35 in Punjab\",",
+							"            \"main_text\": \"With two more persons succumbing to swine flu, the death toll due to the deadly H1N1 virus rose to 35 in Punjab this year.\\nRead Full Article At :: http://www.dailypioneer.com/state-editions/chandigarh/2-more-succumb-to-h1n1-toll-touches-35-in-punjab.html\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-02-24 18:48:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.dailypioneer.com/state-editions/chandigarh/2-more-succumb-to-h1n1-toll-touches-35-in-punjab.html\"",
+							"        },",
+							"        {",
+							"            \"_id\": 21199,",
+							"            \"date_of_publication\": \"2015-08-29 22:10:xx\",",
+							"            \"headline\": \"12 new dengue cases surface in Punjab\",",
+							"            \"main_text\": \"As many as 12 dengue cases surfaced in Punjab on Saturday escalating the number of dengue cases for August to 49...\\nRead Full Article At :: http://www.pakistantoday.com.pk/2015/08/30/city/lahore/12-new-dengue-cases-surface-in-punjab/\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"dengue\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-08-29 22:10:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.170, 72.710\",",
+							"                            \"country\": \"Pakistan\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.pakistantoday.com.pk/2015/08/30/city/lahore/12-new-dengue-cases-surface-in-punjab/\"",
+							"        },",
+							"        {",
+							"            \"_id\": 21565,",
+							"            \"date_of_publication\": \"2015-10-03 20:23:xx\",",
+							"            \"headline\": \"8-yr-old boy dies of suspected dengue in Punjab\",",
+							"            \"main_text\": \"An eight-year-old boy in Manohar Nagar area here has died of suspected dengue, taking the death toll in similar cases in the district to six.\\nRead Full Article At :: http://www.business-standard.com/article/pti-stories/8-yr-old-boy-dies-of-suspected-dengue-in-punjab-115100300488_1.html\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"dengue\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-10-03 20:23:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.business-standard.com/article/pti-stories/8-yr-old-boy-dies-of-suspected-dengue-in-punjab-115100300488_1.html\"",
+							"        },",
+							"        {",
+							"            \"_id\": 21738,",
+							"            \"date_of_publication\": \"2015-10-17 11:31:xx\",",
+							"            \"headline\": \"First swine flu death in Punjab\",",
+							"            \"main_text\": \"First swine flu death in Punjab was reported from Dayanand Medical College and Hospital, Ludhiana on Saturday.\\nRead Full Article At :: http://timesofindia.indiatimes.com/city/ludhiana/First-swine-flu-death-in-Punjab/articleshow/49440650.cms\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-10-17 11:31:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://timesofindia.indiatimes.com/city/ludhiana/First-swine-flu-death-in-Punjab/articleshow/49440650.cms\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22172,",
+							"            \"date_of_publication\": \"2015-12-11 01:23:xx\",",
+							"            \"headline\": \"Four Patients Test Positive for Swine Flu in Punjab\",",
+							"            \"main_text\": \"Four persons from Punjab have tested positive for swine flu even as the state authorities are geared up to tackle the cases of H1N1 influenza virus.\\nRead the full article:\\nhttp://www.outlookindia.com/news/article/four-patients-test-positive-for-swine-flu-in-punjab/923567\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-12-11 01:23:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.outlookindia.com/news/article/four-patients-test-positive-for-swine-flu-in-punjab/923567\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22385,",
+							"            \"date_of_publication\": \"2016-01-14 01:10:xx\",",
+							"            \"headline\": \"After H1N1 deaths in Punjab,swine flu alert issued in Karachi\",",
+							"            \"main_text\": \".. notification had been issued as a precautionary measure and all public and private hospitals had been directed to take all possible measures to deal with the suspected swine flu patients with utmost care.\\nRead the full article:\\nhttp://www.thenews.com.pk/print/90382-After-H1N1-deaths-in-Punjabswine-flu-alert-issued-in-Karachi#sthash.LIh2YhJ5.dpuf\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-01-14 01:10:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.170, 72.710\",",
+							"                            \"country\": \"Pakistan\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.thenews.com.pk/print/90382-After-H1N1-deaths-in-Punjabswine-flu-alert-issued-in-Karachi#sthash.LIh2YhJ5.dpuf\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22396,",
+							"            \"date_of_publication\": \"2016-01-16 10:46:xx\",",
+							"            \"headline\": \"Swine flu, death toll climbs to 12 in Punjab\",",
+							"            \"main_text\": \"The death toll from swine flu has climbed to 12 across Punjab including Rawalpindi, which is reported to be worst hit with four casualties.\\nRead Full Article At :: http://www.dailytimes.com.pk/national/16-Jan-2016/swine-flu-death-toll-climbs-to-12-in-punjab\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-01-16 10:46:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.170, 72.710\",",
+							"                            \"country\": \"Pakistan\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.dailytimes.com.pk/national/16-Jan-2016/swine-flu-death-toll-climbs-to-12-in-punjab\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22403,",
+							"            \"date_of_publication\": \"2016-01-17 08:41:xx\",",
+							"            \"headline\": \"Swine Flu in Punjab, Death toll climbs to 39\",",
+							"            \"main_text\": \"Swine flu took another life in Punjab and after this death death toll climbed to 39 in Punjab, TheNewsTribe.com reported.\\nRead Full Article At :: http://www.thenewstribe.com/2016/01/17/swine-flu-in-punjab-death-toll-climbs-to-39/\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-01-17 08:41:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.170, 72.710\",",
+							"                            \"country\": \"Pakistan\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.thenewstribe.com/2016/01/17/swine-flu-in-punjab-death-toll-climbs-to-39/\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22410,",
+							"            \"date_of_publication\": \"2016-01-18 23:35:xx\",",
+							"            \"headline\": \"Swine flu claims one more life, toll reaches 5 in Punjab\",",
+							"            \"main_text\": \"While one person died of swine flu, a woman admitted at Dayananad Medical College and Hospital has tested positive of H1N1, district epidemiologist, Dr Ramesh said.\\nRead the full article:\\nhttp://abruzzo.tv/news/2016/01/18/swine-flu-claims-one-more-life-toll-reaches-5-in-punjab/\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-01-18 23:35:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://abruzzo.tv/news/2016/01/18/swine-flu-claims-one-more-life-toll-reaches-5-in-punjab/\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22427,",
+							"            \"date_of_publication\": \"2016-01-19 01:22:xx\",",
+							"            \"headline\": \"54 cases of Swine flu confirmed in Punjab\",",
+							"            \"main_text\": \"He said the patients were tested and treated as outdoor patients by various private hospitals in the city as no admission was required to these patients.\\nRead the full article:\\nhttp://quadrangleonline.com/2016/01/19/54-cases-of-swine-flu-confirmed-in-punjab/\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-01-19 01:22:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.170, 72.710\",",
+							"                            \"country\": \"Pakistan\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://quadrangleonline.com/2016/01/19/54-cases-of-swine-flu-confirmed-in-punjab/\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22430,",
+							"            \"date_of_publication\": \"2016-01-19 01:31:xx\",",
+							"            \"headline\": \"Swine flu claims one more life, toll reaches 5 in Punjab\",",
+							"            \"main_text\": \"Advisor on health issues Khawaja Salman Rafique has stated that every effort is being put in to contain the flu and preparations for battling the disease have been completed.\\nRead the full article:\\nhttp://bsccomment.com/2016/01/19/swine-flu-claims-one-more-life-toll-reaches-5-in-punjab.html\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-01-19 01:31:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://bsccomment.com/2016/01/19/swine-flu-claims-one-more-life-toll-reaches-5-in-punjab.html\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22614,",
+							"            \"date_of_publication\": \"2016-02-01 01:17:xx\",",
+							"            \"headline\": \"Death toll due to swine flu in Punjab shoots up to 17\",",
+							"            \"main_text\": \"The death toll due to swine flu in Punjab rose to 17 from four in just about 10 days, raising concern among health officials.\\nRead the full article:\\nhttp://www.business-standard.com/article/pti-stories/death-toll-due-to-swine-flu-in-punjab-shoots-up-to-17-116020100839_1.html\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-02-01 01:17:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.business-standard.com/article/pti-stories/death-toll-due-to-swine-flu-in-punjab-shoots-up-to-17-116020100839_1.html\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22680,",
+							"            \"date_of_publication\": \"2016-02-06 11:03:xx\",",
+							"            \"headline\": \"Swine flu claims seven more lives in Punjab\",",
+							"            \"main_text\": \"Seven more deaths due to swine flu were reported in Punjab in the last four days...\\nRead Full Article At :: http://indianexpress.com/article/india/india-news-india/swine-flu-claims-seven-more-lives-in-punjab-four-in-haryana/\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-02-06 11:03:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://indianexpress.com/article/india/india-news-india/swine-flu-claims-seven-more-lives-in-punjab-four-in-haryana/\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22689,",
+							"            \"date_of_publication\": \"2016-02-08 01:11:xx\",",
+							"            \"headline\": \"26 swine flu deaths in Punjab; committee to review situation\",",
+							"            \"main_text\": \"Twenty-six people have died of swine flu in Punjab in recent days, the states health minister said on Monday.\\nRead the full article:\\nhttp://www.abplive.in/india-news/26-swine-flu-deaths-in-punjab-committee-to-review-situation-286913\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-02-08 01:11:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.abplive.in/india-news/26-swine-flu-deaths-in-punjab-committee-to-review-situation-286913\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22728,",
+							"            \"date_of_publication\": \"2016-02-10 01:20:xx\",",
+							"            \"headline\": \"Over 30 people succumb to Swine Flu in Punjab\",",
+							"            \"main_text\": \"Seven more people have succumbed to swine flu virus in Punjab in the last four days taking the death toll from the disease to 31.\\nRead the full article:\\nhttp://www.indiatvnews.com/news/india/over-30-people-succumb-to-swine-flu-in-punjab-57545.html\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-02-10 01:20:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.indiatvnews.com/news/india/over-30-people-succumb-to-swine-flu-in-punjab-57545.html\"",
+							"        },",
+							"        {",
+							"            \"_id\": 23039,",
+							"            \"date_of_publication\": \"2016-03-08 02:36:xx\",",
+							"            \"headline\": \"Swine Flu: 61 Deaths in Punjab, Five in Haryana\",",
+							"            \"main_text\": \"Swine flu has so far claimed 61 lives in Punjab, with 30 succumbing to H1N1 virus in the state in past one month alone.\\nRead the full article:\\nhttp://www.outlookindia.com/newswire/story/swine-flu-61-deaths-in-punjab-five-in-haryana/932852\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-03-08 02:36:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.outlookindia.com/newswire/story/swine-flu-61-deaths-in-punjab-five-in-haryana/932852\"",
+							"        },",
+							"        {",
+							"            \"_id\": 24378,",
+							"            \"date_of_publication\": \"2016-08-02 16:34:xx\",",
+							"            \"headline\": \"NIH receives four suspected CCHF samples from Punjab\",",
+							"            \"main_text\": \"A total of 138 suspected samples of CCHF have been received by NIH during the period between January 1 to August 2, 2016. Of these, 13 have tested positive and four are currently being processed.\\nRead Full Article At :: https://www.thenews.com.pk/print/139658-NIH-receives-four-suspected-CCHF-samples-from-Punjab\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"crimean-congo haemorrhagic fever\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-08-02 16:34:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.170, 72.710\",",
+							"                            \"country\": \"Pakistan\",",
+							"                            \"location\": \"Punjab Province\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"https://www.thenews.com.pk/print/139658-NIH-receives-four-suspected-CCHF-samples-from-Punjab\"",
+							"        },",
+							"        {",
+							"            \"_id\": 25139,",
+							"            \"date_of_publication\": \"2016-09-23 19:45:xx\",",
+							"            \"headline\": \"Congo virus claims six lives in Punjab\",",
+							"            \"main_text\": \"At least six people have died in Punjab of the Congo virus, raising the death toll to 24 in the country in 2016.\\nRead Full Article At :: http://tribune.com.pk/story/1186652/proving-fatal-congo-virus-claims-six-lives-punjab/\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"crimean-congo haemorrhagic fever\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-09-23 19:45:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.170, 72.710\",",
+							"                            \"country\": \"Pakistan\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://tribune.com.pk/story/1186652/proving-fatal-congo-virus-claims-six-lives-punjab/\"",
+							"        },",
+							"        {",
+							"            \"_id\": 27589,",
+							"            \"date_of_publication\": \"2017-08-17 10:29:xx\",",
+							"            \"headline\": \"Swine flu claimed 15 lives in Punjab this summer\",",
+							"            \"main_text\": \"Fifteen persons died due to swine flu in Punjab this summer season, the states Health and Family Welfare Minister Brahm Mohindra said here on Thursday.\\nRead Full Article At :: http://www.tribuneindia.com/news/punjab/punjab-swine-flu-claims-15-lives/453130.html\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2017-08-17 10:29:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.tribuneindia.com/news/punjab/punjab-swine-flu-claims-15-lives/453130.html\"",
+							"        },",
+							"        {",
+							"            \"_id\": 27642,",
+							"            \"date_of_publication\": \"2017-08-22 11:31:xx\",",
+							"            \"headline\": \"Rise in swine flu cases\",",
+							"            \"main_text\": \"Swine flu is spreading its tentacles in Punjab with 38 of the 96 people found positive this season having surfaced in the last 12 days only.\\nRead Full Article At :: http://www.hindustantimes.com/punjab/rise-in-swine-flu-cases-in-punjab-38-found-positive-in-12-days/story-n7qhQtu8NyvRpw5kLovCMK.html\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2017-08-22 11:31:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.hindustantimes.com/punjab/rise-in-swine-flu-cases-in-punjab-38-found-positive-in-12-days/story-n7qhQtu8NyvRpw5kLovCMK.html\"",
+							"        },",
+							"        {",
+							"            \"_id\": 27778,",
+							"            \"date_of_publication\": \"2017-09-05 12:35:xx\",",
+							"            \"headline\": \"Dengue sting gets sharper, 457 cases reported\",",
+							"            \"main_text\": \"The dreaded dengue is gradually spreading its tentacles in Punjab, with the total number of cases in the state mounting to 457, including 42 reported on Tuesday.\\nRead Full Article At :: http://www.hindustantimes.com/punjab/dengue-sting-gets-sharper-457-cases-reported-in-punjab/story-xmY9ZdVIpFn6wg7psU2XKK.html\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"dengue\"",
+							"                    ],",
+							"                    \"event_date\": \"2017-09-05 12:35:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.hindustantimes.com/punjab/dengue-sting-gets-sharper-457-cases-reported-in-punjab/story-xmY9ZdVIpFn6wg7psU2XKK.html\"",
+							"        },",
+							"        {",
+							"            \"_id\": 27862,",
+							"            \"date_of_publication\": \"2017-09-17 16:38:xx\",",
+							"            \"headline\": \"Swine flu cases reported in 23 days, Ludhiana worst hit\",",
+							"            \"main_text\": \"Swine flu continues to tighten its grip over the state with 100 new cases of influenza A (H1N1) being reported in last 23 days till Saturday, affecting a total of 204 people in Punjab this season.\\nRead Full Article At :: http://www.hindustantimes.com/punjab/punjab-100-swine-flu-cases-reported-in-23-days-ludhiana-worst-hit/story-NUp0Y8CQvgJtwQgbHynmsM.html\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2017-09-17 16:38:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.hindustantimes.com/punjab/punjab-100-swine-flu-cases-reported-in-23-days-ludhiana-worst-hit/story-NUp0Y8CQvgJtwQgbHynmsM.html\"",
+							"        },",
+							"        {",
+							"            \"_id\": 27897,",
+							"            \"date_of_publication\": \"2017-09-21 12:36:xx\",",
+							"            \"headline\": \"Suspected cases of H1N1 influenza reported in Punjab\",",
+							"            \"main_text\": \"A total of 34 suspected cases of H1N1 influenza have been reported so far in Punjab this year with only one confirmed case...\\nRead Full Article At :: https://tribune.com.pk/story/1512854/34-suspected-cases-h1n1-influenza-reported-punjab/\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2017-09-21 12:36:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.170, 72.710\",",
+							"                            \"country\": \"Pakistan\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"https://tribune.com.pk/story/1512854/34-suspected-cases-h1n1-influenza-reported-punjab/\"",
+							"        },",
+							"        {",
+							"            \"_id\": 28069,",
+							"            \"date_of_publication\": \"2017-10-13 18:59:xx\",",
+							"            \"headline\": \"Dengue cases reported in Punjab\",",
+							"            \"main_text\": \"So far 257 confirmed dengue patients have been reported in Punjab this year. Out of these, 178 reported belonged to Islamabad and 77 from other provinces and abroad.\\nRead Full Article At :: http://nation.com.pk/national/13-Oct-2017/at-least-257-dengue-cases-reported-in-punjab\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"dengue\"",
+							"                    ],",
+							"                    \"event_date\": \"2017-10-13 18:59:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.170, 72.710\",",
+							"                            \"country\": \"Pakistan\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://nation.com.pk/national/13-Oct-2017/at-least-257-dengue-cases-reported-in-punjab\"",
+							"        },",
+							"        {",
+							"            \"_id\": 28195,",
+							"            \"date_of_publication\": \"2017-10-28 11:25:xx\",",
+							"            \"headline\": \"Dengue spikes in Punjab\",",
+							"            \"main_text\": \"The last two days alone (October 25 and 26) have seen 652 cases reported.\\nRead Full Article At :: http://www.hindustantimes.com/punjab/dengue-spikes-in-punjab-with-652-cases-in-two-days/story-omA3qm0e4cNPL3jseu00TK.html\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"dengue\"",
+							"                    ],",
+							"                    \"event_date\": \"2017-10-28 11:25:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.hindustantimes.com/punjab/dengue-spikes-in-punjab-with-652-cases-in-two-days/story-omA3qm0e4cNPL3jseu00TK.html\"",
+							"        }",
 							"];",
 							"",
 							"pm.test(\"Status code is 200\", function () {",
@@ -391,7 +996,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000/disease_reports?start_date=2015-02-015T08:45:10&end_date=2015-11-01T19:37:12&key_terms=Brucellosis,Anthrax&location=sydney",
+					"raw": "localhost:5000/disease_reports?start_date=2015-01-01T00:00:00&end_date=2018-01-23T19:37:12&location=punjab",
 					"host": [
 						"localhost"
 					],
@@ -402,19 +1007,276 @@
 					"query": [
 						{
 							"key": "start_date",
-							"value": "2015-02-015T08:45:10"
+							"value": "2015-01-01T00:00:00"
 						},
 						{
 							"key": "end_date",
-							"value": "2015-11-01T19:37:12"
+							"value": "2018-01-23T19:37:12"
 						},
 						{
 							"key": "key_terms",
-							"value": "Brucellosis,Anthrax"
+							"value": "swineflu",
+							"disabled": true
 						},
 						{
 							"key": "location",
-							"value": "sydney"
+							"value": "punjab"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Missing Location",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f91c83e7-d0e2-4182-a1a6-959618620be3",
+						"exec": [
+							"const expObj = [",
+							"    {",
+							"            \"_id\": 18683,",
+							"            \"date_of_publication\": \"2015-01-20 18:01:xx\",",
+							"            \"headline\": \"27 cases in Hyderabad, 1 death in Punjab\",",
+							"            \"main_text\": \"While an outbreak of swineful  has claimed one life in Punjab, as many as 27 people in Telanganas capital Hyderabad have tested positive for the H1N1 virus, and their treatment is underway at the Gandhi Hospital here, while 35 cases are under observation for suspected influenza.\\nRead Full Article At :: http://www.ddinews.gov.in/National/National%20-%20Headlines/Pages/Swineflu27casesinHyderabad,1deathinPunjab.aspx\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-01-20 18:01:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.ddinews.gov.in/National/National%20-%20Headlines/Pages/Swineflu27casesinHyderabad,1deathinPunjab.aspx\"",
+							"        },",
+							"        {",
+							"            \"_id\": 18684,",
+							"            \"date_of_publication\": \"2015-01-20 18:02:xx\",",
+							"            \"headline\": \"27 cases in Hyderabad, 1 death in Punjab\",",
+							"            \"main_text\": \"While an outbreak of swineful  has claimed one life in Punjab, as many as 27 people in Telanganas capital Hyderabad have tested positive for the H1N1 virus, and their treatment is underway at the Gandhi Hospital here, while 35 cases are under observation for suspected influenza.\\nRead Full Article At :: http://www.ddinews.gov.in/National/National%20-%20Headlines/Pages/Swineflu27casesinHyderabad,1deathinPunjab.aspx\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-01-20 18:02:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"17.385, 78.487\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Hyderabad\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.ddinews.gov.in/National/National%20-%20Headlines/Pages/Swineflu27casesinHyderabad,1deathinPunjab.aspx\"",
+							"        },",
+							"        {",
+							"            \"_id\": 18868,",
+							"            \"date_of_publication\": \"2015-02-01 01:50:xx\",",
+							"            \"headline\": \"Odisha reports first H1N1 death\",",
+							"            \"main_text\": \"Odisha recorded its first swine flu death of the season with a 42-year-old man falling victim to the disease at Sriram Chandra Bhanja(SCB) hospital in Cuttack. \\nRead the full article:\\nhttp://www.deccanherald.com/content/457392/odisha-reports-first-h1n1-death.html\\nSee also http://www.ddinews.gov.in/Home%20-%20Headlines/Pages/swineflu49newcasesindelhi.aspx\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-02-01 01:50:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"20.463, 85.883\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Cuttack\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.deccanherald.com/content/457392/odisha-reports-first-h1n1-death.html\"",
+							"        },",
+							"        {",
+							"            \"_id\": 18869,",
+							"            \"date_of_publication\": \"2015-02-01 01:53:xx\",",
+							"            \"headline\": \"49 new cases of swine flu reported in Delhi\",",
+							"            \"main_text\": \"With this, the total number of cases of the disease has gone up to 488 so far this year. Five people have died of the disease this year. \\nRead the full article:\\nhttp://www.ddinews.gov.in/Home%20-%20Headlines/Pages/swineflu49newcasesindelhi.aspx\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-02-01 01:53:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"28.614, 77.209\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"New Delhi\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.ddinews.gov.in/Home%20-%20Headlines/Pages/swineflu49newcasesindelhi.aspx\"",
+							"        },",
+							"        {",
+							"            \"_id\": 20029,",
+							"            \"date_of_publication\": \"2015-04-18 19:38:xx\",",
+							"            \"headline\": \"Another Swine-Flu suspect treated at Shija Hospital\",",
+							"            \"main_text\": \"After a lull in the reports of swine flu infection for 14 days, a patient showing symptoms of the disease has been admitted at Shija Hospitals today evening at around 4 pm.\\nRead Full Article At :: http://kanglaonline.com/2015/04/another-swineflu-suspect-treated-at-shija-hospital/\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-04-18 19:38:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"24.820, 93.950\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Imphal\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://kanglaonline.com/2015/04/another-swineflu-suspect-treated-at-shija-hospital/\"",
+							"        }",
+							"];",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Articles value is as expected\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.articles).to.eql(expObj);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/disease_reports?start_date=2015-01-01T00:00:00&end_date=2018-01-23T19:37:12&key_terms=swineflu",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"disease_reports"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2015-01-01T00:00:00"
+						},
+						{
+							"key": "end_date",
+							"value": "2018-01-23T19:37:12"
+						},
+						{
+							"key": "key_terms",
+							"value": "swineflu"
+						},
+						{
+							"key": "location",
+							"value": "punjab",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Empty Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2a839b41-a7c5-463b-b8a3-45445378370d",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/disease_reports",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"disease_reports"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "No Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66a8f688-949f-4a49-a7a4-804a93132085",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/disase_reports??start_date=2015-10-01T08:45:10&end_date=2016-11-01T19:37:12&key_terms=covid19&location=sydney\n",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"disase_reports"
+					],
+					"query": [
+						{
+							"key": "?start_date",
+							"value": "2015-10-01T08:45:10"
+						},
+						{
+							"key": "end_date",
+							"value": "2016-11-01T19:37:12"
+						},
+						{
+							"key": "key_terms",
+							"value": "covid19"
+						},
+						{
+							"key": "location",
+							"value": "sydney\n"
 						}
 					]
 				}
