@@ -41,6 +41,10 @@ def get_report(parameter, database):
     query = {"$and": query_list} if len(query_list) else {}
     results = list(database.find(query))
 
+    for result in results:
+        result["date_of_publication"] = result["date_of_publication"].strftime("%Y-%m-%d %H:%M:xx")
+        result["reports"][0]["event_date"] = result["reports"][0]["event_date"].strftime("%Y-%m-%d %H:%M:xx")
+
     if len(results) == 0:
         return None
     return results
