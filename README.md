@@ -10,6 +10,7 @@
 **Documentation:**
 - [Design Details](./Reports/Design%20Details.pdf)
 - [Management Information](./Reports/Management%20Information.pdf)
+- [Testing Documentation](./Reports/Testing%20Documentation.pdf)
 - [API Documentation in Swagger](https://app.swaggerhub.com/apis-docs/SMEZ1234/SENG3011-CalmClams/1.0.0)
 
 **API URL**
