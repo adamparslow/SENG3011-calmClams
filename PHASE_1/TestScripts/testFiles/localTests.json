@@ -1282,6 +1282,241 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Multiple Keywords",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ddb1c9a1-fd20-412f-97d9-c20509b6e852",
+						"exec": [
+							"const expObj = [",
+							"    {",
+							"            \"_id\": 18683,",
+							"            \"date_of_publication\": \"2015-01-20 18:01:xx\",",
+							"            \"headline\": \"27 cases in Hyderabad, 1 death in Punjab\",",
+							"            \"main_text\": \"While an outbreak of swineful  has claimed one life in Punjab, as many as 27 people in Telanganas capital Hyderabad have tested positive for the H1N1 virus, and their treatment is underway at the Gandhi Hospital here, while 35 cases are under observation for suspected influenza.\\nRead Full Article At :: http://www.ddinews.gov.in/National/National%20-%20Headlines/Pages/Swineflu27casesinHyderabad,1deathinPunjab.aspx\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-01-20 18:01:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.ddinews.gov.in/National/National%20-%20Headlines/Pages/Swineflu27casesinHyderabad,1deathinPunjab.aspx\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22172,",
+							"            \"date_of_publication\": \"2015-12-11 01:23:xx\",",
+							"            \"headline\": \"Four Patients Test Positive for Swine Flu in Punjab\",",
+							"            \"main_text\": \"Four persons from Punjab have tested positive for swine flu even as the state authorities are geared up to tackle the cases of H1N1 influenza virus.\\nRead the full article:\\nhttp://www.outlookindia.com/news/article/four-patients-test-positive-for-swine-flu-in-punjab/923567\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2015-12-11 01:23:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://www.outlookindia.com/news/article/four-patients-test-positive-for-swine-flu-in-punjab/923567\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22410,",
+							"            \"date_of_publication\": \"2016-01-18 23:35:xx\",",
+							"            \"headline\": \"Swine flu claims one more life, toll reaches 5 in Punjab\",",
+							"            \"main_text\": \"While one person died of swine flu, a woman admitted at Dayananad Medical College and Hospital has tested positive of H1N1, district epidemiologist, Dr Ramesh said.\\nRead the full article:\\nhttp://abruzzo.tv/news/2016/01/18/swine-flu-claims-one-more-life-toll-reaches-5-in-punjab/\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-01-18 23:35:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.147, 75.341\",",
+							"                            \"country\": \"India\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://abruzzo.tv/news/2016/01/18/swine-flu-claims-one-more-life-toll-reaches-5-in-punjab/\"",
+							"        },",
+							"        {",
+							"            \"_id\": 22427,",
+							"            \"date_of_publication\": \"2016-01-19 01:22:xx\",",
+							"            \"headline\": \"54 cases of Swine flu confirmed in Punjab\",",
+							"            \"main_text\": \"He said the patients were tested and treated as outdoor patients by various private hospitals in the city as no admission was required to these patients.\\nRead the full article:\\nhttp://quadrangleonline.com/2016/01/19/54-cases-of-swine-flu-confirmed-in-punjab/\",",
+							"            \"reports\": [",
+							"                {",
+							"                    \"diseases\": [",
+							"                        \"influenza a/h1n1\"",
+							"                    ],",
+							"                    \"event_date\": \"2016-01-19 01:22:xx\",",
+							"                    \"locations\": [",
+							"                        {",
+							"                            \"coords\": \"31.170, 72.710\",",
+							"                            \"country\": \"Pakistan\",",
+							"                            \"location\": \"Punjab\"",
+							"                        }",
+							"                    ],",
+							"                    \"syndromes\": []",
+							"                }",
+							"            ],",
+							"            \"url\": \"http://quadrangleonline.com/2016/01/19/54-cases-of-swine-flu-confirmed-in-punjab/\"",
+							"        }",
+							"];",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Articles value is as expected\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.articles).to.eql(expObj);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://calmclams.appspot.com/disease_reports?start_date=2015-01-01T00:00:00&end_date=2018-01-23T19:37:12&key_terms=test,swine&location=punjab",
+					"protocol": "http",
+					"host": [
+						"calmclams",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"disease_reports"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2015-01-01T00:00:00"
+						},
+						{
+							"key": "end_date",
+							"value": "2018-01-23T19:37:12"
+						},
+						{
+							"key": "key_terms",
+							"value": "test,swine"
+						},
+						{
+							"key": "location",
+							"value": "punjab"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Case Sensitivity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "769c98b3-802d-4a0b-ac8f-38316ff97e8f",
+						"exec": [
+							"const expObj = [",
+							"    {",
+							"        \"_id\": 18683,",
+							"        \"date_of_publication\": \"2015-01-20 18:01:xx\",",
+							"        \"headline\": \"27 cases in Hyderabad, 1 death in Punjab\",",
+							"        \"main_text\": \"While an outbreak of swineful  has claimed one life in Punjab, as many as 27 people in Telanganas capital Hyderabad have tested positive for the H1N1 virus, and their treatment is underway at the Gandhi Hospital here, while 35 cases are under observation for suspected influenza.\\nRead Full Article At :: http://www.ddinews.gov.in/National/National%20-%20Headlines/Pages/Swineflu27casesinHyderabad,1deathinPunjab.aspx\",",
+							"        \"reports\": [",
+							"            {",
+							"                \"diseases\": [",
+							"                    \"influenza a/h1n1\"",
+							"                ],",
+							"                \"event_date\": \"2015-01-20 18:01:xx\",",
+							"                \"locations\": [",
+							"                    {",
+							"                        \"coords\": \"31.147, 75.341\",",
+							"                        \"country\": \"India\",",
+							"                        \"location\": \"Punjab\"",
+							"                    }",
+							"                ],",
+							"                \"syndromes\": []",
+							"            }",
+							"        ],",
+							"        \"url\": \"http://www.ddinews.gov.in/National/National%20-%20Headlines/Pages/Swineflu27casesinHyderabad,1deathinPunjab.aspx\"",
+							"    }",
+							"];",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Articles value is as expected\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.articles).to.eql(expObj);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://calmclams.appspot.com/disease_reports?start_date=2015-01-01T00:00:00&end_date=2018-01-23T19:37:12&key_terms=SwiNeFlu&location=PunJAb",
+					"protocol": "http",
+					"host": [
+						"calmclams",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"disease_reports"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2015-01-01T00:00:00"
+						},
+						{
+							"key": "end_date",
+							"value": "2018-01-23T19:37:12"
+						},
+						{
+							"key": "key_terms",
+							"value": "SwiNeFlu"
+						},
+						{
+							"key": "location",
+							"value": "PunJAb"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
