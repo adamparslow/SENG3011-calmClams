@@ -21,6 +21,7 @@ def get_report(parameter, database):
 
     if key_terms:
         key_terms = unquote(key_terms).replace(" ", "").split(",")
+        term_queries = []
         for term in key_terms:
             term_query = {
                 "$or": [
@@ -28,7 +29,8 @@ def get_report(parameter, database):
                     {"main_text": {"$regex": term, "$options": "i"}}
                 ]
             }
-            query_list.append(term_query)
+            term_queries.append(term_query)
+        query_list.append({"$or": term_queries})
 
     if location:
         query_list.append({

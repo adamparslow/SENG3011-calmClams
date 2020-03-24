@@ -1,9 +1,12 @@
 openapi: 3.0.0
 info:
   description: |
-    This is the documentation for the SENG3011 API for the CalmClams group.
+    This is the documentation for the SENG3011 API for the CalmClams group. This API allows users to search for and access reports for disease outbreaks by time, location or key terms. Results are returned to the user as a JSON string in a consistent form for ease of use, described in the API-Response schema. This university project is intended to be able to contribute to the automated EpiWATCH epidemics detection system, which uses openly available data sources to produce outbreak alerts, analyses on serious or unusual outbreaks, and regular digests.
   version: "1.0.0"
   title: SENG3011 - CalmClams
+externalDocs:
+  description: "Github repository"
+  url: "https://github.com/z5122506/SENG3011-calmClams"
 servers:
   - url: 'http://calmclams.appspot.com/'
     description: CalmClams API
@@ -22,19 +25,21 @@ paths:
       parameters:
         - name: start_date
           in: query
-          description: The earliest date for which records will be searched.
+          description: 'The earliest date for which records will be searched in yyyy-MM-ddTHH:mm:ss format, following the Date-Query schema. The start date should include all components (year, month, day, hour, minute, second) without any wildcard characters, and be chronologically earlier than the end date. Having a start date later than the end date will result in the API finding no valid results and returning a 404 error. Example value: "2019-02-15T08:45:10"'
           required: true
+          example: "2019-02-15T08:45:10"
           schema:
             $ref: '#/components/schemas/Date-Query'
         - name: end_date
           in: query
-          description: The latest date for which records will be searched.
+          description: 'The latest date for which records will be searched in yyyy-MM-ddTHH:mm:ss format, following the Date-Query schema. The end date should include all components (year, month, day, hour, minute, second) without any wildcard characters, and be chronologically later than the start date. Having an end date earlier than the start date will result in the API finding no valid results and returning a 404 error. Example value: "2020-02-15T08:45:10"'
           required: true
+          example: "2020-02-15T08:45:10"
           schema:
             $ref: '#/components/schemas/Date-Query'
         - name: key_terms
           in: query
-          description: A comma-separated sequence of terms to search records for. If omitted, all valid records will be returned.
+          description: 'A comma-separated sequence of terms to search records for. If omitted, all valid records will be returned. When included, the API will return all records containing at least one of the key terms. Key terms are matched case-insensitively. Example value: "Anthrax,Zika"'
           required: false
           explode: false
           schema:
@@ -43,11 +48,11 @@ paths:
               type: string
         - name: location
           in: query
-          description: The location for which records will be searched.
-          required: true
+          description: 'The geographical location for which records will be searched. The API will try to find any records that are relevant to this location. If omitted, all valid records will be returned. Example values: "Sydney", "Wuhan", "Punjab"'
+          required: false
           schema:
             type: string
-            example: Wuhan, Hubei Province
+            example: Punjab
       responses:
         '200':
           description: Valid result(s) returned.
@@ -87,6 +92,10 @@ components:
           description: A non-empty list of reports, with one report per separate case mentioned in the same article.
           items:
             $ref: '#/components/schemas/Report'
+        _id:
+          type: integer
+          description: The unique identifier for this article in the data source's database. Provided in addition to spec-required properties for user convenience.
+          example: 31084
       required:
         - url
         - date_of_publication
@@ -135,8 +144,8 @@ components:
       example: '2015-02-15 08:45:10 to 2015-11-01 19:37:12'
     Date-Query:
       type: string
-      description: "A date in yyyy-MM-ddTHH:mm:ss format. Segments other than the year may be replaced by 'x' to match all values. Note that unlike the Date-Exact schema, Date-Queries have a 'T' separating the date and time rather than a space (see the requirements for details: https://webcms3.cse.unsw.edu.au/static/uploads/course/SENG3011/20T1/4549c6fabd3561b84ad0b29f05b0bb7a07e28a4b2153e6ad8300ca8971de5030/AnalyticsPlatformEpidemics_v_8_3.pdf)."
-      pattern: '^(\d{4})-(\d\d|xx)-(\d\d|xx)T(\d\d|xx):(\d\d|xx):(\d\d|xx)$'
+      description: "A date in yyyy-MM-ddTHH:mm:ss format. Unlike the Date-Exact schema, Date-Queries have a 'T' separating the date and time rather than a space, and do NOT have a wildcard character."
+      pattern: '^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)$'
       example: '2015-02-15T08:45:10'
     Disease:
       type: string
@@ -235,7 +244,11 @@ components:
         location:
           type: string
           description: Location details apart from the country, e.g. Province, city, etc.
-          example: Wuhan, Hubei Province
+          example: Wuhan
+        coords:
+          type: string
+          description: The coordinates for this location. Provided in addition to spec-required properties for user convenience.
+          example: 31.147, 75.341
         geonames_id:
           type: number
           description: The ID that represents this location in the geonames database.
