@@ -1,4 +1,5 @@
-from bson.json_util import dumps
+from urllib.parse import unquote
+from datetime import datetime
 
 
 def get_report(parameter, database):
@@ -7,48 +8,45 @@ def get_report(parameter, database):
     key_terms = parameter.get("key_terms")
     location = parameter.get("location")
 
-    return test_result
+    query_list = []
+    if not start_date or not end_date:
+        raise ValueError
 
-    # probably more processing required
+    start_date = datetime.strptime(unquote(start_date.replace("T", " ")).strip("\\\""), "%Y-%m-%d %H:%M:%S")
+    end_date = datetime.strptime(unquote(end_date.replace("T", " ")).strip("\\\""), "%Y-%m-%d %H:%M:%S")
+    if end_date < start_date:
+        raise ValueError
 
-    query = {
-        "start_date": start_date,
-        "end_date": end_date,
-        "key_terms": key_terms,
-        "location": location
-    }
-    results = list(database.db.disease_reports.find(query))
+    query_list.append({"date_of_publication": {"$gte": start_date, "$lte": end_date}})
+
+    if key_terms:
+        key_terms = unquote(key_terms).replace(" ", "").split(",")
+        term_queries = []
+        for term in key_terms:
+            term_query = {
+                "$or": [
+                    {"headline": {"$regex": term, "$options": "i"}},
+                    {"main_text": {"$regex": term, "$options": "i"}}
+                ]
+            }
+            term_queries.append(term_query)
+        query_list.append({"$or": term_queries})
+
+    if location:
+        query_list.append({
+                "$or": [
+                    {"reports.locations.country": {"$regex": location, "$options": "i"}},
+                    {"reports.locations.location": {"$regex": location, "$options": "i"}}
+                ]
+            })
+
+    query = {"$and": query_list} if len(query_list) else {}
+    results = list(database.find(query))
+
+    for result in results:
+        result["date_of_publication"] = result["date_of_publication"].strftime("%Y-%m-%d %H:%M:xx")
+        result["reports"][0]["event_date"] = result["reports"][0]["event_date"].strftime("%Y-%m-%d %H:%M:xx")
 
     if len(results) == 0:
         return None
-
     return results
-
-
-test_result = [{
-    "url": "https://www.who.int/csr/don/17-january-2020-novel-coronavirus-japan-exchina/en/",
-    "date_of_publication": "2020-01-17 xx:xx:xx",
-    "headline": "Novel Coronavirus – Japan (ex-China)",
-    "main_text": "On 15 January 2020, the Ministry of Health, Labour and Welfare, Japan\n(MHLW) reported an imported case of laboratory-confirmed 2019-novel coronavirus (COVID\n-19) from Wuhan, Hubei Province, China. The case-patient is male, between the age of 30-\n39 years, living in Japan. The case-patient travelled to Wuhan, China in late December and\ndeveloped fever on 3 January 2020 while staying in Wuhan. He did not visit the Huanan\nSeafood Wholesale Market or any other live animal markets in Wuhan. He has indicated that\nhe was in close contact with a person with pneumonia. On 6 January, he traveled back to\nJapan and tested negative for influenza when he visited a local clinic on the same day.",
-    "reports": [
-        {
-            "event_date": "2020-01-03 xx:xx:xx to 2020-01-15",
-            "locations": [
-                {
-                    "country": "China",
-                    "location": "Wuhan, Hubei Province"
-                },
-                {
-                    "country": "Japan",
-                    "location": ""
-                }
-            ],
-            "diseases": [
-                "COVID-19"
-            ],
-            "syndromes": [
-                "Fever of unknown Origin"
-            ]
-        }
-    ]
-}]
