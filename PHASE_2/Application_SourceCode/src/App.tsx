@@ -1,16 +1,24 @@
-import React from 'react';
-import client from './Components/apolloClient/client';
-import { ApolloProvider } from '@apollo/react-hooks';
-import { ExchangeRates } from './Components/apolloClient/queries';
+import React, { useState } from 'react';
+import SearchPage from './pages/search-page';
+import Burger from './components/side-menu/burger';
+import Menu from './components/side-menu/menu';
+import styled from 'styled-components';
 
-const App = () => (
-  <ApolloProvider client={client}>
-    <div>
-      <h2>Placeholder for an entire website!</h2>
-      {/* Exchange Rates is an example of using apollo */}
-      <ExchangeRates/>
-    </div>
-  </ApolloProvider>
-)
 
+const PageContainer = styled.div`
+  margin-left: 56px;
+`;
+
+const App = () => {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Burger open={open} setOpen={setOpen} />
+      <Menu open={open} />
+      <PageContainer>
+        <SearchPage />
+      </PageContainer>
+    </>
+  );
+};
 export default App;
