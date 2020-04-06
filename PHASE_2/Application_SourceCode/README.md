@@ -17,4 +17,5 @@ Runs tests (We don't have any currently).
 * Add components that can be used in multiple places [here](./src/Components)
 * Place all new gql queries in [this file](./src/Components/apolloClient/queries) for now
 * Root Component at [App.tsx](./App.tsx), add all providers here
+* color scheme: https://coolors.co/ffffff-00171f-003459-007ea7-00a8e8
 
