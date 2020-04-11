@@ -6,6 +6,8 @@
   "author": "Marcus Majchrzak",
   "license": "MIT",
   "dependencies": {
+    "@amcharts/amcharts4": "^4.9.13",
+    "@amcharts/amcharts4-geodata": "^4.1.14",
     "@apollo/react-hooks": "^3.1.3",
     "@types/react-dom": "^16.9.5",
     "@wojtekmaj/react-daterange-picker": "^2.5.0",
