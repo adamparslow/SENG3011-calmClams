@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import SearchPanel from './searchPanel';
 import SearchResults from './searchResults';
-import MapPanel from './mapPanel';
 import styled from 'styled-components';
 import config from '../../config';
 
@@ -11,7 +10,7 @@ export const SearchPage = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [data, setData] = useState({});
+  const [data, setData] = useState({articles: []});
 
   const fetchData = async (
     searchquery: string
@@ -36,7 +35,6 @@ export const SearchPage = () => {
   return (
     <PageContainer>
       <SearchPanel fetchData={fetchData} error={error} />
-      <MapPanel data={data}/>
       <SearchResults loading={loading} data={data} />
     </PageContainer>
   );

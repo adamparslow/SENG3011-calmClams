@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import styled from 'styled-components';
 import config from '../../config';
 
@@ -52,15 +52,21 @@ const sanitiseText = (text: string) => {
       );
 }
 
-const SearchReport = (props) => {
-  const [expanded, setExpanded] = useState(false);
+interface SearchReportProps {
+  article: any,
+  expanded: boolean,
+  toggleReport: () => void,
+};
+
+const SearchReport = memo((props: SearchReportProps) => {
+  const {toggleReport, expanded} = props;
   const article = props.article;
   const maintext = sanitiseText(article.main_text);
   const headline = sanitiseHeader(article.headline);
   console.log(JSON.stringify(article));
   console.log(article.headline);
   const handleExpand = () => {
-    setExpanded(!expanded);
+    toggleReport();
   };
   return (
     <>
@@ -70,6 +76,6 @@ const SearchReport = (props) => {
       <TextContainer expanded={expanded}>{maintext}</TextContainer>
     </>
   );
-};
+});
 
 export default SearchReport;

@@ -10,11 +10,11 @@ const PageContainer = styled.div`
 `;
 
 const App = () => {
-  const [open, setOpen] = useState(false);
+  const [tab, setTab] = useState(0);
   return (
     <>
-      <Burger open={open} setOpen={setOpen} />
-      <Menu open={open} />
+      
+      <Menu tab={tab} setTab={setTab}/>
       <PageContainer>
         <SearchPage />
       </PageContainer>

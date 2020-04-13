@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import Spinner from '../../components/spinner';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchReport from './searchReport';
-import config from '../../config'
+import config from '../../config';
+import MapPanel from './mapPanel';
 
 const FlexContainer = styled.div`
   display: grid;
@@ -22,19 +23,46 @@ interface SearchResultProps {
 }
 export const SearchResults = (props: SearchResultProps) => {
   const { loading, data } = props;
+  console.log('>>>', data);
+  const [expandable, setExpandable] = useState(
+    data.articles.map((report) => ({ id: report._id, expanded: false })),
+  );
+  console.log('!!!', expandable);
+  useEffect(() => {
+    setExpandable(
+      data.articles.map((report) => ({ id: report._id, expanded: false })),
+    );
+  }, [props.data]);
+
+  const toggleReport = (id: string) => {
+    const newState = expandable.map((report) => {
+      if (report.id === id) {
+        report.expanded = !report.expanded;
+      }
+      return report;
+    });
+    setExpandable(newState);
+  };
 
   return (
     <>
+      <MapPanel data={data} toggleReport={toggleReport} />
       <Header>Reports:</Header>
       {loading ? (
         <Spinner loading={loading} />
       ) : (
-        data.articles && 
-        <FlexContainer>
-            {data.articles.map((report) =>(
-                <SearchReport article={report} key={report._id}/>
+        data.articles && (
+          <FlexContainer>
+            {data.articles.map((report, index) => (
+              <SearchReport
+                article={report}
+                key={report._id}
+                toggleReport={() => toggleReport(report._id)}
+                expanded={expandable[index].expanded}
+              />
             ))}
-        </FlexContainer>
+          </FlexContainer>
+        )
       )}
     </>
   );

@@ -7,7 +7,8 @@ import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 const style={height: "93vh", width: "100%", backgroundColor: "#00A8E8"};
 
 interface MapPanelProps {
-    data: any
+    data: any,
+    toggleReport: (id: string) => void,
 };
 
 const MapPanel = (props: MapPanelProps) => {
@@ -62,7 +63,8 @@ const MapPanel = (props: MapPanelProps) => {
         circle.propertyFields.fill = "color";
 
         circle.events.on('hit', (event) => {
-            console.log(event.target.propertyFields.id); 
+            const id = event.target.propertyFields.id || "";
+            props.toggleReport(id); 
 
             tooltip != null && tooltip.showTooltip();
         });
@@ -84,7 +86,7 @@ const MapPanel = (props: MapPanelProps) => {
         return function cleanup() {
             chart.dispose(); 
         };
-    })
+    });
 
     return <div id="chartdiv" style={style}></div>;
 }
