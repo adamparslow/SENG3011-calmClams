@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, memo } from 'react'
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
@@ -72,7 +72,6 @@ const MapPanel = (props: MapPanelProps) => {
         // imageSeries.data = imageData;
         imageSeries.data = props.data.articles && props.data.articles.map((article) => {
             circle.propertyFields.id = article._id;
-            console.log(article);
             const coords = article.reports[0].locations[0].coords;
             const [lat, long] = coords.split(", ");
             return {
@@ -91,4 +90,8 @@ const MapPanel = (props: MapPanelProps) => {
     return <div id="chartdiv" style={style}></div>;
 }
 
-export default MapPanel;
+const shouldUpdate = (prevprops, nextprops) => {
+    return prevprops.data.version === nextprops.data.version;
+  }
+
+export default memo(MapPanel, shouldUpdate);

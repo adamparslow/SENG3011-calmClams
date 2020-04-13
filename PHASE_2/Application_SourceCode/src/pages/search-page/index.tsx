@@ -9,8 +9,9 @@ const PageContainer = styled.div``;
 export const SearchPage = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [dataVersion, setDataVersion] = useState(0);
 
-  const [data, setData] = useState({articles: []});
+  const [data, setData] = useState({articles: [], version: -1});
 
   const fetchData = async (
     searchquery: string
@@ -23,7 +24,9 @@ export const SearchPage = () => {
         return response.json();
       })
       .then((response) => {
+        response.version = dataVersion;
         setData(response);
+        setDataVersion(dataVersion + 1);
         setLoading(false);
       })
       .catch((err) => {

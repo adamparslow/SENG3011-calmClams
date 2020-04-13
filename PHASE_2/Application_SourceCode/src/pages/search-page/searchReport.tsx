@@ -51,20 +51,20 @@ const sanitiseText = (text: string) => {
         text.indexOf('Read Full Article At'),
       );
 }
-
+const shouldUpdate = (prevprops, nextprops) => {
+  return prevprops.expanded === nextprops.expanded;
+}
 interface SearchReportProps {
   article: any,
   expanded: boolean,
   toggleReport: () => void,
 };
 
-const SearchReport = memo((props: SearchReportProps) => {
+const SearchReport = (props: SearchReportProps) => {
   const {toggleReport, expanded} = props;
   const article = props.article;
   const maintext = sanitiseText(article.main_text);
   const headline = sanitiseHeader(article.headline);
-  console.log(JSON.stringify(article));
-  console.log(article.headline);
   const handleExpand = () => {
     toggleReport();
   };
@@ -76,6 +76,6 @@ const SearchReport = memo((props: SearchReportProps) => {
       <TextContainer expanded={expanded}>{maintext}</TextContainer>
     </>
   );
-});
+};
 
-export default SearchReport;
+export default memo(SearchReport, shouldUpdate);

@@ -23,11 +23,9 @@ interface SearchResultProps {
 }
 export const SearchResults = (props: SearchResultProps) => {
   const { loading, data } = props;
-  console.log('>>>', data);
   const [expandable, setExpandable] = useState(
     data.articles.map((report) => ({ id: report._id, expanded: false })),
   );
-  console.log('!!!', expandable);
   useEffect(() => {
     setExpandable(
       data.articles.map((report) => ({ id: report._id, expanded: false })),
