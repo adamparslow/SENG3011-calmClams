@@ -36,7 +36,7 @@ export const SearchPage = () => {
   return (
     <PageContainer>
       <SearchPanel fetchData={fetchData} error={error} />
-      <MapPanel />
+      <MapPanel data={data}/>
       <SearchResults loading={loading} data={data} />
     </PageContainer>
   );
