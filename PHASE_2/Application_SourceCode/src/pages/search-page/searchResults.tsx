@@ -34,6 +34,7 @@ export const SearchResults = (props: SearchResultProps) => {
 
   const toggleReport = (id: string) => {
     const newState = expandable.map((report) => {
+      console.log(report.id, id, report.id === id);
       if (report.id === id) {
         report.expanded = !report.expanded;
       }
@@ -44,12 +45,15 @@ export const SearchResults = (props: SearchResultProps) => {
 
   return (
     <>
-      <MapPanel data={data} toggleReport={toggleReport} />
-      <Header>Reports:</Header>
+      
+     
       {loading ? (
         <Spinner loading={loading} />
       ) : (
         data.articles && (
+          <>
+          <MapPanel data={data} toggleReport={toggleReport} />
+          <Header>Reports:</Header>
           <FlexContainer>
             {data.articles.map((report, index) => (
               <SearchReport
@@ -60,6 +64,7 @@ export const SearchResults = (props: SearchResultProps) => {
               />
             ))}
           </FlexContainer>
+          </>
         )
       )}
     </>

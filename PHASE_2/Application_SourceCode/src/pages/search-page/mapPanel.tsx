@@ -1,4 +1,4 @@
-import React, {useState, useEffect, memo } from 'react'
+import React, { useEffect, memo } from 'react'
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
@@ -57,12 +57,15 @@ const MapPanel = (props: MapPanelProps) => {
         imageSeries.mapImages.template.tooltipHTML = "<h1>{title}<h1><button>Hello</button>";
         const tooltip = imageSeries.mapImages.template.tooltip;
         imageSeries.mapImages.template.propertyFields.url = "url";
+        // imageSeries.mapImages.template.propertyFields.id = "id";
 
         const circle = imageSeries.mapImages.template.createChild(am4core.Circle);
         circle.radius = 5;
         circle.propertyFields.fill = "color";
+        circle.propertyFields.id = "id";
 
         circle.events.on('hit', (event) => {
+            console.log(event);
             const id = event.target.propertyFields.id || "";
             props.toggleReport(id); 
 
@@ -78,7 +81,8 @@ const MapPanel = (props: MapPanelProps) => {
                 "title": article.headline,
                 "latitude": Number(lat),
                 "longitude": Number(long), 
-                "url": `#${article._id}`
+                "url": `#${article._id}`,
+                "id": article._id,
             };
         });
 
