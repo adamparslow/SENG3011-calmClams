@@ -1,10 +1,9 @@
 import React, { useEffect, memo } from 'react'
 import * as am4core from "@amcharts/amcharts4/core";
-import * as am4maps from "@amcharts/amcharts4/maps";
+import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 
-const style={height: "93vh", width: "100%", backgroundColor: "#00A8E8"};
+const style = { height: "93vh", width: "100%", backgroundColor: "#00A8E8" };
 
 interface GraphPanelProps {
     data: any,
@@ -13,81 +12,159 @@ interface GraphPanelProps {
 
 const GraphPanel = (props: GraphPanelProps) => {
     useEffect(() => {
-        // Include chart code here
+        /* Chart code */
         // Themes begin
         am4core.useTheme(am4themes_animated);
         // Themes end
 
-        // Create map instance
-        const chart = am4core.create("chartdiv", am4maps.MapChart);
+        // Create chart instance
+        let chart = am4core.create("chartdiv", am4charts.XYChart);
 
-        // Set map definition
-        chart.geodata = am4geodata_worldLow;
+        //chart.paddingTop = 40; // Leave some room for the axis titles
 
-        chart.chartContainer.wheelable = false;
+        // Increase contrast by taking evey second color
+        chart.colors.step = 2;
 
-        // Set projection
-        chart.projection = new am4maps.projections.Miller();
+        // Add data
+        chart.data = generateChartData();
 
-        // Create map polygon series
-        const polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+        // Create axes
+        let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        dateAxis.renderer.minGridDistance = 50;
 
-        // Exclude Antartica
-        polygonSeries.exclude = ["AQ"];
+        // Add scrollbar
+        let scrollbar = new am4charts.XYChartScrollbar();
+        scrollbar.height = 100;
+        scrollbar.scrollbarChart.colors.step = 0;
+        chart.scrollbarX = scrollbar;
+        chart.scrollbarX.parent = chart.bottomAxesContainer;
+        
 
-        // Make map load polygon (like country names) data from GeoJSON
-        polygonSeries.useGeodata = true;
+        // Create series
+        function createAxisAndSeries(field, name, opposite, bulletType) {
+            let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            // Move the axis titles to the top
+            valueAxis.layout = "absolute";
+            valueAxis.title.text = name;
+            valueAxis.title.align = "center";
+            valueAxis.title.valign = "top";
+            valueAxis.title.rotation = 0;
+            valueAxis.title.dy = -40;
+            valueAxis.title.fontWeight = "600";
+            valueAxis.paddingRight = 10;
+            if (chart.yAxes.indexOf(valueAxis) != 0) {
+                // valueAxis.syncWithAxis = chart.yAxes.getIndex(0);
+            }
 
-        // Configure series
-        const polygonTemplate = polygonSeries.mapPolygons.template;
-        polygonTemplate.tooltipText = "{name}";
-        polygonTemplate.polygon.fillOpacity = 0.6;
-        polygonTemplate.fill = am4core.color('#003459');
+            let series = chart.series.push(new am4charts.LineSeries());
+            series.dataFields.valueY = field;
+            series.dataFields.dateX = "date";
+            series.strokeWidth = 2;
+            series.yAxis = valueAxis;
+
+            series.name = name;
+            series.tooltipText = "{valueY}";
+            series.tensionX = 0.9;
+            series.showOnInit = true;
+            series.events.on("hidden", toggleAxes);
+            series.events.on("shown", toggleAxes);
+            scrollbar.series.push(series);
+
+            let interfaceColors = new am4core.InterfaceColorSet();
+
+            // Make the bullets
+            let bullet = series.bullets.push(new am4charts.Bullet());
+            bullet.width = 12;
+            bullet.height = 12;
+            bullet.horizontalCenter = "middle";
+            bullet.verticalCenter = "middle";
+
+            // Choose a shape
+            let shape;
+            switch (bulletType) {
+                case "triangle":
+                    shape = bullet.createChild(am4core.Triangle);
+                    break;
+                case "rectangle":
+                    shape = bullet.createChild(am4core.Rectangle);
+                    break;
+                default:
+                    shape = series.bullets.push(new am4charts.CircleBullet());
+                    break;
+            }
+
+            shape.stroke = interfaceColors.getFor("background");
+            shape.strokeWidth = 2;
+            shape.direction = "top";
+            shape.width = 12;
+            shape.height = 12;
 
 
-        // Create hover state and set alternative fill color
-        const hs = polygonTemplate.states.create("hover");
-        hs.properties.fill = chart.colors.getIndex(0);
+            valueAxis.renderer.line.strokeOpacity = 1;
+            valueAxis.renderer.line.strokeWidth = 2;
+            valueAxis.renderer.line.stroke = series.stroke;
+            valueAxis.renderer.line.align = "right";
+            valueAxis.renderer.labels.template.fill = series.stroke;
+            valueAxis.renderer.opposite = opposite;
+        }
 
-        // Add image series
-        const imageSeries = chart.series.push(new am4maps.MapImageSeries());
-        imageSeries.mapImages.template.propertyFields.longitude = "longitude";
-        imageSeries.mapImages.template.propertyFields.latitude = "latitude";
-        // imageSeries.mapImages.template.tooltipText = "{title}";
-        imageSeries.mapImages.template.tooltipHTML = "<h1>{title}<h1><button>Hello</button>";
-        const tooltip = imageSeries.mapImages.template.tooltip;
-        imageSeries.mapImages.template.propertyFields.url = "url";
-        // imageSeries.mapImages.template.propertyFields.id = "id";
+        function toggleAxes(ev) {
+            let axis = ev.target.yAxis;
+            let disabled = true;
+            axis.series.each(function (series) {
+                if (!series.isHiding && !series.isHidden) {
+                    disabled = false;
+                }
+            });
+            axis.disabled = disabled;
+        }
 
-        const circle = imageSeries.mapImages.template.createChild(am4core.Circle);
-        circle.radius = 5;
-        circle.propertyFields.fill = "color";
-        circle.propertyFields.id = "id";
+        createAxisAndSeries("visits", "Visits", false, "circle");
+        createAxisAndSeries("views", "Views", false, "triangle");
+        createAxisAndSeries("hits", "Hits", false, "rectangle");
 
-        circle.events.on('hit', (event) => {
-            console.log(event);
-            const id = event.target.propertyFields.id || "";
-            props.toggleReport(id); 
+        // Add legend
+        chart.legend = new am4charts.Legend();
+        chart.legend.position = "top";
+        //chart.legend.labels.template.text = '[bold {color}]{name}[\]';
 
-            tooltip != null && tooltip.showTooltip();
-        });
+        // Add cursor
+        chart.cursor = new am4charts.XYCursor();
 
-        // imageSeries.data = imageData;
-        imageSeries.data = props.data.articles && props.data.articles.map((article) => {
-            circle.propertyFields.id = article._id;
-            const coords = article.reports[0].locations[0].coords;
-            const [lat, long] = coords.split(", ");
-            return {
-                "title": article.headline,
-                "latitude": Number(lat),
-                "longitude": Number(long), 
-                "url": `#${article._id}`,
-                "id": article._id,
-            };
-        });
+        // generate some random data, quite different range
+        function generateChartData() {
+            let chartData = [] as any[];
+            let firstDate = new Date();
+            firstDate.setDate(firstDate.getDate() - 100);
+            firstDate.setHours(0, 0, 0, 0);
+
+            let visits = 1600;
+            let hits = 2900;
+            let views = 8700;
+
+            for (var i = 0; i < 15; i++) {
+                // we create date objects here. In your data, you can have date strings
+                // and then set format of your dates using chart.dataDateFormat property,
+                // however when possible, use date objects, as this will speed up chart rendering.
+                let newDate = new Date(firstDate);
+                newDate.setDate(newDate.getDate() + i);
+
+                visits += Math.round((Math.random() < 0.8 ? 1 : -1) * Math.random() * 10);
+                hits += Math.round((Math.random() < 0.85 ? 1 : -1) * Math.random() * 10);
+                views += Math.round((Math.random() < 0.9 ? 1 : -1) * Math.random() * 10);
+
+                chartData.push({
+                    "date": newDate,
+                    "visits": visits,
+                    "hits": hits,
+                    "views": views
+                });
+            }
+            return chartData;
+        }
 
         return function cleanup() {
-            chart.dispose(); 
+            chart.dispose();
         };
     });
 
@@ -96,6 +173,6 @@ const GraphPanel = (props: GraphPanelProps) => {
 
 const shouldUpdate = (prevprops, nextprops) => {
     return prevprops.data.version === nextprops.data.version;
-  }
+}
 
 export default memo(GraphPanel, shouldUpdate);
