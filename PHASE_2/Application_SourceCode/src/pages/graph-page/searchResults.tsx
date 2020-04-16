@@ -20,40 +20,15 @@ interface SearchResultProps {
   loading: boolean;
   data: any;
 }
+
 export const SearchResults = (props: SearchResultProps) => {
   const { loading, data } = props;
-  const [expandable, setExpandable] = useState(
-    data.articles.map((report) => ({ id: report._id, expanded: false })),
-  );
-  useEffect(() => {
-    setExpandable(
-      data.articles.map((report) => ({ id: report._id, expanded: false })),
-    );
-  }, [props.data]);
-
-  const toggleReport = (id: string) => {
-    const newState = expandable.map((report) => {
-      console.log(report.id, id, report.id === id);
-      if (report.id === id) {
-        report.expanded = !report.expanded;
-      }
-      return report;
-    });
-    setExpandable(newState);
-  };
-
   return (
     <>
-      
-     
       {loading ? (
         <Spinner loading={loading} />
       ) : (
-        data.articles && (
-          <>
-          <GraphPanel data={data} toggleReport={toggleReport} />
-          </>
-        )
+          <GraphPanel data={data} />
       )}
     </>
   );

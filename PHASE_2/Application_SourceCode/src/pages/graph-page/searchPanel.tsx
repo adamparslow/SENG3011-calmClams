@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import Button from '../../components/button';
 import Input from '../../components/input';
 import config from '../../config';
-import DateInput from '../../components/date-picker';
+import Switch from '../../components/switch';
+import { Grid } from '@amcharts/amcharts4/charts';
 
 const FlexContainer = styled.div`
   display: flex;
   background: ${config.theme.darkColor};
   align-items: center;
-  padding-left: 100px;
+  
 `;
 const GridContainer = styled.div`
   display: grid;
@@ -28,45 +29,30 @@ interface SearchPanelProps {
 }
 
 export const SearchPanel = (props: SearchPanelProps) => {
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [keyTerms, setKeyTerms] = useState('');
-  const [location, setLocation] = useState('');
-
-  const handleStartDateChange = (event) => {
-    setStartDate(event.target.value);
+  const [googleTerms, setGoogleTerms] = useState('');
+  const [twitterTags, setTwitterTags] = useState('');
+  const [country, setCountry] = useState('');
+  const handleSwitch = (event) => {
+    console.log(event);
   };
-  const handleEndDateChange = (event) => {
-    setEndDate(event.target.value);
+  const handleGoogleTerms = (event) => {
+    setGoogleTerms(event.target.value);
   };
-
-  const handleKeyTerms = (event) => {
-    setKeyTerms(event.target.value);
+  const handleTwitterTags = (event) => {
+    setTwitterTags(event.target.value);
   };
-  const handleLocation = (event) => {
-    setLocation(event.target.value);
+  const handleCountry = (event) => {
+    setCountry(event.target.value);
   };
   const santitisedDataFetch = () => {
     let searchquery = '';
     try {
-      if (startDate) {
-        searchquery += 'end_date=' + endDate + 'T00:00:00';
-      } else {
-        throw new Error("End Date Invalid");
-      }
-
-      if (endDate) {
-        searchquery += '&start_date=' + startDate + 'T00:00:00'; 
-      } else {
-        throw new Error("Start Date Invalid");
-      }
-
-      if (location) {
-        searchquery += '&location=' + location;
+      if (country) {
+        searchquery += '&location=' + country;
       } else {
         throw new Error("Location Invalid");
       }
-      keyTerms && (searchquery += '&key_terms=' + keyTerms);
+      twitterTags && (searchquery += '&key_terms=' + twitterTags);
     } catch (err) {
       console.error(err);
       //Show error Screen
@@ -77,28 +63,53 @@ export const SearchPanel = (props: SearchPanelProps) => {
   return (
     <FlexContainer>
       <GridContainer>
-        START DATE
-        <DateInput onChange={handleStartDateChange} width={200} />
-      </GridContainer>
-      <GridContainer>
-        END DATE
-        <DateInput onChange={handleEndDateChange} width={200} />
-      </GridContainer>
-      <GridContainer>
-        KEY TERMS
-        <Input
-          enableButton={true}
-          placeholder={'Key Terms'}
-          onChange={handleKeyTerms}
-          width={400}
+        Total Cases
+          <Switch
+          onChange={handleSwitch}
         />
       </GridContainer>
       <GridContainer>
-        LOCATION
+        Total Deaths
+        <Switch
+          onChange={handleSwitch}
+        />
+      </GridContainer>
+      <GridContainer>
+        New Cases
+        <Switch
+          onChange={handleSwitch}
+        />
+      </GridContainer>
+      <GridContainer>
+        New Deaths
+          <Switch
+          onChange={handleSwitch}
+        />
+      </GridContainer>
+      <GridContainer>
+        Google Search Terms
+        <Input
+          enableButton={true}
+          placeholder={'Google Search Terms'}
+          onChange={handleGoogleTerms}
+          width={300}
+        />
+      </GridContainer>
+      <GridContainer>
+        Twitter Hashtags
+        <Input
+          enableButton={true}
+          placeholder={'Twitter Hashtags'}
+          onChange={handleTwitterTags}
+          width={300}
+        />
+      </GridContainer>
+      <GridContainer>
+        Countries
         <Input
           enableButton={true}
           placeholder={'Location'}
-          onChange={handleLocation}
+          onChange={handleCountry}
           width={200}
         />
       </GridContainer>

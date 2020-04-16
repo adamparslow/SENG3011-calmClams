@@ -6,6 +6,7 @@ import config from '../../config'
 
 const InputContainer = styled.div`
   display: flex;
+  padding: 10px;
 `;
 const HelpButton = styled.button`
   width: 30px;

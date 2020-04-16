@@ -2,12 +2,12 @@ import React, { useEffect, memo } from 'react'
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import config from '../../config';
 
-const style = { height: "93vh", width: "100%", backgroundColor: "#00A8E8" };
+const style = { height: "93vh", width: "100%", backgroundColor: "#FFFFFF" };
 
 interface GraphPanelProps {
     data: any,
-    toggleReport: (id: string) => void,
 };
 
 const GraphPanel = (props: GraphPanelProps) => {
@@ -35,7 +35,11 @@ const GraphPanel = (props: GraphPanelProps) => {
         // Add scrollbar
         let scrollbar = new am4charts.XYChartScrollbar();
         scrollbar.height = 100;
-        scrollbar.scrollbarChart.colors.step = 0;
+        scrollbar.background.fill = am4core.color(config.theme.mediumColor);
+        scrollbar.startGrip.background.fill = am4core.color(config.theme.mediumColor);
+        scrollbar.endGrip.background.fill = am4core.color(config.theme.mediumColor);
+
+        
         chart.scrollbarX = scrollbar;
         chart.scrollbarX.parent = chart.bottomAxesContainer;
         
@@ -119,9 +123,10 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.disabled = disabled;
         }
 
-        createAxisAndSeries("visits", "Visits", false, "circle");
-        createAxisAndSeries("views", "Views", false, "triangle");
-        createAxisAndSeries("hits", "Hits", false, "rectangle");
+
+        createAxisAndSeries("total_cases", "Total Cases", false, "rectangle");
+        createAxisAndSeries("total_deaths", "Total Deaths", false, "triangle");
+        createAxisAndSeries("new_cases", "New Cases", false, "circle");
 
         // Add legend
         chart.legend = new am4charts.Legend();
@@ -138,9 +143,9 @@ const GraphPanel = (props: GraphPanelProps) => {
             firstDate.setDate(firstDate.getDate() - 100);
             firstDate.setHours(0, 0, 0, 0);
 
-            let visits = 1600;
-            let hits = 2900;
-            let views = 8700;
+            let new_cases = 1600;
+            let total_cases = 2900;
+            let total_deaths = 8700;
 
             for (var i = 0; i < 15; i++) {
                 // we create date objects here. In your data, you can have date strings
@@ -149,15 +154,15 @@ const GraphPanel = (props: GraphPanelProps) => {
                 let newDate = new Date(firstDate);
                 newDate.setDate(newDate.getDate() + i);
 
-                visits += Math.round((Math.random() < 0.8 ? 1 : -1) * Math.random() * 10);
-                hits += Math.round((Math.random() < 0.85 ? 1 : -1) * Math.random() * 10);
-                views += Math.round((Math.random() < 0.9 ? 1 : -1) * Math.random() * 10);
+                new_cases += Math.round((Math.random() < 0.8 ? 1 : -1) * Math.random() * 10);
+                total_cases += Math.round((Math.random() < 0.85 ? 1 : -1) * Math.random() * 10);
+                total_deaths += Math.round((Math.random() < 0.9 ? 1 : -1) * Math.random() * 10);
 
                 chartData.push({
                     "date": newDate,
-                    "visits": visits,
-                    "hits": hits,
-                    "views": views
+                    "new_cases": new_cases,
+                    "total_cases": total_cases,
+                    "total_deaths": total_deaths
                 });
             }
             return chartData;

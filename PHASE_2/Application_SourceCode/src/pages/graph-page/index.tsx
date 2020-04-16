@@ -10,7 +10,6 @@ export const SearchPage = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [dataVersion, setDataVersion] = useState(0);
-
   const [data, setData] = useState({articles: [], version: -1});
 
   const fetchData = async (
