@@ -34,7 +34,7 @@ export const SearchResults = (props: SearchResultProps) => {
 
   const toggleReport = (id: string) => {
     const newState = expandable.map((report) => {
-      console.log(report.id, id, report.id === id);
+      // console.log(report.id, id, report.id === id);
       if (report.id === id) {
         report.expanded = !report.expanded;
       }

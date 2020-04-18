@@ -18,14 +18,24 @@ export const SearchPage = () => {
   ) => {
     //Heroku to bypass CORS like a real hacker :D
     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-    searchquery = `${config.apiRoute}?${searchquery}`;
-    fetch(proxyurl + searchquery)
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        response.version = dataVersion;
-        setData(response);
+    const ourSearchquery = `${config.ourApiRoute}?${searchquery}`;
+    console.log(searchquery);
+    const fsSearchquery = `${config.flyingSplaucersApiRoute}?${searchquery}`;
+    Promise.all([
+      fetch(proxyurl + ourSearchquery)
+        .then((response) => {
+          return response.json();
+        }),
+      fetch(proxyurl + fsSearchquery)
+        .then((response) => {
+          return response.json();
+        })
+    ])
+      .then(([ourResponse, fsResponse]) => {
+        const data = ourResponse;
+        data.articles.push(...fsResponse);
+        data.version = dataVersion;
+        setData(data);
         setDataVersion(dataVersion + 1);
         setLoading(false);
       })

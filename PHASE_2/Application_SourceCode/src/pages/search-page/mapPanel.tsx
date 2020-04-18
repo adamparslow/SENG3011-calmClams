@@ -57,7 +57,7 @@ const MapPanel = (props: MapPanelProps) => {
         imageSeries.mapImages.template.tooltipHTML = "<h1>{title}<h1><button>Hello</button>";
         const tooltip = imageSeries.mapImages.template.tooltip;
         imageSeries.mapImages.template.propertyFields.url = "url";
-        // imageSeries.mapImages.template.propertyFields.id = "id";
+        imageSeries.mapImages.template.propertyFields.id = "id";
 
         const circle = imageSeries.mapImages.template.createChild(am4core.Circle);
         circle.radius = 5;
@@ -65,15 +65,16 @@ const MapPanel = (props: MapPanelProps) => {
         circle.propertyFields.id = "id";
 
         circle.events.on('hit', (event) => {
-            console.log(event);
-            const id = event.target.propertyFields.id || "";
+            debugger;
+            console.log(event.target);
+            const id = event.target.parent && event.target.parent.id || "";
             props.toggleReport(id); 
 
             tooltip != null && tooltip.showTooltip();
         });
 
         // imageSeries.data = imageData;
-        imageSeries.data = props.data.articles && props.data.articles.map((article) => {
+        const imageData = props.data.articles && props.data.articles.map((article) => {
             circle.propertyFields.id = article._id;
             const coords = article.reports[0].locations[0].coords;
             const [lat, long] = coords.split(", ");
@@ -85,7 +86,8 @@ const MapPanel = (props: MapPanelProps) => {
                 "id": article._id,
             };
         });
-
+        console.log(imageData);
+        imageSeries.data = imageData;
         return function cleanup() {
             chart.dispose(); 
         };
