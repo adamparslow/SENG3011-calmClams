@@ -65,8 +65,6 @@ const MapPanel = (props: MapPanelProps) => {
         circle.propertyFields.id = "id";
 
         circle.events.on('hit', (event) => {
-            debugger;
-            console.log(event.target);
             const id = event.target.parent && event.target.parent.id || "";
             props.toggleReport(id); 
 
