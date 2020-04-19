@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../components/button';
 import Input from '../../components/input';
+import Modal from '../../components/modal'
 import config from '../../config';
 import DateInput from '../../components/date-picker';
 
@@ -46,6 +47,18 @@ export const SearchPanel = (props: SearchPanelProps) => {
   const handleLocation = (event) => {
     setLocation(event.target.value);
   };
+
+  const showModal = (error) => {
+    var modals = document.getElementsByClassName('modal') as HTMLCollectionOf<HTMLElement>;
+    var modalContents = modals[0].getElementsByClassName('modal-content') as HTMLCollectionOf<HTMLElement>;
+    modalContents[0].getElementsByTagName('p')[0].textContent = error;
+    modals[0].style.display = 'block';
+  }
+
+  const getErrorMessage = () => {
+    return 'Please enter valid inputs';
+  }
+
   const santitisedDataFetch = () => {
     let searchquery = '';
     try {
@@ -69,13 +82,15 @@ export const SearchPanel = (props: SearchPanelProps) => {
       keyTerms && (searchquery += '&key_terms=' + keyTerms);
     } catch (err) {
       console.error(err);
-      //Show error Screen
+      showModal(err);
+      return null;
     }
     return props.fetchData(searchquery);
   };
 
   return (
     <FlexContainer>
+      <Modal error={getErrorMessage()}></Modal>
       <GridContainer>
         START DATE
         <DateInput onChange={handleStartDateChange} width={200} />
