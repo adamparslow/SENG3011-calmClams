@@ -20,7 +20,7 @@ export const SearchPage = () => {
     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
     const ourSearchquery = `${config.ourApiRoute}?${searchquery}`;
     const fsSearchquery = `${config.flyingSplaucersApiRoute}?${searchquery}`;
-    const geocodingUrl = "https://api.geocod.io/v1.4/geocode?api_key=e6da5ed2b0a56751beae5e9baba75e9b7956adb&limit=1"
+    const geocodingUrl = `https://api.geocod.io/v1.4/geocode?api_key=${config.geocodioKey}&limit=1`
     Promise.all([
       fetch(proxyurl + ourSearchquery)
         .then((response) => {
