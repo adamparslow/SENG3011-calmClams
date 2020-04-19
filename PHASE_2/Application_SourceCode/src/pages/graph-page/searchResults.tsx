@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import config from '../../config';
 import GraphPanel from './graphPanel';
 
+
 const FlexContainer = styled.div`
   display: grid;
   flex-wrap: wrap;
@@ -23,6 +24,7 @@ interface SearchResultProps {
 
 export const SearchResults = (props: SearchResultProps) => {
   const { loading, data } = props;
+  console.log(loading);
   return (
     <>
       {loading ? (

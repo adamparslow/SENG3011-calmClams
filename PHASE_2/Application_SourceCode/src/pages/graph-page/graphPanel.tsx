@@ -7,7 +7,7 @@ import config from '../../config';
 const style = { height: "93vh", width: "100%", backgroundColor: "#FFFFFF" };
 
 interface GraphPanelProps {
-    data: any,
+    data: any
 };
 
 const GraphPanel = (props: GraphPanelProps) => {
@@ -25,9 +25,6 @@ const GraphPanel = (props: GraphPanelProps) => {
         // Increase contrast by taking evey second color
         chart.colors.step = 2;
 
-        // Add data
-        chart.data = generateChartData();
-
         // Create axes
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         dateAxis.renderer.minGridDistance = 50;
@@ -39,32 +36,36 @@ const GraphPanel = (props: GraphPanelProps) => {
         scrollbar.startGrip.background.fill = am4core.color(config.theme.mediumColor);
         scrollbar.endGrip.background.fill = am4core.color(config.theme.mediumColor);
 
-        
+
         chart.scrollbarX = scrollbar;
         chart.scrollbarX.parent = chart.bottomAxesContainer;
-        
+
+
+        function createAxis(name) {
+            let axis = chart.yAxes.push(new am4charts.ValueAxis());
+            // Move the axis titles to the top
+            axis.layout = "absolute";
+            axis.title.text = name;
+            axis.title.align = "center";
+            axis.title.valign = "top";
+            axis.title.rotation = 0;
+            axis.title.dy = -40;
+            axis.title.fontWeight = "600";
+            axis.paddingRight = 10;
+            axis.disabled = true;
+            if (chart.yAxes.indexOf(axis) != 0) {
+                // axis.syncWithAxis = chart.yAxes.getIndex(0);
+            }
+            return axis;
+        }
 
         // Create series
-        function createAxisAndSeries(field, name, opposite, bulletType) {
-            let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            // Move the axis titles to the top
-            valueAxis.layout = "absolute";
-            valueAxis.title.text = name;
-            valueAxis.title.align = "center";
-            valueAxis.title.valign = "top";
-            valueAxis.title.rotation = 0;
-            valueAxis.title.dy = -40;
-            valueAxis.title.fontWeight = "600";
-            valueAxis.paddingRight = 10;
-            if (chart.yAxes.indexOf(valueAxis) != 0) {
-                // valueAxis.syncWithAxis = chart.yAxes.getIndex(0);
-            }
-
+        function createSeries(axis, xField, yField, name, bulletType) {
             let series = chart.series.push(new am4charts.LineSeries());
-            series.dataFields.valueY = field;
-            series.dataFields.dateX = "date";
+            series.dataFields.valueY = yField;
+            series.dataFields.dateX = xField;
             series.strokeWidth = 2;
-            series.yAxis = valueAxis;
+            series.yAxis = axis;
 
             series.name = name;
             series.tooltipText = "{valueY}";
@@ -103,13 +104,11 @@ const GraphPanel = (props: GraphPanelProps) => {
             shape.width = 12;
             shape.height = 12;
 
-
-            valueAxis.renderer.line.strokeOpacity = 1;
-            valueAxis.renderer.line.strokeWidth = 2;
-            valueAxis.renderer.line.stroke = series.stroke;
-            valueAxis.renderer.line.align = "right";
-            valueAxis.renderer.labels.template.fill = series.stroke;
-            valueAxis.renderer.opposite = opposite;
+            axis.renderer.line.strokeOpacity = 1;
+            axis.renderer.line.strokeWidth = 2;
+            axis.renderer.line.stroke = series.stroke;
+            axis.renderer.line.align = "right";
+            axis.renderer.labels.template.fill = series.stroke;
         }
 
         function toggleAxes(ev) {
@@ -124,9 +123,33 @@ const GraphPanel = (props: GraphPanelProps) => {
         }
 
 
-        createAxisAndSeries("total_cases", "Total Cases", false, "rectangle");
-        createAxisAndSeries("total_deaths", "Total Deaths", false, "triangle");
-        createAxisAndSeries("new_cases", "New Cases", false, "circle");
+        let data = [];
+
+        let tCasesAxis, tDeathsAxis, nCasesAxis, nDeathsAxis;
+        tCasesAxis = createAxis("Total Cases");
+        tDeathsAxis = createAxis("Total Deaths");
+        nCasesAxis = createAxis("New Cases");
+        nDeathsAxis = createAxis("New Deaths"); 
+        
+        // Combine all the data and create a series for each
+        for (let country in props.data) {
+            data = data.concat(props.data[country]);
+            for (let series in props.data[country][0]) {
+                if (series.includes("total_cases")) {
+                    createSeries(tCasesAxis, "date_"+country, series, series, "rectangle");
+                }
+                if (series.includes("total_deaths")) {
+                    createSeries(tDeathsAxis, "date_"+country, series, series, "triangle");
+                }
+                if (series.includes("new_cases")) {
+                    createSeries(nCasesAxis, "date_"+country, series, series, "circle");
+                }
+                if (series.includes("new_deaths")) {
+                    createSeries(nDeathsAxis, "date_"+country, series, series, "circle");
+                }
+            }
+        }
+        chart.data = data;
 
         // Add legend
         chart.legend = new am4charts.Legend();
@@ -136,38 +159,6 @@ const GraphPanel = (props: GraphPanelProps) => {
         // Add cursor
         chart.cursor = new am4charts.XYCursor();
 
-        // generate some random data, quite different range
-        function generateChartData() {
-            let chartData = [] as any[];
-            let firstDate = new Date();
-            firstDate.setDate(firstDate.getDate() - 100);
-            firstDate.setHours(0, 0, 0, 0);
-
-            let new_cases = 1600;
-            let total_cases = 2900;
-            let total_deaths = 8700;
-
-            for (var i = 0; i < 15; i++) {
-                // we create date objects here. In your data, you can have date strings
-                // and then set format of your dates using chart.dataDateFormat property,
-                // however when possible, use date objects, as this will speed up chart rendering.
-                let newDate = new Date(firstDate);
-                newDate.setDate(newDate.getDate() + i);
-
-                new_cases += Math.round((Math.random() < 0.8 ? 1 : -1) * Math.random() * 10);
-                total_cases += Math.round((Math.random() < 0.85 ? 1 : -1) * Math.random() * 10);
-                total_deaths += Math.round((Math.random() < 0.9 ? 1 : -1) * Math.random() * 10);
-
-                chartData.push({
-                    "date": newDate,
-                    "new_cases": new_cases,
-                    "total_cases": total_cases,
-                    "total_deaths": total_deaths
-                });
-            }
-            return chartData;
-        }
-
         return function cleanup() {
             chart.dispose();
         };
@@ -175,6 +166,15 @@ const GraphPanel = (props: GraphPanelProps) => {
 
     return <div id="chartdiv" style={style}></div>;
 }
+
+const renameProp = (
+    oldProp,
+    newProp,
+{ [oldProp]: old, ...others }
+) => ({
+    [newProp]: old,
+    ...others
+})
 
 const shouldUpdate = (prevprops, nextprops) => {
     return prevprops.data.version === nextprops.data.version;

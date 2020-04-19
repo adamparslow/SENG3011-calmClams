@@ -10,15 +10,24 @@ export const SearchPage = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [dataVersion, setDataVersion] = useState(0);
-  const [data, setData] = useState({articles: [], version: -1});
+  const [data, setData] = useState({
+    australia: generateChartData('australia'),
+    united_states: generateChartData('united_states')
+  });
 
   const fetchData = async (
-    searchquery: string
+    tCases: boolean,
+    tDeaths: boolean,
+    nCases: boolean,
+    nDeaths: boolean,
+    google: Array<String>,
+    twitter: Array<String>,
+    countries: Array<String>
   ) => {
     //Heroku to bypass CORS like a real hacker :D
     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-    searchquery = `${config.apiRoute}?${searchquery}`;
-    fetch(proxyurl + searchquery)
+
+    fetch(proxyurl)
       .then((response) => {
         return response.json();
       })
@@ -41,5 +50,43 @@ export const SearchPage = () => {
     </PageContainer>
   );
 };
+
+
+// generate some random data, quite different range
+function generateChartData(suffix) {
+  let chartData = [] as any[];
+  let firstDate = new Date();
+  firstDate.setDate(firstDate.getDate() - 100);
+  firstDate.setHours(0, 0, 0, 0);
+
+  let new_cases = 1600;
+  let new_deaths = 5;
+  let total_cases = 2900;
+  let total_deaths = 8700;
+
+  for (var i = 0; i < 15; i++) {
+    // we create date objects here. In your data, you can have date strings
+    // and then set format of your dates using chart.dataDateFormat property,
+    // however when possible, use date objects, as this will speed up chart rendering.
+    let newDate = new Date(firstDate);
+    newDate.setDate(newDate.getDate() + i);
+
+    new_cases += Math.round((Math.random() < 0.8 ? 1 : -1) * Math.random() * 10);
+    new_deaths += Math.round((Math.random() < 0.8 ? 1 : -1) * Math.random() * 10);
+    total_cases += Math.round((Math.random() < 0.85 ? 1 : -1) * Math.random() * 10);
+    total_deaths += Math.round((Math.random() < 0.9 ? 1 : -1) * Math.random() * 10);
+
+    let data = {};
+    data["date_" + suffix] = newDate;
+    data["new_cases_" + suffix] = new_cases;
+    data["new_deaths_" + suffix] = new_deaths;
+    data["total_cases_" + suffix] = total_cases;
+    data["total_deaths_" + suffix] = total_deaths;
+    data["google_" + suffix] = 0.0;
+    data["twitter_" + suffix] = 0.0;
+    chartData.push(data);
+  }
+  return chartData;
+}
 
 export default SearchPage;

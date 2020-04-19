@@ -23,7 +23,13 @@ const GridContainer = styled.div`
 
 interface SearchPanelProps {
   fetchData: (
-    searchquery: string,
+    tCases: boolean,
+    tDeaths: boolean,
+    nCases: boolean,
+    nDeaths: boolean,
+    google: Array<String>,
+    twitter: Array<String>,
+    countries: Array<String>
   ) => void;
   error: boolean;
 }
@@ -57,7 +63,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
       console.error(err);
       //Show error Screen
     }
-    return props.fetchData(searchquery);
+    return props.fetchData(false, false, false, false, [], [], []);
   };
 
   return (
