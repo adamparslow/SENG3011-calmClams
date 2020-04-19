@@ -20,7 +20,7 @@ export const SearchPage = () => {
     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
     const ourSearchquery = `${config.ourApiRoute}?${searchquery}`;
     const fsSearchquery = `${config.flyingSplaucersApiRoute}?${searchquery}`;
-    const geocodingUrl = "https://api.geocod.io/v1.4/geocode?api_key=e249e5bbefb9fe55ebb5972e5e7f42e754bedef&limit=1"
+    const geocodingUrl = "https://api.geocod.io/v1.4/geocode?api_key=e6da5ed2b0a56751beae5e9baba75e9b7956adb&limit=1"
     Promise.all([
       fetch(proxyurl + ourSearchquery)
         .then((response) => {
@@ -36,6 +36,7 @@ export const SearchPage = () => {
 
         let id = data.articles[data.articles.length - 1]._id + 1;
 
+        let locationData : any[] = [];
         for (const article of fsResponse) {
           id++;
           article._id = id;
@@ -48,32 +49,42 @@ export const SearchPage = () => {
             continue;
           }
 
-          const response = await fetch(geocodingUrl, {
+          locationData.push({
+            article: article,
+            locations: locations
+          });
+        }
+
+        const promises = locationData.map(({article, locations}) => {
+          return fetch(geocodingUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(locations)
-          });
+          })
+            .then(response => response.json())
+            .then(data => {
+              const newLocations: any[] = [];
+              for (const result of data.results) {
+                if (result.response.results && result.response.results.length !== 0) {
+                  const locationData = result.response.results[0].location;
+                  const coords = `${locationData.lat}, ${locationData.lng}`;
 
-          const data = await response.json();
+                  newLocations.push({ 
+                    'coords': coords
+                  });
+                }
+              }
 
-          const newLocations: any[] = [];
-          for (const result of data.results) {
-            if (result.response.results && result.response.results.length !== 0) {
-              const locationData = result.response.results[0].location;
-              const coords = `${locationData.lat}, ${locationData.lng}`;
+              article.reports[0].locations = newLocations;
+            });
+        });
 
-              newLocations.push({ 
-                'coords': coords
-              });
-            }
-          }
-
-          article.reports[0].locations = newLocations;
-        };
+        await Promise.all(promises);
 
         data.articles.push(...fsResponse);
+        console.log(fsResponse);
         // data.articles = fsResponse;
         data.version = dataVersion;
         setData(data);
