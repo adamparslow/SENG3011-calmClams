@@ -32,7 +32,7 @@ export const SearchResults = (props: SearchResultProps) => {
     );
   }, [props.data]);
 
-  const toggleReport = (id: string) => {
+  const toggleReport = (id: number) => {
     const newState = expandable.map((report) => {
       // console.log(report.id, id, report.id === id);
       if (report.id === id) {
