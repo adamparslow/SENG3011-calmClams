@@ -129,23 +129,23 @@ const GraphPanel = (props: GraphPanelProps) => {
         tCasesAxis = createAxis("Total Cases");
         tDeathsAxis = createAxis("Total Deaths");
         nCasesAxis = createAxis("New Cases");
-        nDeathsAxis = createAxis("New Deaths"); 
-        
+        nDeathsAxis = createAxis("New Deaths");
+
         // Combine all the data and create a series for each
         for (let country in props.data) {
             data = data.concat(props.data[country]);
-            for (let series in props.data[country][0]) {
-                if (series.includes("total_cases")) {
-                    createSeries(tCasesAxis, "date_"+country, series, series, "rectangle");
+            for (let seriesName in props.data[country][0]) {
+                if (seriesName.includes("total_cases")) {
+                    createSeries(tCasesAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "rectangle");
                 }
-                if (series.includes("total_deaths")) {
-                    createSeries(tDeathsAxis, "date_"+country, series, series, "triangle");
+                if (seriesName.includes("total_deaths")) {
+                    createSeries(tDeathsAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "triangle");
                 }
-                if (series.includes("new_cases")) {
-                    createSeries(nCasesAxis, "date_"+country, series, series, "circle");
+                if (seriesName.includes("new_cases")) {
+                    createSeries(nCasesAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "circle");
                 }
-                if (series.includes("new_deaths")) {
-                    createSeries(nDeathsAxis, "date_"+country, series, series, "circle");
+                if (seriesName.includes("new_deaths")) {
+                    createSeries(nDeathsAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "circle");
                 }
             }
         }
@@ -167,14 +167,14 @@ const GraphPanel = (props: GraphPanelProps) => {
     return <div id="chartdiv" style={style}></div>;
 }
 
-const renameProp = (
-    oldProp,
-    newProp,
-{ [oldProp]: old, ...others }
-) => ({
-    [newProp]: old,
-    ...others
-})
+function snakeToTitle(string: String) {
+    let parts = string.split("_");
+    let ans: Array<String> = [];
+    for (let p of parts) {
+        ans.push(p.charAt(0).toUpperCase() + p.slice(1).toLowerCase());
+    }
+    return ans.join(" ");
+}
 
 const shouldUpdate = (prevprops, nextprops) => {
     return prevprops.data.version === nextprops.data.version;

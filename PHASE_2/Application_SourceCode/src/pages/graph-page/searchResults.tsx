@@ -24,7 +24,6 @@ interface SearchResultProps {
 
 export const SearchResults = (props: SearchResultProps) => {
   const { loading, data } = props;
-  console.log(loading);
   return (
     <>
       {loading ? (
