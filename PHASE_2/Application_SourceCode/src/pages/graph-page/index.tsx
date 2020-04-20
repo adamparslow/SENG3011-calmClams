@@ -6,13 +6,20 @@ import config from '../../config';
 
 const PageContainer = styled.div``;
 
+interface GraphDataInterface {
+  version: number,
+  countries: Array<string>,
+  graphData: Array<{}>
+}
+
 export const SearchPage = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [dataVersion, setDataVersion] = useState(0);
-  const [data, setData] = useState({
-    australia: generateChartData('australia'),
-    united_states: generateChartData('united_states')
+  const [data, setData] = useState<GraphDataInterface>({
+    version: 0,
+    countries: ['global'],
+    graphData: [generateChartData('global')]
   });
 
   const fetchData = async (
@@ -20,13 +27,28 @@ export const SearchPage = () => {
     tDeaths: boolean,
     nCases: boolean,
     nDeaths: boolean,
-    google: Array<String>,
-    twitter: Array<String>,
-    countries: Array<String>
+    google: Array<string>,
+    twitter: Array<string>,
+    countries: Array<string>
   ) => {
     //Heroku to bypass CORS like a real hacker :D
     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
 
+    
+    let newGraphData: Array<{}> = [];
+    for (let c of countries) {
+      newGraphData.push(generateChartData(c));
+    }
+    
+    let newData: GraphDataInterface = {
+      version: dataVersion,
+      countries: countries,
+      graphData: newGraphData
+    };
+
+    setData(newData);
+    setDataVersion(dataVersion + 1);
+    /*
     fetch(proxyurl)
       .then((response) => {
         return response.json();
@@ -42,6 +64,7 @@ export const SearchPage = () => {
         console.error(err);
       });
     setLoading(true);
+    */
   };
   return (
     <PageContainer>
@@ -82,8 +105,6 @@ function generateChartData(suffix) {
     data["new_deaths_" + suffix] = new_deaths;
     data["total_cases_" + suffix] = total_cases;
     data["total_deaths_" + suffix] = total_deaths;
-    data["google_" + suffix] = 0.0;
-    data["twitter_" + suffix] = 0.0;
     chartData.push(data);
   }
   return chartData;

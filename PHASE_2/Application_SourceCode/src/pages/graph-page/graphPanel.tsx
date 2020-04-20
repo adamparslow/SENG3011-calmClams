@@ -125,16 +125,20 @@ const GraphPanel = (props: GraphPanelProps) => {
 
         let data = [];
 
-        let tCasesAxis, tDeathsAxis, nCasesAxis, nDeathsAxis;
+        let tCasesAxis, tDeathsAxis, nCasesAxis, nDeathsAxis, googleAxis, twitterAxis;
         tCasesAxis = createAxis("Total Cases");
         tDeathsAxis = createAxis("Total Deaths");
         nCasesAxis = createAxis("New Cases");
         nDeathsAxis = createAxis("New Deaths");
+        googleAxis = createAxis("Google %Traffic");
+        twitterAxis = createAxis("Twitter");
+        console.log(props.data);
 
         // Combine all the data and create a series for each
-        for (let country in props.data) {
-            data = data.concat(props.data[country]);
-            for (let seriesName in props.data[country][0]) {
+        for (let i in props.data.countries) {
+            const country = props.data.countries[i];
+            data = data.concat(props.data.graphData[i]);
+            for (let seriesName in props.data.graphData[i][0]) {
                 if (seriesName.includes("total_cases")) {
                     createSeries(tCasesAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "rectangle");
                 }
@@ -147,6 +151,13 @@ const GraphPanel = (props: GraphPanelProps) => {
                 if (seriesName.includes("new_deaths")) {
                     createSeries(nDeathsAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "circle");
                 }
+                if (seriesName.includes("google")) {
+                    createSeries(googleAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "circle");
+                }
+                if (seriesName.includes("twitter")) {
+                    createSeries(twitterAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "circle");
+                }
+
             }
         }
         chart.data = data;

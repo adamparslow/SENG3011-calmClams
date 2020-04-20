@@ -27,9 +27,9 @@ interface SearchPanelProps {
     tDeaths: boolean,
     nCases: boolean,
     nDeaths: boolean,
-    google: Array<String>,
-    twitter: Array<String>,
-    countries: Array<String>
+    google: Array<string>,
+    twitter: Array<string>,
+    countries: Array<string>
   ) => void;
   error: boolean;
 }
@@ -37,7 +37,7 @@ interface SearchPanelProps {
 export const SearchPanel = (props: SearchPanelProps) => {
   const [googleTerms, setGoogleTerms] = useState('');
   const [twitterTags, setTwitterTags] = useState('');
-  const [country, setCountry] = useState('');
+  const [countries, setCountries] = useState('');
   const handleSwitch = (event) => {
     console.log(event);
   };
@@ -48,22 +48,10 @@ export const SearchPanel = (props: SearchPanelProps) => {
     setTwitterTags(event.target.value);
   };
   const handleCountry = (event) => {
-    setCountry(event.target.value);
+    setCountries(event.target.value);
   };
   const santitisedDataFetch = () => {
-    let searchquery = '';
-    try {
-      if (country) {
-        searchquery += '&location=' + country;
-      } else {
-        throw new Error("Location Invalid");
-      }
-      twitterTags && (searchquery += '&key_terms=' + twitterTags);
-    } catch (err) {
-      console.error(err);
-      //Show error Screen
-    }
-    return props.fetchData(false, false, false, false, [], [], []);
+    return props.fetchData(true, false, false, false, [], [], countries.split(","));
   };
 
   return (
