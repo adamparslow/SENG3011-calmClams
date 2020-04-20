@@ -21,6 +21,27 @@ const port = 8080;
  * end date: date string
  */
 
+ /**
+  * Example output
+  * {
+  *     countries: [italy, germany],
+  *     graphData: [
+  *         {
+  *             date_italy: Sat Jan 11 2020 00:00:00,
+  *             new_cases_italy: 1602,
+  *             new_deaths_italy: 3,
+  *             total_casesitaly: 2906
+  *         }, (repeat this many times for each date of the italy data)
+  *         {
+  *             date germany: Sat Jan 11 2020 00:00:00,
+  *             newcases germany: 1599,
+  *             newdeaths germany: 8,
+  *             totalcases germany: 2906,
+  *         } (repeat this many times for each date of the germany data)
+  *     ]
+  * }
+  */
+
 app.put("/get_data", (req, res) => {
     console.log(req.body);
     const data = req.body;
@@ -40,16 +61,17 @@ app.put("/get_data", (req, res) => {
         res.send();
     }
 
+    let response = {};
     switch (data.disease) {
         case "covid19":
-            handleCovid();
+            response = handleCovid();
             break;
         case "ebola":
-            handleEbola();
+            response = handleEbola();
             break;
     }
 
-    res.send();
+    res.send(response);
 }) 
 
 app.listen(port, () => {
