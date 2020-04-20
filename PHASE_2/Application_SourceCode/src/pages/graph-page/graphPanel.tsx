@@ -60,19 +60,21 @@ const GraphPanel = (props: GraphPanelProps) => {
         }
 
         // Create series
-        function createSeries(axis, xField, yField, name, bulletType) {
+        function createSeries(axis, xField, yField, bulletType, colour) {
             let series = chart.series.push(new am4charts.LineSeries());
             series.dataFields.valueY = yField;
             series.dataFields.dateX = xField;
             series.strokeWidth = 2;
             series.yAxis = axis;
 
-            series.name = name;
-            series.tooltipText = "{valueY}";
+            series.name = snakeToTitle(yField);
+            series.tooltipText = "{name}:{valueY}";
             series.tensionX = 0.9;
             series.showOnInit = true;
             series.events.on("hidden", toggleAxes);
             series.events.on("shown", toggleAxes);
+            series.fill = colour;
+            series.stroke = colour;
             scrollbar.series.push(series);
 
             let interfaceColors = new am4core.InterfaceColorSet();
@@ -93,8 +95,37 @@ const GraphPanel = (props: GraphPanelProps) => {
                 case "rectangle":
                     shape = bullet.createChild(am4core.Rectangle);
                     break;
+                case "rrectangle":
+                    shape = bullet.createChild(am4core.RoundedRectangle);
+                    shape.cornerRadiusBottomLeft = 0;
+                    shape.cornerRadiusBottomRight = 30;
+                    shape.cornerRadiusTopLeft = 30;
+                    shape.cornerRadiusTopRight = 0;
+                    break;
+                case "rrectangle2":
+                    shape = bullet.createChild(am4core.RoundedRectangle);
+                    shape.cornerRadiusBottomLeft = 30;
+                    shape.cornerRadiusBottomRight = 0;
+                    shape.cornerRadiusTopLeft = 0;
+                    shape.cornerRadiusTopRight = 30;
+                    break;
+                case "trapizoid":
+                    shape = bullet.createChild(am4core.Trapezoid);
+                    shape.topSide = 5;
+                    shape.botSide = 10;
+                    break;
+                case "cone":
+                    shape = bullet.createChild(am4core.Cone);
+                    break;
+
                 default:
-                    shape = series.bullets.push(new am4charts.CircleBullet());
+                    console.log("error", bulletType);
+                case "circle":
+                    shape = bullet.createChild(am4core.RoundedRectangle);
+                    shape.cornerRadiusBottomLeft = 100;
+                    shape.cornerRadiusBottomRight = 100;
+                    shape.cornerRadiusTopLeft = 100;
+                    shape.cornerRadiusTopRight = 100;
                     break;
             }
 
@@ -134,28 +165,42 @@ const GraphPanel = (props: GraphPanelProps) => {
         twitterAxis = createAxis("Twitter");
         console.log(props.data);
 
+        let tCasesColour, tDeathsColour, nCasesColour, nDeathsColour, googleColour, twitterColour;
+        const colourSet = new am4core.ColorSet();
+        colourSet.step = 2;
+        tCasesColour = colourSet.next();
+        tDeathsColour = colourSet.next();
+        nCasesColour = colourSet.next();
+        nDeathsColour = colourSet.next();
+        googleColour = colourSet.next();
+        twitterColour = colourSet.next();
+
+        const bullets = ["circle", "rectangle", "triangle", "trapizoid", "rrectangle", "rrectangle2", "cone"];
+
         // Combine all the data and create a series for each
         for (let i in props.data.countries) {
             const country = props.data.countries[i];
             data = data.concat(props.data.graphData[i]);
+            const bullet = bullets[i];
+            console.log(bullets[i], i);
             for (let seriesName in props.data.graphData[i][0]) {
                 if (seriesName.includes("total_cases")) {
-                    createSeries(tCasesAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "rectangle");
+                    createSeries(tCasesAxis, "date_" + country, seriesName, bullet, tCasesColour);
                 }
                 if (seriesName.includes("total_deaths")) {
-                    createSeries(tDeathsAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "triangle");
+                    createSeries(tDeathsAxis, "date_" + country, seriesName, bullet, tDeathsColour);
                 }
                 if (seriesName.includes("new_cases")) {
-                    createSeries(nCasesAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "circle");
+                    createSeries(nCasesAxis, "date_" + country, seriesName, bullet, nCasesColour);
                 }
                 if (seriesName.includes("new_deaths")) {
-                    createSeries(nDeathsAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "circle");
+                    createSeries(nDeathsAxis, "date_" + country, seriesName, bullet, nDeathsColour);
                 }
                 if (seriesName.includes("google")) {
-                    createSeries(googleAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "circle");
+                    createSeries(googleAxis, "date_" + country, seriesName, bullet, googleColour);
                 }
                 if (seriesName.includes("twitter")) {
-                    createSeries(twitterAxis, "date_" + country, seriesName, snakeToTitle(seriesName), "circle");
+                    createSeries(twitterAxis, "date_" + country, seriesName, bullet, twitterColour);
                 }
 
             }
