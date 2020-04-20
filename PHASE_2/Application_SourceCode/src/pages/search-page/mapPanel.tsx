@@ -17,7 +17,6 @@ const tooltipClickHandler = (id: string) => {
 
 const MapPanel = (props: MapPanelProps) => {
     useEffect(() => {
-        // Include chart code here
         // Themes begin
         am4core.useTheme(am4themes_animated);
         // Themes end
@@ -57,30 +56,20 @@ const MapPanel = (props: MapPanelProps) => {
         const imageSeries = chart.series.push(new am4maps.MapImageSeries());
         if (imageSeries.tooltip) {
             imageSeries.tooltip.keepTargetHover = true;
-            imageSeries.tooltip.label.interactionsEnabled = true;
         }
 
         imageSeries.mapImages.template.propertyFields.longitude = "longitude";
         imageSeries.mapImages.template.propertyFields.latitude = "latitude";
-        // imageSeries.mapImages.template.tooltipText = "{title}";
         imageSeries.mapImages.template.tooltipHTML = 
         `
-            <h1>{title}<h1>
-            <button onclick='{click}'>Click to see full report</button>
+            <h3>{title}<h3>
+            <p>Click on the circle for more information</p>
         `;
 
         if (imageSeries.tooltip) {
             imageSeries.tooltip.contentValign = "top";
         }
-        // const button = imageSeries.mapImages.template. && imageSeries.mapImages.template.tooltip.createChild(am4core.Button);
-        // if (button && button.label) {
-        //     button.label.text = "Am i here?";
-        // }
 
-
-        // imageSeries.tooltip && imageSeries.tooltip.events.on("hit", () => {
-        //     console.log("does this work?");
-        // });
         imageSeries.mapImages.template.propertyFields.url = "url";
         imageSeries.mapImages.template.propertyFields.id = "id";
 
@@ -94,13 +83,10 @@ const MapPanel = (props: MapPanelProps) => {
             props.toggleReport(id); 
         });
 
-        // imageSeries.data = imageData;
-
-        // Mapping multi - locations to single locations
+        // Mapping multi-locations to single locations
         const imageData : any[] = [];
 
         for (const article of props.data.articles) {
-            // circle.propertyFields.id = article._id;
             const locations = article.reports[0].locations;
 
             if (locations.length === 0) {
@@ -112,17 +98,15 @@ const MapPanel = (props: MapPanelProps) => {
                 if (!location.coords) {
                     continue;
                 }
+
                 const id = Number(`${article._id}.${i}`);
-                console.log(id);
+
                 const result = imageData.filter(data => data.id === id);
-                console.log(result);
                 if (result.length !== 0) {
                     continue;
                 }
 
                 const [lat, long] = location.coords.split(", ");
-                console.log(lat);
-                console.log(long);
 
                 imageData.push({
                     "title": article.headline,
@@ -135,28 +119,6 @@ const MapPanel = (props: MapPanelProps) => {
             }
         }
 
-        // const imageData = props.data.articles && props.data.articles.map((article) => {
-        //     if (article.reports[0].locations.length > 1 || article.reports[0].locations.length === 0) {
-        //         console.log(article.reports[0].locations);
-        //         return;
-        //     }
-        //     console.log(article.reports[0].locations)
-        //     const coords = article.reports[0].locations[0].coords;
-        //     if (!coords) {
-        //         return;
-        //     }
-        //     // console.log(article);
-        //     const [lat, long] = coords.split(", ");
-        //     return {
-        //         "title": article.headline,
-        //         "latitude": Number(lat),
-        //         "longitude": Number(long), 
-        //         "url": `#${article._id}`,
-        //         "id": article._id,
-        //         "click": `console.log(${article._id})`
-        //     };
-        // });
-        console.log(imageData);
         imageSeries.data = imageData;
         return function cleanup() {
             chart.dispose(); 

@@ -74,7 +74,8 @@ const SearchReport = (props: SearchReportProps) => {
       <HeaderContainer id={article._id} expanded={expanded} onClick={handleExpand}>
         {headline}
       </HeaderContainer>
-      <TextContainer expanded={expanded}>{maintext}</TextContainer>
+      <TextContainer expanded={expanded}>{maintext}<a href="#top">Home</a></TextContainer>
+      
     </>
   );
 };

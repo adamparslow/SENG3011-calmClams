@@ -77,7 +77,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
       if (location) {
         searchquery += '&location=' + location;
       } else {
-        throw new Error("Location Invalid");
+        // throw new Error("Location Invalid");
       }
       keyTerms && (searchquery += '&key_terms=' + keyTerms);
     } catch (err) {
@@ -89,7 +89,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
   };
 
   return (
-    <FlexContainer>
+    <FlexContainer id="top">
       <Modal error={getErrorMessage()}></Modal>
       <GridContainer>
         START DATE
