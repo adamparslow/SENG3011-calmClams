@@ -61,7 +61,7 @@ const formatDate = (date) => {
     var day = date.slice(0, 2);
     var month = date.slice(3, 5);
     var year = '20' + date.slice(6, 8);
-    return new Date(year + '-' + month + '-' + day).toDateString();
+    return new Date(year + '-' + month + '-' + day).toDateString() + ' 00:00:00';
 };
 
 // Have to use this messed up method because the csv converts into an object with weird keys
