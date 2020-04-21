@@ -42,36 +42,27 @@ const port = 8080;
   * }
   */
 
-app.put("/get_data", (req, res) => {
+app.put("/get_data", async (req, res) => {
     console.log(req.body);
     const data = req.body;
-    const diseases = req.body.disease;
-    const totalCases = req.body.total_cases || false;
-    const totalDeaths = req.body.total_deaths || false;
-    const newCases = req.body.new_cases || false;
-    const newDeaths = req.body.new_deaths || false;
-    const countries = req.body.countries;
-    const twitterHashtags = req.body.twitter_hashtags;
-    const googleSearch = req.body.google_search;
-    const startDate = req.body.startDate;
-    const endDate = req.body.endDate;
 
-    if (!data.startDate || !data.endDate || !data.disease) {
+    if (!data.start_date || !data.end_date || !data.disease || !data.countries) {
         res.status(400);
         res.send();
+        return;
     }
 
     let response = {};
     switch (data.disease) {
         case "covid19":
-            response = handleCovid();
+            response = await handleCovid(data);
             break;
         case "ebola":
             response = handleEbola();
             break;
     }
 
-    res.send(response);
+    res.send(JSON.stringify(response));
 }) 
 
 app.listen(port, () => {
