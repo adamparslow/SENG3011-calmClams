@@ -1,4 +1,3 @@
-// import readCSV, {head} from 'zebras'
 const z = require('zebras');
 
 const handleEbola = () => {
@@ -8,7 +7,8 @@ const handleEbola = () => {
     const uniqueCountries = getUniqueCountries(combined);
     const graphData = getGraphData(combined, uniqueCountries);
     const serverData = getServerData(graphData, uniqueCountries);
-    console.log('SERVER DATA: ', serverData);
+    // console.log('SERVER DATA: ', serverData);
+    return serverData;
 };
 
 const getEbolaData = (file) => {
@@ -72,6 +72,6 @@ const getColumnName = (data, colNum, isCases) => {
     return Object.keys(data[3333])[colNum];
 };
 
-handleEbola();
+// handleEbola();
 
 module.exports = handleEbola;
