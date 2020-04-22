@@ -11,9 +11,6 @@ interface MapPanelProps {
     toggleReport: (id: number) => void,
 };
 
-const tooltipClickHandler = (id: string) => {
-    console.log(id);
-}
 
 const MapPanel = (props: MapPanelProps) => {
     useEffect(() => {
@@ -79,7 +76,7 @@ const MapPanel = (props: MapPanelProps) => {
         circle.propertyFields.id = "reportId";
 
         circle.events.on('hit', (event) => {
-            const id = Math.floor(Number(event.target.parent && event.target.parent.id || ""));
+            const id = Math.floor(Number((event.target.parent && event.target.parent.id) || ""));
             props.toggleReport(id); 
         });
 
