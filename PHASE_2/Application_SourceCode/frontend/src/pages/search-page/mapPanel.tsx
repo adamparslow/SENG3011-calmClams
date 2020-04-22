@@ -8,12 +8,15 @@ const style={height: "93vh", width: "100%", backgroundColor: "#00A8E8"};
 
 interface MapPanelProps {
     data: any,
-    toggleReport: (id: string) => void,
+    toggleReport: (id: number) => void,
 };
+
+const tooltipClickHandler = (id: string) => {
+    console.log(id);
+}
 
 const MapPanel = (props: MapPanelProps) => {
     useEffect(() => {
-        // Include chart code here
         // Themes begin
         am4core.useTheme(am4themes_animated);
         // Themes end
@@ -51,41 +54,72 @@ const MapPanel = (props: MapPanelProps) => {
 
         // Add image series
         const imageSeries = chart.series.push(new am4maps.MapImageSeries());
+        if (imageSeries.tooltip) {
+            imageSeries.tooltip.keepTargetHover = true;
+        }
+
         imageSeries.mapImages.template.propertyFields.longitude = "longitude";
         imageSeries.mapImages.template.propertyFields.latitude = "latitude";
-        // imageSeries.mapImages.template.tooltipText = "{title}";
-        imageSeries.mapImages.template.tooltipHTML = "<h1>{title}<h1><button>Hello</button>";
-        const tooltip = imageSeries.mapImages.template.tooltip;
+        imageSeries.mapImages.template.tooltipHTML = 
+        `
+            <h3>{title}<h3>
+            <p>Click on the circle for more information</p>
+        `;
+
+        if (imageSeries.tooltip) {
+            imageSeries.tooltip.contentValign = "top";
+        }
+
         imageSeries.mapImages.template.propertyFields.url = "url";
-        // imageSeries.mapImages.template.propertyFields.id = "id";
+        imageSeries.mapImages.template.propertyFields.id = "id";
 
         const circle = imageSeries.mapImages.template.createChild(am4core.Circle);
         circle.radius = 5;
         circle.propertyFields.fill = "color";
-        circle.propertyFields.id = "id";
+        circle.propertyFields.id = "reportId";
 
         circle.events.on('hit', (event) => {
-            console.log(event);
-            const id = event.target.propertyFields.id || "";
+            const id = Math.floor(Number(event.target.parent && event.target.parent.id || ""));
             props.toggleReport(id); 
-
-            tooltip != null && tooltip.showTooltip();
         });
 
-        // imageSeries.data = imageData;
-        imageSeries.data = props.data.articles && props.data.articles.map((article) => {
-            circle.propertyFields.id = article._id;
-            const coords = article.reports[0].locations[0].coords;
-            const [lat, long] = coords.split(", ");
-            return {
-                "title": article.headline,
-                "latitude": Number(lat),
-                "longitude": Number(long), 
-                "url": `#${article._id}`,
-                "id": article._id,
-            };
-        });
+        // Mapping multi-locations to single locations
+        const imageData : any[] = [];
 
+        for (const article of props.data.articles) {
+            const locations = article.reports[0].locations;
+
+            if (locations.length === 0) {
+                continue;
+            }
+
+            for (let i = 0; i < locations.length; i++) {
+                const location = locations[i];
+                if (!location.coords) {
+                    continue;
+                }
+
+                const id = Number(`${article._id}.${i}`);
+
+                const result = imageData.filter(data => data.id === id);
+                if (result.length !== 0) {
+                    continue;
+                }
+
+                const [lat, long] = location.coords.split(", ");
+
+                imageData.push({
+                    "title": article.headline,
+                    "url": `#${article._id}`,
+                    "click": `console.log(${article._id})`,
+                    "latitude": Number(lat),
+                    "longitude": Number(long),
+                    "id": id
+                });
+            }
+        }
+
+        imageSeries.data = imageData;
         return function cleanup() {
             chart.dispose(); 
         };
@@ -96,6 +130,6 @@ const MapPanel = (props: MapPanelProps) => {
 
 const shouldUpdate = (prevprops, nextprops) => {
     return prevprops.data.version === nextprops.data.version;
-  }
+}
 
 export default memo(MapPanel, shouldUpdate);

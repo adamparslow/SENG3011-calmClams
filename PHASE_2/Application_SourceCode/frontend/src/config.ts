@@ -1,5 +1,7 @@
 const config = { 
-    apiRoute: "http://calmclams.appspot.com/disease_reports",
+    ourApiRoute: "http://calmclams.appspot.com/disease_reports",
+    flyingSplaucersApiRoute: "https://us-central1-flyingsplaucers-7b3cf.cloudfunctions.net/reports",
+    geocodioKey: "e6da5ed2b0a56751beae5e9baba75e9b7956adb",
     theme: {
         primaryLight: "#FFFFFF",
         primaryDark: "#003459",

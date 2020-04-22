@@ -49,7 +49,7 @@ const sanitiseText = (text: string) => {
       text.substring(
         0,
         text.indexOf('Read Full Article At'),
-      );
+      ) || text;
 }
 const shouldUpdate = (prevprops, nextprops) => {
   return prevprops.expanded === nextprops.expanded;
@@ -63,6 +63,7 @@ interface SearchReportProps {
 const SearchReport = (props: SearchReportProps) => {
   const {toggleReport, expanded} = props;
   const article = props.article;
+  console.log(article);
   const maintext = sanitiseText(article.main_text);
   const headline = sanitiseHeader(article.headline);
   const handleExpand = () => {
@@ -73,7 +74,8 @@ const SearchReport = (props: SearchReportProps) => {
       <HeaderContainer id={article._id} expanded={expanded} onClick={handleExpand}>
         {headline}
       </HeaderContainer>
-      <TextContainer expanded={expanded}>{maintext}</TextContainer>
+      <TextContainer expanded={expanded}>{maintext}<a href="#top">Home</a></TextContainer>
+      
     </>
   );
 };
