@@ -22,9 +22,6 @@ const GraphPanel = (props: GraphPanelProps) => {
 
         //chart.paddingTop = 40; // Leave some room for the axis titles
 
-        // Increase contrast by taking evey second color
-        chart.colors.step = 2;
-
         // Create axes
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         dateAxis.renderer.minGridDistance = 50;
@@ -44,6 +41,7 @@ const GraphPanel = (props: GraphPanelProps) => {
         function createAxis(name) {
             let axis = chart.yAxes.push(new am4charts.ValueAxis());
             // Move the axis titles to the top
+            /*
             axis.layout = "absolute";
             axis.title.text = name;
             axis.title.align = "center";
@@ -52,6 +50,8 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.title.dy = -40;
             axis.title.fontWeight = "600";
             axis.paddingRight = 10;
+            */
+            axis.title.text = name;
             axis.disabled = true;
             if (chart.yAxes.indexOf(axis) != 0) {
                 // axis.syncWithAxis = chart.yAxes.getIndex(0);
@@ -167,7 +167,7 @@ const GraphPanel = (props: GraphPanelProps) => {
 
         let tCasesColour, tDeathsColour, nCasesColour, nDeathsColour, googleColour, twitterColour;
         const colourSet = new am4core.ColorSet();
-        colourSet.step = 2;
+        colourSet.step = 3;
         tCasesColour = colourSet.next();
         tDeathsColour = colourSet.next();
         nCasesColour = colourSet.next();
