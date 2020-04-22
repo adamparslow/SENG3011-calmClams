@@ -177,12 +177,19 @@ const GraphPanel = (props: GraphPanelProps) => {
 
         const bullets = ["circle", "rectangle", "triangle", "trapizoid", "rrectangle", "rrectangle2", "cone"];
 
-        // Combine all the data and create a series for each
+        // Combine all the data and create each series
         for (let i in props.data.countries) {
             const country = props.data.countries[i];
+
+            // Convert the string dates to actual dates
+            for (let k of props.data.graphData[i]) {
+                k['date_'+country] = new Date(k['date_'+country]);
+            }
+
             data = data.concat(props.data.graphData[i]);
             const bullet = bullets[i];
-            console.log(bullets[i], i);
+
+            // Create each series for each country
             for (let seriesName in props.data.graphData[i][0]) {
                 if (seriesName.includes("total_cases")) {
                     createSeries(tCasesAxis, "date_" + country, seriesName, bullet, tCasesColour);
@@ -205,6 +212,7 @@ const GraphPanel = (props: GraphPanelProps) => {
 
             }
         }
+        
         chart.data = data;
 
         // Add legend

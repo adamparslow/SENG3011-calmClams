@@ -39,13 +39,16 @@ export const SearchPage = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        start_date: "2000-01-01",
-        end_date: "2030-01-01",
+        start_date: "2020-02-01",
+        end_date: "2020-04-01",
         countries: countries,
         disease: "covid19"
       })
     })
-      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
       .then(json => {
         let newData: GraphDataInterface = {
           version: dataVersion,
@@ -54,11 +57,13 @@ export const SearchPage = () => {
         };
         setData(newData);
         setDataVersion(dataVersion + 1);
+        setLoading(false);
       })
       .catch(error => {
         setError(true);
         console.log(error);
       });
+    setLoading(true);
 
 
     /*
