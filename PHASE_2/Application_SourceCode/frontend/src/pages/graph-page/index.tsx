@@ -31,23 +31,36 @@ export const SearchPage = () => {
     twitter: Array<string>,
     countries: Array<string>
   ) => {
-    //Heroku to bypass CORS like a real hacker :D
-    const proxyurl = 'https://cors-anywhere.herokuapp.com/';
 
-    
-    let newGraphData: Array<{}> = [];
-    for (let c of countries) {
-      newGraphData.push(generateChartData(c));
-    }
-    
-    let newData: GraphDataInterface = {
-      version: dataVersion,
-      countries: countries,
-      graphData: newGraphData
-    };
+    fetch('http://localhost:8080/get_data', {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        start_date: "2000-01-01",
+        end_date: "2030-01-01",
+        countries: countries,
+        disease: "covid19"
+      })
+    })
+      .then(response => response.json())
+      .then(json => {
+        let newData: GraphDataInterface = {
+          version: dataVersion,
+          countries: json.countries,
+          graphData: json.graphData
+        };
+        setData(newData);
+        setDataVersion(dataVersion + 1);
+      })
+      .catch(error => {
+        setError(true);
+        console.log(error);
+      });
 
-    setData(newData);
-    setDataVersion(dataVersion + 1);
+
     /*
     fetch(proxyurl)
       .then((response) => {
