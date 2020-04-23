@@ -3,20 +3,20 @@
 import styled from 'styled-components';
 import config from '../../../config';
 
-export const StyledMenu = styled.nav`
+export const StyledMenu = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   background: ${config.theme.darkColor};
   height: 100vh;
   text-align: left;
-  padding: 0rem 2rem 0rem 2rem;
+  padding: 4.4rem 0rem 4.4rem 0rem;
   position: fixed;
   top: 0;
   left: 0;
   transition: transform 0.3s ease-in-out;
   transform: ${({ open }) => open ? 'translateX(0%)' : 'translateX(-75%)'};
-  width: 160px;
+  width: 225px;
   z-index:1;
 
   a {
