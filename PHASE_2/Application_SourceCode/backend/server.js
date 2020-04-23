@@ -64,7 +64,7 @@ app.put("/get_data", async (req, res) => {
     }
 
     if (data.google) {
-        await handleGoogle(data.start_date, data.end_date);
+        await handleGoogle(data.start_date, data.end_date, data.google, response);
     }
 
     res.send(JSON.stringify(response));

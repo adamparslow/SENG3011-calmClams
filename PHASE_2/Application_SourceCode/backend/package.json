@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "express": "^4.17.1",
     "google-trends-api": "^4.9.0",
+    "request-promise": "^4.2.5",
     "zebras": "^0.0.18"
   }
 }
