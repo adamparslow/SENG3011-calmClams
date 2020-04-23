@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "google-trends-api": "^4.9.0",
     "zebras": "^0.0.18"
   }
 }
