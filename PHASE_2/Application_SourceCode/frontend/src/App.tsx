@@ -13,7 +13,7 @@ const PageContainer = styled.div`
 const App = () => {
   const [tab, setTab] = useState(0);
   const tabList = ["Graph Page", "Map Page"];
-  const pageList = [<SearchPage />, <GraphPage/>]
+  const pageList = [<GraphPage/>, <SearchPage />]
   return (
     <>
       <Menu tab={tab} setTab={setTab} tabList={tabList}/>

@@ -42,17 +42,18 @@ export const SearchPage = () => {
         start_date: "2020-02-01",
         end_date: "2020-04-23",
         countries: countries,
+        google: google,
         disease: "covid19"
       })
     })
       .then(response => {
-        console.log(response);
         return response.json();
       })
       .then(json => {
+        console.log(json);
         let newData: GraphDataInterface = {
           version: dataVersion,
-          countries: json.countries,
+          countries: json.seriesTitles,
           graphData: json.graphData
         };
         setData(newData);

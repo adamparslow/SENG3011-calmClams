@@ -160,7 +160,7 @@ const GraphPanel = (props: GraphPanelProps) => {
         tDeathsAxis = createAxis("Total Deaths");
         nCasesAxis = createAxis("New Cases");
         nDeathsAxis = createAxis("New Deaths");
-        googleAxis = createAxis("Google %Traffic");
+        googleAxis = createAxis("Google Percentage of Peak Traffic");
         twitterAxis = createAxis("Twitter");
         nCasesAxis.extraMax = 0.8
         nDeathsAxis.extraMax = 0.8
@@ -185,7 +185,11 @@ const GraphPanel = (props: GraphPanelProps) => {
 
             // Convert the string dates to actual dates
             for (let k of props.data.graphData[i]) {
-                k['date_' + country] = new Date(k['date_' + country]);
+                for (let n in k) {
+                    if (n.includes("date_")) {
+                        k[n] = new Date(k[n]);
+                    }
+                }
             }
 
             data = data.concat(props.data.graphData[i]);
@@ -206,16 +210,17 @@ const GraphPanel = (props: GraphPanelProps) => {
                     createSeries(nDeathsAxis, "date_" + country, seriesName, bullet, nDeathsColour);
                 }
                 if (seriesName.includes("google")) {
-                    createSeries(googleAxis, "date_" + country, seriesName, bullet, googleColour);
+                    createSeries(googleAxis, "gdate_" + country, seriesName, bullet, googleColour);
                 }
                 if (seriesName.includes("twitter")) {
-                    createSeries(twitterAxis, "date_" + country, seriesName, bullet, twitterColour);
+                    createSeries(twitterAxis, "tdate_" + country, seriesName, bullet, twitterColour);
                 }
 
             }
         }
         
         chart.data = data;
+        console.log(chart.data);
 
         // Add legend
         chart.legend = new am4charts.Legend();

@@ -51,7 +51,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
     setCountries(event.target.value);
   };
   const santitisedDataFetch = () => {
-    return props.fetchData(true, false, false, false, [], [], countries.split(","));
+    return props.fetchData(true, false, false, false, googleTerms == "" ? []:googleTerms.split(","), [], countries == "" ? []:countries.split(","));
   };
 
   return (

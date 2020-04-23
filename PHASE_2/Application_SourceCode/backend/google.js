@@ -1,7 +1,7 @@
 const googleTrends = require('google-trends-api');
 
 const handleGoogle = async (start, end, keywords, response) => {
-    console.log("google works");
+    console.log("Finding google data for", keywords);
 
     for (const keyword of keywords) {
         const keywordData = [];
