@@ -40,7 +40,7 @@ export const SearchPage = () => {
       },
       body: JSON.stringify({
         start_date: "2020-02-01",
-        end_date: "2020-04-01",
+        end_date: "2020-04-23",
         countries: countries,
         disease: "covid19"
       })

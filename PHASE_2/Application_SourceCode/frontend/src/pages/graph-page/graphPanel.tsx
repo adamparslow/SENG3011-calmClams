@@ -12,7 +12,6 @@ interface GraphPanelProps {
 
 const GraphPanel = (props: GraphPanelProps) => {
     useEffect(() => {
-        /* Chart code */
         // Themes begin
         am4core.useTheme(am4themes_animated);
         // Themes end
@@ -52,9 +51,10 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.paddingRight = 10;
             */
             axis.title.text = name;
+            axis.min = 0;
             axis.disabled = true;
             if (chart.yAxes.indexOf(axis) != 0) {
-                // axis.syncWithAxis = chart.yAxes.getIndex(0);
+                axis.syncWithAxis = tCasesAxis;
             }
             return axis;
         }
@@ -153,7 +153,6 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.disabled = disabled;
         }
 
-
         let data = [];
 
         let tCasesAxis, tDeathsAxis, nCasesAxis, nDeathsAxis, googleAxis, twitterAxis;
@@ -163,6 +162,9 @@ const GraphPanel = (props: GraphPanelProps) => {
         nDeathsAxis = createAxis("New Deaths");
         googleAxis = createAxis("Google %Traffic");
         twitterAxis = createAxis("Twitter");
+        nCasesAxis.extraMax = 0.8
+        nDeathsAxis.extraMax = 0.8
+
         console.log(props.data);
 
         let tCasesColour, tDeathsColour, nCasesColour, nDeathsColour, googleColour, twitterColour;
@@ -183,7 +185,7 @@ const GraphPanel = (props: GraphPanelProps) => {
 
             // Convert the string dates to actual dates
             for (let k of props.data.graphData[i]) {
-                k['date_'+country] = new Date(k['date_'+country]);
+                k['date_' + country] = new Date(k['date_' + country]);
             }
 
             data = data.concat(props.data.graphData[i]);
@@ -222,6 +224,7 @@ const GraphPanel = (props: GraphPanelProps) => {
 
         // Add cursor
         chart.cursor = new am4charts.XYCursor();
+        chart.cursor.behavior = "zoomXY";
 
         return function cleanup() {
             chart.dispose();
