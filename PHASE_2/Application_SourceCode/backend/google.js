@@ -15,7 +15,8 @@ const handleGoogle = async (start, end, keywords, response) => {
 
         for (const timeData of json.default.timelineData) {
             const googleObj = {};
-            googleObj[`gdate_${keyword}`] = new Date(timeData.time).toDateString();
+            console.log(timeData);
+            googleObj[`gdate_${keyword}`] = `${new Date(timeData.time * 1000).toDateString()} 00:00:00`;
             googleObj[`google_${keyword}`] = timeData.formattedValue[0];
             
             keywordData.push(googleObj);
