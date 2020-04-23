@@ -16,9 +16,9 @@ interface tabType {
   setTab: Dispatch<SetStateAction<number>>;
 }
 
-const Tab = ({ tab, setTab, tabName, active, open }) => {
+const Tab = ({setTab, tabName, active}) => {
   return (
-    <StyledTab active={active} onClick={() => open && setTab(tab)}>
+    <StyledTab active={active} onClick={setTab}>
       {tabName}
     </StyledTab>
   );
