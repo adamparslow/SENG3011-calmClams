@@ -40,6 +40,8 @@ const getGlobalData = async (country, startDate, endDate, graphData) => {
 
     const response = await Promise.all(promises);
 
+    const globalData = [];
+
     for (const data of response) {
         let graphDataObj = {};
         graphDataObj[`date_${country}`] = `${new Date(data.data.date).toDateString()} 00:00:00`;
@@ -48,8 +50,9 @@ const getGlobalData = async (country, startDate, endDate, graphData) => {
         graphDataObj[`new_cases_${country}`] = data.data.confirmed_diff;
         graphDataObj[`new_deaths_${country}`] = data.data.deaths_diff;
 
-        graphData.push(graphDataObj);
+        globalData.push(graphDataObj);
     }
+    graphData.push(globalData);
 }
 
 const getCountryData = async (country, startDate, endDate, graphData) => {
@@ -94,26 +97,7 @@ const getCountryData = async (country, startDate, endDate, graphData) => {
         currentDate = next.Date;
     }
 
-    // for (let i = 0; i < response.length / max; i++) {
-    //     const entries = [
-    //         response[i * max],
-    //         response[i * max + 1],
-    //         response[i * max + 2],
-    //         response[i * max + 3],
-    //         response[i * max + 4],
-    //         response[i * max + 5],
-    //         response[i * max + 6],
-    //         response[i * max + 7]
-    //     ];
-    //     console.log(entries);
-    //     grouped.push({
-    //         date: response[i * max].Date,
-    //         entries
-    //     });
-    // }
-
-    console.log(grouped);
-
+    const countryData = [];
 
     for (const date of grouped) {
         let confirmed = 0;
@@ -132,8 +116,9 @@ const getCountryData = async (country, startDate, endDate, graphData) => {
         previousDeaths = deaths;
         previousConfirmed = confirmed;
 
-        graphData.push(graphDataObj);
+        countryData.push(graphDataObj);
     }
+    graphData.push(countryData);
 }
 
 module.exports = handleCovid;
