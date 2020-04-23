@@ -2,6 +2,7 @@ const express = require('express');
 const handleCovid = require('./covid');
 const handleEbola = require('./ebola');
 const cors = require('cors');
+const handleGoogle = require('./google');
 const app = express();
 app.use(express.static('client/build'));
 app.use(express.json());
@@ -68,6 +69,10 @@ app.put("/get_data", cors(corsOptions), async (req, res) => {
         case "ebola":
             response = handleEbola();
             break;
+    }
+
+    if (data.google) {
+        await handleGoogle(data.start_date, data.end_date, data.google, response);
     }
 
     res.send(JSON.stringify(response));

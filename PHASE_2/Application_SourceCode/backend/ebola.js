@@ -41,7 +41,7 @@ const getGraphData = (data, uniqueCountries) => {
 
 const getServerData = (data, uniqueCountries) => {
     const serverData = {};
-    serverData['countries'] = uniqueCountries;
+    serverData['seriesTitles'] = uniqueCountries;
     serverData['graphData'] = [];
     for (var country of uniqueCountries) {
         for (var date of Object.keys(data[country])) {
