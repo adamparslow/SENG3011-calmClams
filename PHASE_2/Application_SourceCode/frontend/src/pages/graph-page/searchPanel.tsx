@@ -5,6 +5,7 @@ import Input from '../../components/input';
 import config from '../../config';
 import Switch from '../../components/switch';
 import { Grid } from '@amcharts/amcharts4/charts';
+import Modal from '../../components/modal';
 
 const FlexContainer = styled.div`
   display: flex;
@@ -51,11 +52,28 @@ export const SearchPanel = (props: SearchPanelProps) => {
     setCountries(event.target.value);
   };
   const santitisedDataFetch = () => {
+    let searchquery = '';
+    try {
+      if (googleTerms.length + twitterTags.length + countries.length == 0) {
+        throw new Error("Please enter a Google search term, Twitter hashtag or Country");
+      }
+    } catch (err) {
+      showModal(err);
+      return null;
+    }
     return props.fetchData(true, false, false, false, googleTerms == "" ? []:googleTerms.split(","), [], countries == "" ? []:countries.split(","));
   };
 
+  const showModal = (error) => {
+    var modals = document.getElementsByClassName('modal') as HTMLCollectionOf<HTMLElement>;
+    var modalContents = modals[0].getElementsByClassName('modal-content') as HTMLCollectionOf<HTMLElement>;
+    modalContents[0].getElementsByTagName('p')[0].textContent = error;
+    modals[0].style.display = 'block';
+  }
+
   return (
     <FlexContainer>
+      <Modal error={() => "error"}></Modal>
       <GridContainer>
         Total Cases
           <Switch

@@ -65,25 +65,6 @@ export const SearchPage = () => {
         console.log(error);
       });
     setLoading(true);
-
-
-    /*
-    fetch(proxyurl)
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        response.version = dataVersion;
-        setData(response);
-        setDataVersion(dataVersion + 1);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(true);
-        console.error(err);
-      });
-    setLoading(true);
-    */
   };
   return (
     <PageContainer>
