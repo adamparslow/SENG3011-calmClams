@@ -13,7 +13,7 @@ const handleCovid = async (body) => {
     }
 
     return {
-        countries: body.countries,
+        seriesTitles: body.countries,
         graphData
     };
 };
