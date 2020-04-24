@@ -1,10 +1,18 @@
 const express = require('express');
 const handleCovid = require('./covid');
 const handleEbola = require('./ebola');
+const cors = require('cors');
 const handleGoogle = require('./google');
 const app = express();
 app.use(express.static('client/build'));
 app.use(express.json());
+app.use(cors());
+
+var corsOptions = {
+    origin: "*",
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
 
 const port = 8080;
 
@@ -42,8 +50,8 @@ const port = 8080;
   *     ]
   * }
   */
-
-app.put("/get_data", async (req, res) => {
+app.options('/get_data', cors(corsOptions));
+app.put("/get_data", cors(corsOptions), async (req, res) => {
     console.log(req.body);
     const data = req.body;
 

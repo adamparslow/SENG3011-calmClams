@@ -11,25 +11,36 @@ const Logo = styled.img`
   position: fixed;
   top: 15px;
   left: 7px;
-  z-index:2;
+  z-index: 2;
 `;
 interface menuTypes {
-  tab: number, 
-  setTab: Dispatch<SetStateAction<number>>
+  tab: number;
+  setTab: Dispatch<SetStateAction<number>>;
+  tabList: Array<String>;
 }
 
-const Menu = ({tab, setTab}: menuTypes) => {
+const Menu = ({ tab, setTab, tabList }: menuTypes) => {
   const [open, setOpen] = useState(false);
   //Initialise Tabs
 
   return (
     <>
-    <Burger open={open} setOpen={setOpen} />
-    <Logo src={LogoImage} />
-    <StyledMenu open={open}>
-      
-      <Tab tab={tab} setTab={setTab}/>
-    </StyledMenu>
+      <Burger open={open} setOpen={setOpen} />
+      <Logo src={LogoImage} />
+      <StyledMenu open={open}>
+        {tabList.map((tabName, index) => (
+          <Tab
+            setTab={() => {
+              if (open) {
+                setTab(index);
+                setOpen(false);
+              }
+            }}
+            tabName={tabName}
+            active={tab === index}
+          />
+        ))}
+      </StyledMenu>
     </>
   );
 };
