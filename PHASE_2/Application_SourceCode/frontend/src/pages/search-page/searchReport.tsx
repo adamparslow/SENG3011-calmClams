@@ -5,7 +5,6 @@ import { FaRegArrowAltCircleUp, FaLink, FaClock } from 'react-icons/fa';
 
 const HeaderContainer = styled.div`
   width: 120vh;
-  height: 30px;
   margin: 15px;
   padding: 10px;
   border-radius: ${({ expanded }) => (expanded ? '10px 10px 0px 0px' : '10px')};
@@ -23,7 +22,6 @@ const ContextContainer = styled.div`
   display: ${({ expanded }) => (expanded ? 'display' : 'none')};
   font-size: 16px;
   width: 120vh;
-  height: 80px;
   margin: 15px;
   padding: 10px;
   border-radius: 0px 0px 10px 10px;
@@ -31,7 +29,6 @@ const ContextContainer = styled.div`
   margin-top: 0px;
 `;
 const TextContainer = styled.div`
-  height: 55px;
   margin: 5px;
 `;
 const InvButton = styled.button`

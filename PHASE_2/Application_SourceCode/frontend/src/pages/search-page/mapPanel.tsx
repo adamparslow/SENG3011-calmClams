@@ -4,7 +4,7 @@ import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 
-const style={height: "93vh", width: "100%", backgroundColor: "#00A8E8"};
+const style={height: "91.1vh", width: "100%", backgroundColor: "#00A8E8"};
 
 interface MapPanelProps {
     loading: boolean,
@@ -61,7 +61,7 @@ const MapPanel = (props: MapPanelProps) => {
         imageSeries.mapImages.template.tooltipHTML = 
         `
             <h3>{title}<h3>
-            <p>Click on the circle for more information</p>
+            <p style="font-size: 15px">Click on the circle for more information</p>
         `;
 
         if (imageSeries.tooltip) {
@@ -83,6 +83,7 @@ const MapPanel = (props: MapPanelProps) => {
 
         // Mapping multi-locations to single locations
         const imageData : any[] = [];
+        let dataNumber = 0;
 
         for (const article of props.data.articles) {
             const locations = article.reports[0].locations;
@@ -108,12 +109,13 @@ const MapPanel = (props: MapPanelProps) => {
 
                 imageData.push({
                     "title": article.headline,
-                    "url": `#${article._id}`,
+                    "url": `#${dataNumber >= 2 ? article._id - 2 : article._id}`,
                     "click": `console.log(${article._id})`,
                     "latitude": Number(lat),
                     "longitude": Number(long),
                     "id": id
                 });
+                dataNumber++;
             }
         }
 

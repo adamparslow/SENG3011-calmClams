@@ -140,6 +140,9 @@ export const SearchPanel = (props: SearchPanelProps) => {
           placeholder={'Google Search Terms'}
           onChange={handleGoogleTerms}
           width={300}
+          className=""
+          toolTipTitle={'Help'}
+          toolTipMessage={'Type out your search terms separated by commas.\nEach search term will be a new graph.\nType [seachTerm]:[country] to narrow the search down to an individual country'}
         />
       </GridContainer>
       <GridContainer>
@@ -149,6 +152,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
           placeholder={'Twitter Hashtags'}
           onChange={handleTwitterTags}
           width={300}
+          toolTipTitle={'Help'}
+          toolTipMessage={'Not Yet Implemented'}
         />
       </GridContainer>
       <GridContainer>
@@ -158,6 +163,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
           placeholder={'Location'}
           onChange={handleCountry}
           width={200}
+          toolTipTitle={'Help'}
+          toolTipMessage={'Type out your countries separated by commas.\nEach country will be a new graph.'}
         />
       </GridContainer>
       <GridContainer>

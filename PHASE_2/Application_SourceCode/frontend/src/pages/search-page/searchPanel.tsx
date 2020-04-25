@@ -55,30 +55,29 @@ export const SearchPanel = (props: SearchPanelProps) => {
     modals[0].style.display = 'block';
   }
 
-  const getErrorMessage = () => {
-    return 'Please enter valid inputs';
-  }
-
   const santitisedDataFetch = () => {
     let searchquery = '';
     try {
+      if (new Date(endDate) < new Date(startDate)) {
+        throw new Error("Start Date must be earlier than End Date");
+      }
+      
       if (startDate) {
-        searchquery += 'end_date=' + endDate + 'T00:00:00';
+        searchquery += 'start_date=' + startDate + 'T00:00:00';
       } else {
-        throw new Error("End Date Invalid");
+        throw new Error("Please enter a Start Date");
       }
 
       if (endDate) {
-        searchquery += '&start_date=' + startDate + 'T00:00:00'; 
+        searchquery += '&end_date=' + endDate + 'T00:00:00';
       } else {
-        throw new Error("Start Date Invalid");
+        throw new Error("Please enter an End Date");
       }
 
       if (location) {
         searchquery += '&location=' + location;
-      } else {
-        // throw new Error("Location Invalid");
       }
+      
       keyTerms && (searchquery += '&key_terms=' + keyTerms);
     } catch (err) {
       console.error(err);
@@ -90,7 +89,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
 
   return (
     <FlexContainer id="top">
-      <Modal error={getErrorMessage()}></Modal>
+      <Modal></Modal>
       <GridContainer>
         START DATE
         <DateInput onChange={handleStartDateChange} width={200} />
@@ -106,6 +105,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
           placeholder={'Key Terms'}
           onChange={handleKeyTerms}
           width={400}
+          toolTipTitle={'Help'}
+          toolTipMessage={'Type out your key terms separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'}
         />
       </GridContainer>
       <GridContainer>
@@ -115,6 +116,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
           placeholder={'Location'}
           onChange={handleLocation}
           width={200}
+          toolTipTitle={'Help'}
+          toolTipMessage={'Type out your countries separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'}
         />
       </GridContainer>
       <GridContainer>
