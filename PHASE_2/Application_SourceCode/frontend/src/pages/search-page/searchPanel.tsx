@@ -103,13 +103,13 @@ export const SearchPanel = (props: SearchPanelProps) => {
       <GridContainer>
         <div>
           <Autocomplete onChange={handleKeyTerms} options={'key_terms'} label={'KEY TERMS'} placeholder={'Key Terms'} defaultValue={[]} />
-          <HelpButton toolTipMessage="" toolTipTitle=""></HelpButton>
-          </div>
+          <HelpButton toolTipMessage={'Type out your key terms separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'} toolTipTitle={"Help"}></HelpButton>
+        </div>
       </GridContainer>
       <GridContainer>
         <div>
           <Autocomplete onChange={handleLocation} options={'countries'} label={'COUNTRIES'} placeholder={'Countries'} defaultValue={['Global']} />
-          <HelpButton toolTipMessage="" toolTipTitle=""></HelpButton>
+          <HelpButton toolTipMessage={'Type out your countries separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'} toolTipTitle={"Help"}></HelpButton>
         </div>
       </GridContainer>
       <GridContainer>

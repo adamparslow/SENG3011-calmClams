@@ -26,18 +26,15 @@ const ReactAutocomplete = (props) => {
           multiple
           id="tags-standard"
           options={optionsDict[props.options]}
-          // getOptionLabel={(option) => option}  // Doesn't work because of something to do with Typescript // Don't think it's necessary though?
           defaultValue={props.defaultValue}
+          onChange={props.onChange}
           renderInput={(params) => (
             <TextField
               {...params}
               variant="standard"
               label={props.label}
               placeholder={props.placeholder}
-              onChange={props.onChange}
-              // toolTipTitle={'Help'}
-              // toolTipMessage={'Type out your key terms separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'}
-            />
+              />
           )}
         />
       </div>
