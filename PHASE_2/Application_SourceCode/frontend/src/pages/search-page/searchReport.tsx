@@ -1,6 +1,7 @@
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import config from '../../config';
+import { FaRegArrowAltCircleUp, FaLink, FaClock } from 'react-icons/fa';
 
 const HeaderContainer = styled.div`
   width: 120vh;
@@ -17,7 +18,7 @@ const HeaderContainer = styled.div`
   }
   margin-bottom: ${({ expanded }) => (expanded ? '0px' : '15px')};
 `;
-const TextContainer = styled.div`
+const ContextContainer = styled.div`
   color: ${config.theme.primaryDark};
   display: ${({ expanded }) => (expanded ? 'display' : 'none')};
   font-size: 16px;
@@ -29,9 +30,41 @@ const TextContainer = styled.div`
   background: ${config.theme.primaryLightGrey};
   margin-top: 0px;
 `;
+const TextContainer = styled.div`
+  height: 55px;
+  margin: 5px;
+`;
+const InvButton = styled.button`
+  background: transparent;
+  border: none !important;
+  font-size: 18px;
+  margin-right: 10px;
+`;
+const OptionsTextStyle = styled.span`
+  position: relative;
+  margin-left: 5px;
+  bottom: 2px;
+`;
+const OptionsBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+`;
+const RightBar = styled.div`
 
+`
+const dateFormat = (input: String) => {
+  //We are formatting strings in the style of: 2015-11-02 02:32:xx
+  return (
+    input.substring(5, 7) +
+    '/' +
+    input.substring(8, 10) +
+    '/' +
+    input.substring(0, 4)
+  );
+};
 const sanitiseHeader = (header: string) => {
-  if (!header.charAt(85)) {
+  if (!header.charAt(80)) {
     return header;
   }
   for (var i = header.length - 1; i >= 0; i--) {
@@ -42,26 +75,23 @@ const sanitiseHeader = (header: string) => {
   return 'Error - Title Invalid';
 };
 const sanitiseText = (text: string) => {
-    return text.substring(
-        0,
-        text.indexOf('Read the full article'),
-      ) ||
-      text.substring(
-        0,
-        text.indexOf('Read Full Article At'),
-      ) || text;
-}
+  return (
+    text.substring(0, text.indexOf('Read the full article')) ||
+    text.substring(0, text.indexOf('Read Full Article At')) ||
+    text
+  );
+};
 const shouldUpdate = (prevprops, nextprops) => {
   return prevprops.expanded === nextprops.expanded;
-}
-interface SearchReportProps {
-  article: any,
-  expanded: boolean,
-  toggleReport: () => void,
 };
+interface SearchReportProps {
+  article: any;
+  expanded: boolean;
+  toggleReport: () => void;
+}
 
 const SearchReport = (props: SearchReportProps) => {
-  const {toggleReport, expanded} = props;
+  const { toggleReport, expanded } = props;
   const article = props.article;
   console.log(article);
   const maintext = sanitiseText(article.main_text);
@@ -71,11 +101,42 @@ const SearchReport = (props: SearchReportProps) => {
   };
   return (
     <>
-      <HeaderContainer id={article._id} expanded={expanded} onClick={handleExpand}>
+      <HeaderContainer
+        id={article._id}
+        expanded={expanded}
+        onClick={handleExpand}
+      >
         {headline}
       </HeaderContainer>
-      <TextContainer expanded={expanded}>{maintext}<a href="#top">Home</a></TextContainer>
-      
+      <ContextContainer expanded={expanded}>
+        <TextContainer>{maintext}</TextContainer>
+        <OptionsBar>
+          <InvButton>
+            <FaClock />
+            <OptionsTextStyle>
+              {dateFormat(article.date_of_publication)}
+            </OptionsTextStyle>
+          </InvButton>
+          <RightBar>
+            <InvButton
+              onClick={() => {
+                window.open(article.url, '_blank');
+              }}
+            >
+              <FaLink />
+              <OptionsTextStyle>See Full Report</OptionsTextStyle>
+            </InvButton>
+            <InvButton
+              onClick={() => {
+                window.location.href = '#top';
+              }}
+            >
+              <FaRegArrowAltCircleUp />
+              <OptionsTextStyle>Back To Top</OptionsTextStyle>
+            </InvButton>
+          </RightBar>
+        </OptionsBar>
+      </ContextContainer>
     </>
   );
 };
