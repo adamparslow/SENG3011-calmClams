@@ -161,10 +161,11 @@ const GraphPanel = (props: GraphPanelProps) => {
         tDeathsAxis = createAxis("Total Deaths");
         nCasesAxis = createAxis("New Cases");
         nDeathsAxis = createAxis("New Deaths");
-        googleAxis = createAxis("Google Percentage of Peak Traffic");
+        googleAxis = createAxis("Google Search Terms (Percentage of Peak Traffic)");
         twitterAxis = createAxis("Twitter");
-        nCasesAxis.extraMax = 0.8
-        nDeathsAxis.extraMax = 0.8
+        nCasesAxis.extraMax = 0.8;
+        nDeathsAxis.extraMax = 0.8;
+        tDeathsAxis.extraMax = 0.2;
 
         console.log(props.data);
 
@@ -241,6 +242,8 @@ const GraphPanel = (props: GraphPanelProps) => {
 }
 
 function snakeToTitle(string: String) {
+    string = string.replace(" ", "_");
+    string = string.replace(":", "_");
     let parts = string.split("_");
     let ans: Array<String> = [];
     for (let p of parts) {
