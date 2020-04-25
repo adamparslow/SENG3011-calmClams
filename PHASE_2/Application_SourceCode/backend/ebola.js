@@ -1,12 +1,12 @@
 const z = require('zebras');
 
-const handleEbola = () => {
+const handleEbola = (countries) => {
     const cases = getEbolaData('Ebola Confirmed Cases.csv');
     const deaths = getEbolaData('Ebola Confirmed Deaths.csv');
     const combined = z.concat(cases, deaths);
     const uniqueCountries = getUniqueCountries(combined);
     const graphData = getGraphData(combined, uniqueCountries);
-    const serverData = getServerData(graphData, uniqueCountries);
+    const serverData = getServerData(graphData, countries);
     // console.log('SERVER DATA: ', serverData);
     return serverData;
 };
