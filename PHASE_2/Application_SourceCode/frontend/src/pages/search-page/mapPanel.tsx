@@ -61,7 +61,7 @@ const MapPanel = (props: MapPanelProps) => {
         imageSeries.mapImages.template.tooltipHTML = 
         `
             <h3>{title}<h3>
-            <p>Click on the circle for more information</p>
+            <p style="font-size: 15px">Click on the circle for more information</p>
         `;
 
         if (imageSeries.tooltip) {
