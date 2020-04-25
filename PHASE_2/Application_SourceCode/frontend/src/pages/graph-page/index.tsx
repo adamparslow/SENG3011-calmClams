@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 import SearchPanel from './searchPanel';
-import SearchResults from './searchResults';
 import styled from 'styled-components';
+import Spinner from '../../components/spinner';
+import GraphPanel from './graphPanel';
+import Switch from '../../components/switch';
 
 const PageContainer = styled.div``;
 
 interface GraphDataInterface {
-  version: number,
-  countries: Array<string>,
-  graphData: Array<{}>
+  version: number;
+  countries: Array<string>;
+  graphData: Array<{}>;
 }
 
 export const SearchPage = () => {
+  const [totalCases, setTotalCases] = useState(true);
+  const [totalDeaths, setTotalDeaths] = useState(true);
+  const [newCases, setNewCases] = useState(true);
+  const [newDeaths, setNewDeaths] = useState(true);
+
   const [firstLoad, setFirstLoad] = useState(true);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -19,20 +26,20 @@ export const SearchPage = () => {
   const [data, setData] = useState<GraphDataInterface>({
     version: 0,
     countries: [],
-    graphData: [{}]
+    graphData: [{}],
   });
 
   const fetchData = async (
     google: Array<string>,
     twitter: Array<string>,
-    countries: Array<string>
+    countries: Array<string>,
   ) => {
-    
     setFirstLoad(false);
+
     fetch('http://localhost:8080/get_data', {
       method: 'PUT',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -40,25 +47,24 @@ export const SearchPage = () => {
         end_date: "2020-04-20",
         countries: countries,
         google: google,
-        disease: "covid19"
-      })
+        disease: 'covid19',
+      }),
     })
-      .then(response => {
-        console.log(response);
+      .then((response) => {
         return response.json();
       })
-      .then(json => {
+      .then((json) => {
         console.log(json);
         let newData: GraphDataInterface = {
           version: dataVersion,
           countries: json.seriesTitles,
-          graphData: json.graphData
+          graphData: json.graphData,
         };
         setData(newData);
         setDataVersion(dataVersion + 1);
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         setError(true);
         console.log(error);
       });
@@ -66,8 +72,31 @@ export const SearchPage = () => {
   };
   return (
     <PageContainer>
-      <SearchPanel fetchData={fetchData} error={error} firstLoad={firstLoad}/>
-      <SearchResults loading={loading} data={data} />
+      <SearchPanel
+        fetchData={fetchData}
+        error={error}
+        totalCases={totalCases}
+        setTotalCases={setTotalCases}
+        totalDeaths={totalDeaths}
+        setTotalDeaths={setTotalDeaths}
+        firstLoad={firstLoad}
+        newCases={newCases}
+        setNewCases={setNewCases}
+        newDeaths={newDeaths}
+        setNewDeaths={setNewDeaths}
+      />
+      <>
+        {loading && <Spinner loading={loading} />}
+        <>
+          <GraphPanel
+            data={data}
+            totalDeaths={totalDeaths}
+            newCases={newCases}
+            totalCases={totalCases}
+            newDeaths={newDeaths}
+          />
+        </>
+      </>
     </PageContainer>
   );
 };

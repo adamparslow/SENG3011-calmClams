@@ -94,6 +94,8 @@ export const SearchPage = () => {
       .catch((err) => {
         setError(true);
         console.error(err);
+        setLoading(false);
+        showModal("That query returned no results");
       });
     setLoading(true);
   };
@@ -104,5 +106,12 @@ export const SearchPage = () => {
     </PageContainer>
   );
 };
+
+const showModal = (error) => {
+  var modals = document.getElementsByClassName('modal') as HTMLCollectionOf<HTMLElement>;
+  var modalContents = modals[0].getElementsByClassName('modal-content') as HTMLCollectionOf<HTMLElement>;
+  modalContents[0].getElementsByTagName('p')[0].textContent = error;
+  modals[0].style.display = 'block';
+}
 
 export default SearchPage;
