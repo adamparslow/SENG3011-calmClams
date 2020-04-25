@@ -37,8 +37,8 @@ interface SearchPanelProps {
   setNewCases: (value: boolean) => void;
   newDeaths: boolean;
   setNewDeaths: (value: boolean) => void;
-  firstLoad: boolean;
 }
+let firstLoad = true;
 
 export const SearchPanel = (props: SearchPanelProps) => {
   const {
@@ -53,20 +53,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
   } = props;
   const [googleTerms, setGoogleTerms] = useState('');
   const [twitterTags, setTwitterTags] = useState('');
+  const [countries, setCountries] = useState('');
 
-  const [countries, setCountries] = useState('global');
-  const handleSwitch = (event, setSwitch) => {
-    setSwitch(event);
-  };
-  const handleGoogleTerms = (event) => {
-    setGoogleTerms(event.target.value);
-  };
-  const handleTwitterTags = (event) => {
-    setTwitterTags(event.target.value);
-  };
-  const handleCountry = (event) => {
-    setCountries(event.target.value);
-  };
   const santitisedDataFetch = () => {
     let searchquery = '';
     try {
@@ -82,6 +70,24 @@ export const SearchPanel = (props: SearchPanelProps) => {
     return props.fetchData(googleTerms === '' ? [] : googleTerms.split(','), [], countries === '' ? [] : countries.split(','));
   };
 
+  if (firstLoad) {
+    firstLoad = false;
+    props.fetchData([],[],["global"]);
+  }
+
+  const handleSwitch = (event, setSwitch) => {
+    setSwitch(event);
+  };
+  const handleGoogleTerms = (event) => {
+    setGoogleTerms(event.target.value);
+  };
+  const handleTwitterTags = (event) => {
+    setTwitterTags(event.target.value);
+  };
+  const handleCountry = (event) => {
+    setCountries(event.target.value);
+  };
+
   const showModal = (error) => {
     var modals = document.getElementsByClassName('modal') as HTMLCollectionOf<
       HTMLElement
@@ -92,10 +98,6 @@ export const SearchPanel = (props: SearchPanelProps) => {
     modalContents[0].getElementsByTagName('p')[0].textContent = error;
     modals[0].style.display = 'block';
   };
-
-  if (props.firstLoad) {
-    santitisedDataFetch();
-  }
 
   return (
     <FlexContainer>
