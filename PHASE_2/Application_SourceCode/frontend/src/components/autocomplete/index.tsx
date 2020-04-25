@@ -4,29 +4,43 @@ import config from '../../config'
 import HelpButton from '../helpButton';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 //TODO: Add typescript typing
 
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: 500,
+    '& > * + *': {
+      marginTop: theme.spacing(3),
+    },
+  },
+}));
 
 const ReactAutocomplete = (props) => {
+  const classes = useStyles();
+
   return (
-    <Autocomplete
-        multiple
-        id="tags-standard"
-        options={optionsDict[props.options]}
-        // getOptionLabel={(option) => option}  // Doesn't work because of something to do with Typescript // Don't think it's necessary though?
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="standard"
-            label={props.label}
-            placeholder={props.placeholder}
-            onChange={props.onChange}
-            // toolTipTitle={'Help'}
-            // toolTipMessage={'Type out your key terms separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'}
-          />
-        )}
-      />
+    <div className={classes.root}>
+      <Autocomplete
+          multiple
+          id="tags-standard"
+          options={optionsDict[props.options]}
+          // getOptionLabel={(option) => option}  // Doesn't work because of something to do with Typescript // Don't think it's necessary though?
+          defaultValue={props.defaultValue}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="standard"
+              label={props.label}
+              placeholder={props.placeholder}
+              onChange={props.onChange}
+              // toolTipTitle={'Help'}
+              // toolTipMessage={'Type out your key terms separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'}
+            />
+          )}
+        />
+      </div>
   );
 };
 

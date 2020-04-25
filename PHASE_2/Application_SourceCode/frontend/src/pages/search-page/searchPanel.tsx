@@ -100,10 +100,10 @@ export const SearchPanel = (props: SearchPanelProps) => {
         <DateInput onChange={handleEndDateChange} width={200} />
       </GridContainer>
       <GridContainer>
-        <Autocomplete onChange={handleKeyTerms} options={'key_terms'} label={'KEY TERMS'} placeholder={'Key Terms'} />
+        <Autocomplete onChange={handleKeyTerms} options={'key_terms'} label={'KEY TERMS'} placeholder={'Key Terms'} defaultValue={[]} />
       </GridContainer>
       <GridContainer>
-        <Autocomplete onChange={handleKeyTerms} options={'countries'} label={'COUNTRIES'} placeholder={'Countries'} />
+        <Autocomplete onChange={handleKeyTerms} options={'countries'} label={'COUNTRIES'} placeholder={'Countries'} defaultValue={['Global']} />
       </GridContainer>
       <GridContainer>
         <Button hover={true} onClick={santitisedDataFetch}>
