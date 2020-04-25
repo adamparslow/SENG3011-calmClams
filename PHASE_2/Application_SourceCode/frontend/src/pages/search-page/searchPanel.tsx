@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../components/button';
-import Input from '../../components/input';
-import Modal from '../../components/modal'
+import Autocomplete from '../../components/autocomplete';
+import Modal from '../../components/modal';
 import config from '../../config';
 import DateInput from '../../components/date-picker';
+import HelpButton from '../../components/helpButton';
+
 
 const FlexContainer = styled.div`
   display: flex;
@@ -55,30 +57,29 @@ export const SearchPanel = (props: SearchPanelProps) => {
     modals[0].style.display = 'block';
   }
 
-  const getErrorMessage = () => {
-    return 'Please enter valid inputs';
-  }
-
   const santitisedDataFetch = () => {
     let searchquery = '';
     try {
+      if (new Date(endDate) < new Date(startDate)) {
+        throw new Error("Start Date must be earlier than End Date");
+      }
+      
       if (startDate) {
-        searchquery += 'end_date=' + endDate + 'T00:00:00';
+        searchquery += 'start_date=' + startDate + 'T00:00:00';
       } else {
-        throw new Error("End Date Invalid");
+        throw new Error("Please enter a Start Date");
       }
 
       if (endDate) {
-        searchquery += '&start_date=' + startDate + 'T00:00:00'; 
+        searchquery += '&end_date=' + endDate + 'T00:00:00';
       } else {
-        throw new Error("Start Date Invalid");
+        throw new Error("Please enter an End Date");
       }
 
       if (location) {
         searchquery += '&location=' + location;
-      } else {
-        // throw new Error("Location Invalid");
       }
+      
       keyTerms && (searchquery += '&key_terms=' + keyTerms);
     } catch (err) {
       console.error(err);
@@ -90,7 +91,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
 
   return (
     <FlexContainer id="top">
-      <Modal error={getErrorMessage()}></Modal>
+      <Modal></Modal>
       <GridContainer>
         START DATE
         <DateInput onChange={handleStartDateChange} width={200} />
@@ -100,22 +101,16 @@ export const SearchPanel = (props: SearchPanelProps) => {
         <DateInput onChange={handleEndDateChange} width={200} />
       </GridContainer>
       <GridContainer>
-        KEY TERMS
-        <Input
-          enableButton={true}
-          placeholder={'Key Terms'}
-          onChange={handleKeyTerms}
-          width={400}
-        />
+        <div>
+          <Autocomplete onChange={handleKeyTerms} options={'key_terms'} label={'KEY TERMS'} placeholder={'Key Terms'} defaultValue={[]} />
+          <HelpButton toolTipMessage={'Type out your key terms separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'} toolTipTitle={"Help"}></HelpButton>
+        </div>
       </GridContainer>
       <GridContainer>
-        LOCATION
-        <Input
-          enableButton={true}
-          placeholder={'Location'}
-          onChange={handleLocation}
-          width={200}
-        />
+        <div>
+          <Autocomplete onChange={handleLocation} options={'countries'} label={'COUNTRIES'} placeholder={'Countries'} defaultValue={['Global']} />
+          <HelpButton toolTipMessage={'Type out your countries separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'} toolTipTitle={"Help"}></HelpButton>
+        </div>
       </GridContainer>
       <GridContainer>
         <Button hover={true} onClick={santitisedDataFetch}>

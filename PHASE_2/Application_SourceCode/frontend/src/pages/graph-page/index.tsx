@@ -1,66 +1,82 @@
 import React, { useState } from 'react';
 import SearchPanel from './searchPanel';
-import SearchResults from './searchResults';
 import styled from 'styled-components';
-import config from '../../config';
+import Spinner from '../../components/spinner';
+import GraphPanel from './graphPanel';
+import Switch from '../../components/switch';
 
 const PageContainer = styled.div``;
 
 interface GraphDataInterface {
-  version: number,
-  countries: Array<string>,
-  graphData: Array<{}>
+  seriesTitles: Array<string>;
+  graphData: Array<any>;
 }
 
 export const SearchPage = () => {
+  const [totalCases, setTotalCases] = useState(true);
+  const [totalDeaths, setTotalDeaths] = useState(true);
+  const [newCases, setNewCases] = useState(true);
+  const [newDeaths, setNewDeaths] = useState(true);
+
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [dataVersion, setDataVersion] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState<GraphDataInterface>({
-    version: 0,
-    countries: ['global'],
-    graphData: [generateChartData('global')]
+    seriesTitles: [],
+    graphData: [],
   });
 
   const fetchData = async (
-    tCases: boolean,
-    tDeaths: boolean,
-    nCases: boolean,
-    nDeaths: boolean,
     google: Array<string>,
     twitter: Array<string>,
-    countries: Array<string>
+    countries: Array<string>,
   ) => {
 
     fetch('http://localhost:8080/get_data', {
       method: 'PUT',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        start_date: "2020-02-01",
-        end_date: "2020-04-23",
+        start_date: "2020-01-20",
+        end_date: "2020-04-20",
         countries: countries,
         google: google,
-        disease: "covid19"
-      })
+        disease: 'covid19',
+      }),
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(json => {
+      .then((json) => {
         console.log(json);
         let newData: GraphDataInterface = {
-          version: dataVersion,
-          countries: json.seriesTitles,
-          graphData: json.graphData
+          seriesTitles: json.seriesTitles,
+          graphData: json.graphData,
         };
+
+        // Combine all the data and create each series
+        for (let i in newData.seriesTitles) {
+          const country = newData.seriesTitles[i];
+          
+          for (let k of newData.graphData[i]) {
+              for (let n in k) {
+                  if (n.includes("date_")) {
+                      // Convert the string dates to actual dates
+                      k[n] = new Date(k[n]);
+                  } else {
+                      // Can't use zero if we try to do a log scale
+                      if (k[n] <= 0) {
+                          k[n] = 0.0000000001;
+                      }
+                  }
+              }
+          }
+        }
         setData(newData);
-        setDataVersion(dataVersion + 1);
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         setError(true);
         console.log(error);
       });
@@ -68,46 +84,31 @@ export const SearchPage = () => {
   };
   return (
     <PageContainer>
-      <SearchPanel fetchData={fetchData} error={error} />
-      <SearchResults loading={loading} data={data} />
+      <SearchPanel
+        fetchData={fetchData}
+        error={error}
+        totalCases={totalCases}
+        setTotalCases={setTotalCases}
+        totalDeaths={totalDeaths}
+        setTotalDeaths={setTotalDeaths}
+        newCases={newCases}
+        setNewCases={setNewCases}
+        newDeaths={newDeaths}
+        setNewDeaths={setNewDeaths}
+      />
+      <>
+        {loading && <Spinner loading={loading} />}
+        <>
+          <GraphPanel
+            data={data}
+            totalDeaths={totalDeaths}
+            newCases={newCases}
+            totalCases={totalCases}
+            newDeaths={newDeaths}
+          />
+        </>
+      </>
     </PageContainer>
   );
 };
-
-
-// generate some random data, quite different range
-function generateChartData(suffix) {
-  let chartData = [] as any[];
-  let firstDate = new Date();
-  firstDate.setDate(firstDate.getDate() - 100);
-  firstDate.setHours(0, 0, 0, 0);
-
-  let new_cases = 1600;
-  let new_deaths = 5;
-  let total_cases = 2900;
-  let total_deaths = 8700;
-
-  for (var i = 0; i < 15; i++) {
-    // we create date objects here. In your data, you can have date strings
-    // and then set format of your dates using chart.dataDateFormat property,
-    // however when possible, use date objects, as this will speed up chart rendering.
-    let newDate = new Date(firstDate);
-    newDate.setDate(newDate.getDate() + i);
-
-    new_cases += Math.round((Math.random() < 0.8 ? 1 : -1) * Math.random() * 10);
-    new_deaths += Math.round((Math.random() < 0.8 ? 1 : -1) * Math.random() * 10);
-    total_cases += Math.round((Math.random() < 0.85 ? 1 : -1) * Math.random() * 10);
-    total_deaths += Math.round((Math.random() < 0.9 ? 1 : -1) * Math.random() * 10);
-
-    let data = {};
-    data["date_" + suffix] = newDate;
-    data["new_cases_" + suffix] = new_cases;
-    data["new_deaths_" + suffix] = new_deaths;
-    data["total_cases_" + suffix] = total_cases;
-    data["total_deaths_" + suffix] = total_deaths;
-    chartData.push(data);
-  }
-  return chartData;
-}
-
 export default SearchPage;

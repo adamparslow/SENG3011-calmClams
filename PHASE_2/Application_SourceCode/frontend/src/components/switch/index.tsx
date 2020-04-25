@@ -15,7 +15,7 @@ const SwitchContainer = styled.div`
 const Swtch = (props) => {
   return (
     <SwitchContainer>
-      <Switch checked={false} onChange={props.onChange} onColor={config.theme.mediumColor}/>
+      <Switch checked={props.checked} onChange={props.onChange} onColor={config.theme.mediumColor}/>
       {props.text}
     </SwitchContainer>
   );
