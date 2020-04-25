@@ -8,9 +8,8 @@ import Switch from '../../components/switch';
 const PageContainer = styled.div``;
 
 interface GraphDataInterface {
-  version: number;
-  countries: Array<string>;
-  graphData: Array<{}>;
+  seriesTitles: Array<string>;
+  graphData: Array<any>;
 }
 
 export const SearchPage = () => {
@@ -19,14 +18,11 @@ export const SearchPage = () => {
   const [newCases, setNewCases] = useState(true);
   const [newDeaths, setNewDeaths] = useState(true);
 
-  const [firstLoad, setFirstLoad] = useState(true);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [dataVersion, setDataVersion] = useState(0);
   const [data, setData] = useState<GraphDataInterface>({
-    version: 0,
-    countries: [],
-    graphData: [{}],
+    seriesTitles: [],
+    graphData: [],
   });
 
   const fetchData = async (
@@ -34,7 +30,6 @@ export const SearchPage = () => {
     twitter: Array<string>,
     countries: Array<string>,
   ) => {
-    setFirstLoad(false);
 
     fetch('http://localhost:8080/get_data', {
       method: 'PUT',
@@ -56,12 +51,29 @@ export const SearchPage = () => {
       .then((json) => {
         console.log(json);
         let newData: GraphDataInterface = {
-          version: dataVersion,
-          countries: json.seriesTitles,
+          seriesTitles: json.seriesTitles,
           graphData: json.graphData,
         };
+
+        // Combine all the data and create each series
+        for (let i in newData.seriesTitles) {
+          const country = newData.seriesTitles[i];
+          
+          for (let k of newData.graphData[i]) {
+              for (let n in k) {
+                  if (n.includes("date_")) {
+                      // Convert the string dates to actual dates
+                      k[n] = new Date(k[n]);
+                  } else {
+                      // Can't use zero if we try to do a log scale
+                      if (k[n] <= 0) {
+                          k[n] = 0.0000000001;
+                      }
+                  }
+              }
+          }
+        }
         setData(newData);
-        setDataVersion(dataVersion + 1);
         setLoading(false);
       })
       .catch((error) => {
@@ -79,7 +91,6 @@ export const SearchPage = () => {
         setTotalCases={setTotalCases}
         totalDeaths={totalDeaths}
         setTotalDeaths={setTotalDeaths}
-        firstLoad={firstLoad}
         newCases={newCases}
         setNewCases={setNewCases}
         newDeaths={newDeaths}
