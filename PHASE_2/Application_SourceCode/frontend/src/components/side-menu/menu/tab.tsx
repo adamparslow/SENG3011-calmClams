@@ -45,10 +45,10 @@ const determineIcon = (tabName: String) => {
   }
 };
 
-const Tab = ({ tab, setTab, tabName, active, open }) => {
+const Tab = ({ setTab, tabName, active}) => {
   const Icon = determineIcon(tabName);
   return (
-    <StyledTab active={active} onClick={() => setTab(tab)}>
+    <StyledTab active={active} onClick={setTab}>
       {tabName}
       {Icon}
     </StyledTab>
