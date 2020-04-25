@@ -71,10 +71,15 @@ const GraphPanel = (props: GraphPanelProps) => {
             series.tooltipText = "{name}:{valueY}";
             series.tensionX = 0.9;
             series.showOnInit = true;
-            series.events.on("hidden", toggleAxes);
-            series.events.on("shown", toggleAxes);
             series.fill = colour;
             series.stroke = colour;
+
+            // Maybe remove/show the axis for this series when we toggle this axis
+            series.events.on("hidden", toggleAxes);
+            series.events.on("shown", toggleAxes);
+
+            // Display the current number in the legend
+            series.legendSettings.valueText = "{valueY.close}";
             scrollbar.series.push(series);
 
             let interfaceColors = new am4core.InterfaceColorSet();
@@ -156,16 +161,15 @@ const GraphPanel = (props: GraphPanelProps) => {
 
         let data = [];
 
-        let tCasesAxis, tDeathsAxis, nCasesAxis, nDeathsAxis, googleAxis, twitterAxis;
-        tCasesAxis = createAxis("Total Cases");
-        tDeathsAxis = createAxis("Total Deaths");
-        nCasesAxis = createAxis("New Cases");
-        nDeathsAxis = createAxis("New Deaths");
-        googleAxis = createAxis("Google Search Terms (Percentage of Peak Traffic)");
-        twitterAxis = createAxis("Twitter");
+        let tCasesAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Total Cases");
+        let tDeathsAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Total Deaths");
+        let nCasesAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("New Cases");
+        let nDeathsAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("New Deaths");
+        let googleAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Google Search Terms (Percentage of Peak Traffic)");
+        let twitterAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Twitter");
         nCasesAxis.extraMax = 0.8;
         nDeathsAxis.extraMax = 0.8;
-        tDeathsAxis.extraMax = 0.2;
+
 
         console.log(props.data);
 
@@ -196,6 +200,7 @@ const GraphPanel = (props: GraphPanelProps) => {
 
             data = data.concat(props.data.graphData[i]);
             const bullet = bullets[i];
+            
 
             // Create each series for each country
             for (let seriesName in props.data.graphData[i][0]) {
@@ -220,7 +225,7 @@ const GraphPanel = (props: GraphPanelProps) => {
 
             }
         }
-        
+
         chart.data = data;
         console.log(chart.data);
 
