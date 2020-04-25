@@ -49,12 +49,13 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.title.fontWeight = "600";
             axis.paddingRight = 10;
             */
+            axis.disabled = true;
             axis.title.text = name;
             axis.min = 1;
-            axis.disabled = true;
             if (chart.yAxes.indexOf(axis) !== 0) {
                 axis.syncWithAxis = tCasesAxis;
             }
+            axis.title.events.on("hit", () => axis.logarithmic = !axis.logarithmic);
             return axis;
         }
 
@@ -242,13 +243,6 @@ const GraphPanel = (props: GraphPanelProps) => {
         chart.cursor = new am4charts.XYCursor();
         chart.cursor.behavior = "zoomXY";
 
-        /*
-        tCasesAxis.logarithmic = true;
-        nCasesAxis.logarithmic = true;
-        tDeathsAxis.logarithmic = true;
-        nDeathsAxis.logarithmic = true;
-
-        */
         return function cleanup() {
             chart.dispose();
         };

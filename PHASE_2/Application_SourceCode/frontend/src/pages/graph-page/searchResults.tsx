@@ -20,7 +20,6 @@ export const SearchResults = (props: SearchResultProps) => {
       ) : (
           <ChartContainer>
             <GraphPanel data={data} />
-            <div margin-top={"-80px"}><Switch onChange={()=>{}}/></div>
           </ChartContainer>
         )}
     </>
