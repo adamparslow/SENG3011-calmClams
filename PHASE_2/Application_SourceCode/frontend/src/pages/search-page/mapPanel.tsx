@@ -7,6 +7,7 @@ import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 const style={height: "93vh", width: "100%", backgroundColor: "#00A8E8"};
 
 interface MapPanelProps {
+    loading: boolean,
     data: any,
     toggleReport: (id: number) => void,
 };
@@ -126,7 +127,8 @@ const MapPanel = (props: MapPanelProps) => {
 }
 
 const shouldUpdate = (prevprops, nextprops) => {
-    return prevprops.data.version === nextprops.data.version;
+    
+    return prevprops.loading !== nextprops.loading && prevprops.data.version === nextprops.data.version;
 }
 
 export default memo(MapPanel, shouldUpdate);

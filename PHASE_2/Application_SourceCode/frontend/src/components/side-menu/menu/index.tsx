@@ -30,6 +30,7 @@ const Menu = ({ tab, setTab, tabList }: menuTypes) => {
       <StyledMenu open={open}>
         {tabList.map((tabName, index) => (
           <Tab
+            key={index}
             tab={index}
             setTab={setTab}
             tabName={tabName}
