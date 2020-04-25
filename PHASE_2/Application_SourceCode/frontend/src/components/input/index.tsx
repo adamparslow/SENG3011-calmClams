@@ -1,20 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import config from '../../config'
+import HelpButton from '../helpButton';
 //TODO: Add typescript typing
 //      Add Auto-Complete Option
 
 const InputContainer = styled.div`
   display: flex;
   padding: 10px;
-`;
-const HelpButton = styled.button`
-  width: 30px;
-  background: ${config.theme.mediumColor};
-  border-radius: 0px 5px 5px 0px;
-  border: none;
-  font-size: 18px;
-  color: ${config.theme.primaryLight};
 `;
 const Input = styled.input`
   width: ${({ width }) => width ? `${width}px` : `100%`};
@@ -36,7 +29,7 @@ const ReactInput = (props) => {
       className={`input ${props.className}`}
       placeholder = {props.placeholder}
     />
-    {props.enableButton && <HelpButton>?</HelpButton>}
+    {props.enableButton && <HelpButton toolTipMessage={props.toolTipMessage} toolTipTitle={props.toolTipTitle}></HelpButton>}
     </InputContainer>
   );
 };

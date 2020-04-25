@@ -106,6 +106,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
           placeholder={'Key Terms'}
           onChange={handleKeyTerms}
           width={400}
+          toolTipTitle={'Help'}
+          toolTipMessage={'Type out your key terms separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'}
         />
       </GridContainer>
       <GridContainer>
@@ -115,6 +117,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
           placeholder={'Location'}
           onChange={handleLocation}
           width={200}
+          toolTipTitle={'Help'}
+          toolTipMessage={'Type out your countries separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'}
         />
       </GridContainer>
       <GridContainer>
