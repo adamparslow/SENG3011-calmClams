@@ -8,6 +8,10 @@ const style = { height: "93vh", width: "100%", backgroundColor: "#FFFFFF" };
 
 interface GraphPanelProps {
     data: any
+    totalCases: boolean;
+    totalDeaths: boolean;
+    newCases: boolean;
+    newDeaths: boolean;
 };
 
 const GraphPanel = (props: GraphPanelProps) => {
@@ -198,16 +202,16 @@ const GraphPanel = (props: GraphPanelProps) => {
 
             // Create each series for each country
             for (let seriesName in props.data.graphData[i][0]) {
-                if (seriesName.includes("total_cases")) {
+                if (seriesName.includes("total_cases") && props.totalCases) {
                     createSeries(tCasesAxis, "date_" + country, seriesName, bullet, tCasesColour);
                 }
-                if (seriesName.includes("total_deaths")) {
+                if (seriesName.includes("total_deaths") && props.totalDeaths) {
                     createSeries(tDeathsAxis, "date_" + country, seriesName, bullet, tDeathsColour);
                 }
-                if (seriesName.includes("new_cases")) {
+                if (seriesName.includes("new_cases") && props.newCases) {
                     createSeries(nCasesAxis, "date_" + country, seriesName, bullet, nCasesColour);
                 }
-                if (seriesName.includes("new_deaths")) {
+                if (seriesName.includes("new_deaths") && props.newDeaths) {
                     createSeries(nDeathsAxis, "date_" + country, seriesName, bullet, nDeathsColour);
                 }
                 if (seriesName.includes("google")) {
@@ -249,8 +253,4 @@ function snakeToTitle(string: String) {
     return ans.join(" ");
 }
 
-const shouldUpdate = (prevprops, nextprops) => {
-    return prevprops.data.version === nextprops.data.version;
-}
-
-export default memo(GraphPanel, shouldUpdate);
+export default GraphPanel;

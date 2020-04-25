@@ -31,14 +31,33 @@ interface SearchPanelProps {
     countries: Array<string>,
   ) => void;
   error: boolean;
+  totalCases: boolean;
+  setTotalCases: (value: boolean) => void;
+  totalDeaths: boolean;
+  setTotalDeaths: (value: boolean) => void;
+  newCases: boolean;
+  setNewCases: (value: boolean) => void;
+  newDeaths: boolean;
+  setNewDeaths: (value: boolean) => void;
 }
 
 export const SearchPanel = (props: SearchPanelProps) => {
+  const {
+    totalCases,
+    setTotalCases,
+    totalDeaths,
+    setTotalDeaths,
+    newCases,
+    setNewCases,
+    newDeaths,
+    setNewDeaths,
+  } = props;
   const [googleTerms, setGoogleTerms] = useState('');
   const [twitterTags, setTwitterTags] = useState('');
   const [countries, setCountries] = useState('');
-  const handleSwitch = (event) => {
-    console.log(event);
+
+  const handleSwitch = (event, setSwitch) => {
+    setSwitch(event);
   };
   const handleGoogleTerms = (event) => {
     setGoogleTerms(event.target.value);
@@ -88,19 +107,31 @@ export const SearchPanel = (props: SearchPanelProps) => {
       <Modal error={() => 'error'}></Modal>
       <GridContainer>
         Total Cases
-        <Switch onChange={handleSwitch} />
+        <Switch
+          checked={totalCases}
+          onChange={(event) => handleSwitch(event, setTotalCases)}
+        />
       </GridContainer>
       <GridContainer>
         Total Deaths
-        <Switch onChange={handleSwitch} />
+        <Switch
+          checked={totalDeaths}
+          onChange={(event) => handleSwitch(event, setTotalDeaths)}
+        />
       </GridContainer>
       <GridContainer>
         New Cases
-        <Switch onChange={handleSwitch} />
+        <Switch
+          checked={newCases}
+          onChange={(event) => handleSwitch(event, setNewCases)}
+        />
       </GridContainer>
       <GridContainer>
         New Deaths
-        <Switch onChange={handleSwitch} />
+        <Switch
+          checked={newDeaths}
+          onChange={(event) => handleSwitch(event, setNewDeaths)}
+        />
       </GridContainer>
       <GridContainer>
         Google Search Terms
