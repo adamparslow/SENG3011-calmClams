@@ -18,24 +18,24 @@ export const SearchPage = () => {
   const [newCases, setNewCases] = useState(true);
   const [newDeaths, setNewDeaths] = useState(true);
 
+  const [firstLoad, setFirstLoad] = useState(true);
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [dataVersion, setDataVersion] = useState(0);
   const [data, setData] = useState<GraphDataInterface>({
     version: 0,
-    countries: ['global'],
-    graphData: [generateChartData('global')],
+    countries: [],
+    graphData: [{}]
   });
 
   const fetchData = async (
-    tCases: boolean,
-    tDeaths: boolean,
-    nCases: boolean,
-    nDeaths: boolean,
     google: Array<string>,
     twitter: Array<string>,
     countries: Array<string>,
   ) => {
+    
+    setFirstLoad(false);
+
     fetch('http://localhost:8080/get_data', {
       method: 'PUT',
       headers: {
@@ -79,6 +79,7 @@ export const SearchPage = () => {
         setTotalCases={setTotalCases}
         totalDeaths={totalDeaths}
         setTotalDeaths={setTotalDeaths}
+        firstLoad={firstLoad}
         newCases={newCases}
         setNewCases={setNewCases}
         newDeaths={newDeaths}
@@ -143,5 +144,4 @@ function generateChartData(suffix) {
   }
   return chartData;
 }
-
 export default SearchPage;

@@ -22,13 +22,9 @@ const GridContainer = styled.div`
 
 interface SearchPanelProps {
   fetchData: (
-    tCases: boolean,
-    tDeaths: boolean,
-    nCases: boolean,
-    nDeaths: boolean,
     google: Array<string>,
     twitter: Array<string>,
-    countries: Array<string>,
+    countries: Array<string>
   ) => void;
   error: boolean;
   totalCases: boolean;
@@ -39,6 +35,7 @@ interface SearchPanelProps {
   setNewCases: (value: boolean) => void;
   newDeaths: boolean;
   setNewDeaths: (value: boolean) => void;
+  firstLoad: boolean;
 }
 
 export const SearchPanel = (props: SearchPanelProps) => {
@@ -54,8 +51,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
   } = props;
   const [googleTerms, setGoogleTerms] = useState('');
   const [twitterTags, setTwitterTags] = useState('');
-  const [countries, setCountries] = useState('');
 
+  const [countries, setCountries] = useState('global');
   const handleSwitch = (event, setSwitch) => {
     setSwitch(event);
   };
@@ -80,15 +77,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
       showModal(err);
       return null;
     }
-    return props.fetchData(
-      true,
-      false,
-      false,
-      false,
-      googleTerms === '' ? [] : googleTerms.split(','),
-      [],
-      countries === '' ? [] : countries.split(','),
-    );
+    return props.fetchData(googleTerms === '' ? [] : googleTerms.split(','), [], countries === '' ? [] : countries.split(','));
   };
 
   const showModal = (error) => {
@@ -102,9 +91,13 @@ export const SearchPanel = (props: SearchPanelProps) => {
     modals[0].style.display = 'block';
   };
 
+  if (props.firstLoad) {
+    santitisedDataFetch();
+  }
+
   return (
     <FlexContainer>
-      <Modal error={() => 'error'}></Modal>
+      <Modal error={() => props.error}></Modal>
       <GridContainer>
         Total Cases
         <Switch

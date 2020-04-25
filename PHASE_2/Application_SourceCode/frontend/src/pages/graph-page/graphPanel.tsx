@@ -36,7 +36,6 @@ const GraphPanel = (props: GraphPanelProps) => {
         scrollbar.startGrip.background.fill = am4core.color(config.theme.mediumColor);
         scrollbar.endGrip.background.fill = am4core.color(config.theme.mediumColor);
 
-
         chart.scrollbarX = scrollbar;
         chart.scrollbarX.parent = chart.bottomAxesContainer;
 
@@ -55,7 +54,7 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.paddingRight = 10;
             */
             axis.title.text = name;
-            axis.min = 0;
+            axis.min = 1;
             axis.disabled = true;
             if (chart.yAxes.indexOf(axis) !== 0) {
                 axis.syncWithAxis = tCasesAxis;
@@ -75,10 +74,15 @@ const GraphPanel = (props: GraphPanelProps) => {
             series.tooltipText = "{name}:{valueY}";
             series.tensionX = 0.9;
             series.showOnInit = true;
-            series.events.on("hidden", toggleAxes);
-            series.events.on("shown", toggleAxes);
             series.fill = colour;
             series.stroke = colour;
+
+            // Maybe remove/show the axis for this series when we toggle this axis
+            series.events.on("hidden", toggleAxes);
+            series.events.on("shown", toggleAxes);
+
+            // Display the current number in the legend
+            series.legendSettings.valueText = "{valueY.close}";
             scrollbar.series.push(series);
 
             let interfaceColors = new am4core.InterfaceColorSet();
@@ -145,6 +149,7 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.renderer.line.stroke = series.stroke;
             axis.renderer.line.align = "right";
             axis.renderer.labels.template.fill = series.stroke;
+
         }
 
         function toggleAxes(ev) {
@@ -160,15 +165,15 @@ const GraphPanel = (props: GraphPanelProps) => {
 
         let data = [];
 
-        let tCasesAxis, tDeathsAxis, nCasesAxis, nDeathsAxis, googleAxis, twitterAxis;
-        tCasesAxis = createAxis("Total Cases");
-        tDeathsAxis = createAxis("Total Deaths");
-        nCasesAxis = createAxis("New Cases");
-        nDeathsAxis = createAxis("New Deaths");
-        googleAxis = createAxis("Google Percentage of Peak Traffic");
-        twitterAxis = createAxis("Twitter");
-        nCasesAxis.extraMax = 0.8
-        nDeathsAxis.extraMax = 0.8
+        let tCasesAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Total Cases");
+        let tDeathsAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Total Deaths");
+        let nCasesAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("New Cases");
+        let nDeathsAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("New Deaths");
+        let googleAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Google Search Terms (Percentage of Peak Traffic)");
+        let twitterAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Twitter");
+        nCasesAxis.extraMax = 0.8;
+        nDeathsAxis.extraMax = 0.8;
+
 
         console.log(props.data);
 
@@ -193,12 +198,17 @@ const GraphPanel = (props: GraphPanelProps) => {
                 for (let n in k) {
                     if (n.includes("date_")) {
                         k[n] = new Date(k[n]);
+                    } else {
+                        if (k[n] <= 0) {
+                            k[n] = 0.0000000001;
+                        }
                     }
                 }
             }
 
             data = data.concat(props.data.graphData[i]);
             const bullet = bullets[i];
+
 
             // Create each series for each country
             for (let seriesName in props.data.graphData[i][0]) {
@@ -223,7 +233,7 @@ const GraphPanel = (props: GraphPanelProps) => {
 
             }
         }
-        
+
         chart.data = data;
         console.log(chart.data);
 
@@ -236,6 +246,13 @@ const GraphPanel = (props: GraphPanelProps) => {
         chart.cursor = new am4charts.XYCursor();
         chart.cursor.behavior = "zoomXY";
 
+        /*
+        tCasesAxis.logarithmic = true;
+        nCasesAxis.logarithmic = true;
+        tDeathsAxis.logarithmic = true;
+        nDeathsAxis.logarithmic = true;
+
+        */
         return function cleanup() {
             chart.dispose();
         };
@@ -245,6 +262,8 @@ const GraphPanel = (props: GraphPanelProps) => {
 }
 
 function snakeToTitle(string: String) {
+    string = string.replace(" ", "_");
+    string = string.replace(":", "_");
     let parts = string.split("_");
     let ans: Array<String> = [];
     for (let p of parts) {
