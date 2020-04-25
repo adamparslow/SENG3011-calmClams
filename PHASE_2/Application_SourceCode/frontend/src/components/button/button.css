@@ -8,8 +8,7 @@
     width: 180px;
     transition: all 0.5s;
     cursor: pointer;
-    margin: 5px;
-    height: 25px;
+    margin: 20px 5px 5px 5px;
   }
   
   .btn span {
