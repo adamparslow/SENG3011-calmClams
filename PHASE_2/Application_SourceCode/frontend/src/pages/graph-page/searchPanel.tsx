@@ -5,6 +5,7 @@ import Input from '../../components/input';
 import config from '../../config';
 import Switch from '../../components/switch';
 import Modal from '../../components/modal';
+import Autocomplete from '../../components/autocomplete';
 
 const FlexContainer = styled.div`
   display: flex;
@@ -126,15 +127,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
         />
       </GridContainer>
       <GridContainer>
-        Countries
-        <Input
-          enableButton={true}
-          placeholder={'Location'}
-          onChange={handleCountry}
-          width={200}
-          toolTipTitle={'Help'}
-          toolTipMessage={'Type out your countries separated by commas.\nEach country will be a new graph.'}
-        />
+        <Autocomplete onChange={handleCountry} options={'countries'} label={'COUNTRIES'} placeholder={'Countries'} defaultValue={['Global']} />
       </GridContainer>
       <GridContainer>
         <Button hover={true} onClick={santitisedDataFetch}>
