@@ -5,6 +5,7 @@ import Autocomplete from '../../components/autocomplete';
 import Modal from '../../components/modal';
 import config from '../../config';
 import DateInput from '../../components/date-picker';
+import HelpButton from '../../components/helpButton';
 
 
 const FlexContainer = styled.div`
@@ -100,10 +101,16 @@ export const SearchPanel = (props: SearchPanelProps) => {
         <DateInput onChange={handleEndDateChange} width={200} />
       </GridContainer>
       <GridContainer>
-        <Autocomplete onChange={handleKeyTerms} options={'key_terms'} label={'KEY TERMS'} placeholder={'Key Terms'} defaultValue={[]} />
+        <div>
+          <Autocomplete onChange={handleKeyTerms} options={'key_terms'} label={'KEY TERMS'} placeholder={'Key Terms'} defaultValue={[]} />
+          <HelpButton toolTipMessage="" toolTipTitle=""></HelpButton>
+          </div>
       </GridContainer>
       <GridContainer>
-        <Autocomplete onChange={handleLocation} options={'countries'} label={'COUNTRIES'} placeholder={'Countries'} defaultValue={['Global']} />
+        <div>
+          <Autocomplete onChange={handleLocation} options={'countries'} label={'COUNTRIES'} placeholder={'Countries'} defaultValue={['Global']} />
+          <HelpButton toolTipMessage="" toolTipTitle=""></HelpButton>
+        </div>
       </GridContainer>
       <GridContainer>
         <Button hover={true} onClick={santitisedDataFetch}>
