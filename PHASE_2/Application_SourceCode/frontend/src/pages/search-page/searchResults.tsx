@@ -12,9 +12,15 @@ const FlexContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const Header = styled.h1`
+const Header = styled.div`
+  top: 0;
+  position: sticky;
+  font-weight: bold;
+  padding: 15px;
+  font-size: 30px;
   text-align: center;
-  color: ${config.theme.primaryDark};
+  color: ${config.theme.primaryLight};
+  background-color: ${config.theme.mediumColor};
 `;
 
 interface SearchResultProps {
@@ -30,29 +36,28 @@ export const SearchResults = (props: SearchResultProps) => {
     setExpandable(
       data.articles.map((report) => ({ id: report._id, expanded: false })),
     );
+  // eslint-disable-next-line
   }, [props.data]);
 
   const toggleReport = (id: number) => {
+    console.log(">>>1");
+    console.log("expandable: ", expandable);
     const newState = expandable.map((report) => {
-      // console.log(report.id, id, report.id === id);
+      console.log(">>>2");
       if (report.id === id) {
+        console.log(">>>3");
         report.expanded = !report.expanded;
       }
       return report;
     });
     setExpandable(newState);
   };
-
   return (
     <>
-      
-     
-      {loading ? (
-        <Spinner loading={loading} />
-      ) : (
-        data.articles && (
-          <>
-          <MapPanel data={data} toggleReport={toggleReport} />
+      {loading && <Spinner loading={loading} />}
+      <MapPanel loading={loading} data={data} toggleReport={toggleReport} />
+      {data.articles.length === 0 || loading || (
+        <>
           <Header>Reports:</Header>
           <FlexContainer>
             {data.articles.map((report, index) => (
@@ -60,12 +65,11 @@ export const SearchResults = (props: SearchResultProps) => {
                 article={report}
                 key={report._id}
                 toggleReport={() => toggleReport(report._id)}
-                expanded={expandable[index].expanded}
+                expanded={expandable[index] && expandable[index].expanded}
               />
             ))}
           </FlexContainer>
-          </>
-        )
+        </>
       )}
     </>
   );

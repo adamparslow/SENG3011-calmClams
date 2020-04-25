@@ -53,7 +53,7 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.title.text = name;
             axis.min = 0;
             axis.disabled = true;
-            if (chart.yAxes.indexOf(axis) != 0) {
+            if (chart.yAxes.indexOf(axis) !== 0) {
                 axis.syncWithAxis = tCasesAxis;
             }
             return axis;
@@ -120,6 +120,7 @@ const GraphPanel = (props: GraphPanelProps) => {
 
                 default:
                     console.log("error", bulletType);
+                    break;
                 case "circle":
                     shape = bullet.createChild(am4core.RoundedRectangle);
                     shape.cornerRadiusBottomLeft = 100;

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import SearchPanel from './searchPanel';
 import SearchResults from './searchResults';
 import styled from 'styled-components';
-import config from '../../config';
 
 const PageContainer = styled.div``;
 
