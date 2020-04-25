@@ -83,6 +83,7 @@ const MapPanel = (props: MapPanelProps) => {
 
         // Mapping multi-locations to single locations
         const imageData : any[] = [];
+        let dataNumber = 0;
 
         for (const article of props.data.articles) {
             const locations = article.reports[0].locations;
@@ -108,12 +109,13 @@ const MapPanel = (props: MapPanelProps) => {
 
                 imageData.push({
                     "title": article.headline,
-                    "url": `#${article._id}`,
+                    "url": `#${dataNumber >= 2 ? article._id - 2 : article._id}`,
                     "click": `console.log(${article._id})`,
                     "latitude": Number(lat),
                     "longitude": Number(long),
                     "id": id
                 });
+                dataNumber++;
             }
         }
 
