@@ -32,7 +32,6 @@ const GraphPanel = (props: GraphPanelProps) => {
         scrollbar.startGrip.background.fill = am4core.color(config.theme.mediumColor);
         scrollbar.endGrip.background.fill = am4core.color(config.theme.mediumColor);
 
-
         chart.scrollbarX = scrollbar;
         chart.scrollbarX.parent = chart.bottomAxesContainer;
 
@@ -51,7 +50,7 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.paddingRight = 10;
             */
             axis.title.text = name;
-            axis.min = 0;
+            axis.min = 1;
             axis.disabled = true;
             if (chart.yAxes.indexOf(axis) !== 0) {
                 axis.syncWithAxis = tCasesAxis;
@@ -146,6 +145,7 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.renderer.line.stroke = series.stroke;
             axis.renderer.line.align = "right";
             axis.renderer.labels.template.fill = series.stroke;
+
         }
 
         function toggleAxes(ev) {
@@ -194,13 +194,17 @@ const GraphPanel = (props: GraphPanelProps) => {
                 for (let n in k) {
                     if (n.includes("date_")) {
                         k[n] = new Date(k[n]);
+                    } else {
+                        if (k[n] <= 0) {
+                            k[n] = 0.0000000001;
+                        }
                     }
                 }
             }
 
             data = data.concat(props.data.graphData[i]);
             const bullet = bullets[i];
-            
+
 
             // Create each series for each country
             for (let seriesName in props.data.graphData[i][0]) {
@@ -238,6 +242,13 @@ const GraphPanel = (props: GraphPanelProps) => {
         chart.cursor = new am4charts.XYCursor();
         chart.cursor.behavior = "zoomXY";
 
+        /*
+        tCasesAxis.logarithmic = true;
+        nCasesAxis.logarithmic = true;
+        tDeathsAxis.logarithmic = true;
+        nDeathsAxis.logarithmic = true;
+
+        */
         return function cleanup() {
             chart.dispose();
         };

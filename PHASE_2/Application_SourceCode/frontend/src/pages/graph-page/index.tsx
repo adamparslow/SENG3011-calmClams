@@ -36,7 +36,7 @@ export const SearchPage = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        start_date: "2020-02-01",
+        start_date: "2020-01-01",
         end_date: "2020-04-23",
         countries: countries,
         google: google,
