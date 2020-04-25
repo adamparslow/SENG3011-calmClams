@@ -126,6 +126,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
             label="KEY TERMS"
             placeholder={'Key Terms'}
             onChange={handleKeyTerms}
+            //toolTipTitle={'Help'}
+            //toolTipMessage={'Type out your key terms separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'}
           />
         )}
       />
@@ -144,6 +146,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
             label="LOCATIONS"
             placeholder={'Locations'}
             onChange={handleLocation}
+            //toolTipTitle={'Help'}
+            //toolTipMessage={'Type out your countries separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'}
           />
         )}
       />
