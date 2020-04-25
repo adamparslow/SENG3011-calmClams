@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../components/button';
 import Input from '../../components/input';
-import Modal from '../../components/modal'
+import Modal from '../../components/modal';
+import TextField from '../../components/autocomplete';
 import config from '../../config';
 import DateInput from '../../components/date-picker';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+//import Autocomplete from '@material-ui/lab/Autocomplete';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+//import TextField from '@material-ui/core/TextField';
 
 const FlexContainer = styled.div`
   display: flex;
