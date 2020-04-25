@@ -23,23 +23,39 @@ const GridContainer = styled.div`
 
 interface SearchPanelProps {
   fetchData: (
-    tCases: boolean,
-    tDeaths: boolean,
-    nCases: boolean,
-    nDeaths: boolean,
     google: Array<string>,
     twitter: Array<string>,
-    countries: Array<string>,
+    countries: Array<string>
   ) => void;
   error: boolean;
+  totalCases: boolean;
+  setTotalCases: (value: boolean) => void;
+  totalDeaths: boolean;
+  setTotalDeaths: (value: boolean) => void;
+  newCases: boolean;
+  setNewCases: (value: boolean) => void;
+  newDeaths: boolean;
+  setNewDeaths: (value: boolean) => void;
+  firstLoad: boolean;
 }
 
 export const SearchPanel = (props: SearchPanelProps) => {
+  const {
+    totalCases,
+    setTotalCases,
+    totalDeaths,
+    setTotalDeaths,
+    newCases,
+    setNewCases,
+    newDeaths,
+    setNewDeaths,
+  } = props;
   const [googleTerms, setGoogleTerms] = useState('');
   const [twitterTags, setTwitterTags] = useState('');
-  const [countries, setCountries] = useState('');
-  const handleSwitch = (event) => {
-    console.log(event);
+
+  const [countries, setCountries] = useState('global');
+  const handleSwitch = (event, setSwitch) => {
+    setSwitch(event);
   };
   const handleGoogleTerms = (event) => {
     setGoogleTerms(event.target.value);
@@ -62,15 +78,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
       showModal(err);
       return null;
     }
-    return props.fetchData(
-      true,
-      false,
-      false,
-      false,
-      googleTerms === '' ? [] : googleTerms.split(','),
-      [],
-      countries === '' ? [] : countries.split(','),
-    );
+    return props.fetchData(googleTerms === '' ? [] : googleTerms.split(','), [], countries === '' ? [] : countries.split(','));
   };
 
   const showModal = (error) => {
@@ -84,24 +92,40 @@ export const SearchPanel = (props: SearchPanelProps) => {
     modals[0].style.display = 'block';
   };
 
+  if (props.firstLoad) {
+    santitisedDataFetch();
+  }
+
   return (
     <FlexContainer>
-      <Modal error={() => 'error'}></Modal>
+      <Modal error={() => props.error}></Modal>
       <GridContainer>
         Total Cases
-        <Switch onChange={handleSwitch} />
+        <Switch
+          checked={totalCases}
+          onChange={(event) => handleSwitch(event, setTotalCases)}
+        />
       </GridContainer>
       <GridContainer>
         Total Deaths
-        <Switch onChange={handleSwitch} />
+        <Switch
+          checked={totalDeaths}
+          onChange={(event) => handleSwitch(event, setTotalDeaths)}
+        />
       </GridContainer>
       <GridContainer>
         New Cases
-        <Switch onChange={handleSwitch} />
+        <Switch
+          checked={newCases}
+          onChange={(event) => handleSwitch(event, setNewCases)}
+        />
       </GridContainer>
       <GridContainer>
         New Deaths
-        <Switch onChange={handleSwitch} />
+        <Switch
+          checked={newDeaths}
+          onChange={(event) => handleSwitch(event, setNewDeaths)}
+        />
       </GridContainer>
       <GridContainer>
         Google Search Terms

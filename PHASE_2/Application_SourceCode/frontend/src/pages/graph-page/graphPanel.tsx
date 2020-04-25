@@ -8,6 +8,10 @@ const style = { height: "93vh", width: "100%", backgroundColor: "#FFFFFF" };
 
 interface GraphPanelProps {
     data: any
+    totalCases: boolean;
+    totalDeaths: boolean;
+    newCases: boolean;
+    newDeaths: boolean;
 };
 
 const GraphPanel = (props: GraphPanelProps) => {
@@ -32,7 +36,6 @@ const GraphPanel = (props: GraphPanelProps) => {
         scrollbar.startGrip.background.fill = am4core.color(config.theme.mediumColor);
         scrollbar.endGrip.background.fill = am4core.color(config.theme.mediumColor);
 
-
         chart.scrollbarX = scrollbar;
         chart.scrollbarX.parent = chart.bottomAxesContainer;
 
@@ -50,12 +53,13 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.title.fontWeight = "600";
             axis.paddingRight = 10;
             */
-            axis.title.text = name;
-            axis.min = 0;
             axis.disabled = true;
+            axis.title.text = name;
+            axis.min = 1;
             if (chart.yAxes.indexOf(axis) !== 0) {
                 axis.syncWithAxis = tCasesAxis;
             }
+            axis.title.events.on("hit", () => axis.logarithmic = !axis.logarithmic);
             return axis;
         }
 
@@ -71,10 +75,15 @@ const GraphPanel = (props: GraphPanelProps) => {
             series.tooltipText = "{name}:{valueY}";
             series.tensionX = 0.9;
             series.showOnInit = true;
-            series.events.on("hidden", toggleAxes);
-            series.events.on("shown", toggleAxes);
             series.fill = colour;
             series.stroke = colour;
+
+            // Maybe remove/show the axis for this series when we toggle this axis
+            series.events.on("hidden", toggleAxes);
+            series.events.on("shown", toggleAxes);
+
+            // Display the current number in the legend
+            //series.legendSettings.valueText = "{valueY.close}";
             scrollbar.series.push(series);
 
             let interfaceColors = new am4core.InterfaceColorSet();
@@ -141,6 +150,7 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.renderer.line.stroke = series.stroke;
             axis.renderer.line.align = "right";
             axis.renderer.labels.template.fill = series.stroke;
+
         }
 
         function toggleAxes(ev) {
@@ -156,15 +166,15 @@ const GraphPanel = (props: GraphPanelProps) => {
 
         let data = [];
 
-        let tCasesAxis, tDeathsAxis, nCasesAxis, nDeathsAxis, googleAxis, twitterAxis;
-        tCasesAxis = createAxis("Total Cases");
-        tDeathsAxis = createAxis("Total Deaths");
-        nCasesAxis = createAxis("New Cases");
-        nDeathsAxis = createAxis("New Deaths");
-        googleAxis = createAxis("Google Percentage of Peak Traffic");
-        twitterAxis = createAxis("Twitter");
-        nCasesAxis.extraMax = 0.8
-        nDeathsAxis.extraMax = 0.8
+        let tCasesAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Total Cases");
+        let tDeathsAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Total Deaths");
+        let nCasesAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("New Cases");
+        let nDeathsAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("New Deaths");
+        let googleAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Google Search Terms (Percentage of Peak Traffic)");
+        let twitterAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Twitter");
+        nCasesAxis.extraMax = 0.8;
+        nDeathsAxis.extraMax = 0.8;
+
 
         console.log(props.data);
 
@@ -189,25 +199,30 @@ const GraphPanel = (props: GraphPanelProps) => {
                 for (let n in k) {
                     if (n.includes("date_")) {
                         k[n] = new Date(k[n]);
+                    } else {
+                        if (k[n] <= 0) {
+                            k[n] = 0.0000000001;
+                        }
                     }
                 }
             }
 
             data = data.concat(props.data.graphData[i]);
-            const bullet = bullets[i];
+            const bullet = bullets[+i % bullets.length];
+
 
             // Create each series for each country
             for (let seriesName in props.data.graphData[i][0]) {
-                if (seriesName.includes("total_cases")) {
+                if (seriesName.includes("total_cases") && props.totalCases) {
                     createSeries(tCasesAxis, "date_" + country, seriesName, bullet, tCasesColour);
                 }
-                if (seriesName.includes("total_deaths")) {
+                if (seriesName.includes("total_deaths") && props.totalDeaths) {
                     createSeries(tDeathsAxis, "date_" + country, seriesName, bullet, tDeathsColour);
                 }
-                if (seriesName.includes("new_cases")) {
+                if (seriesName.includes("new_cases") && props.newCases) {
                     createSeries(nCasesAxis, "date_" + country, seriesName, bullet, nCasesColour);
                 }
-                if (seriesName.includes("new_deaths")) {
+                if (seriesName.includes("new_deaths") && props.newDeaths) {
                     createSeries(nDeathsAxis, "date_" + country, seriesName, bullet, nDeathsColour);
                 }
                 if (seriesName.includes("google")) {
@@ -219,7 +234,7 @@ const GraphPanel = (props: GraphPanelProps) => {
 
             }
         }
-        
+
         chart.data = data;
         console.log(chart.data);
 
@@ -241,6 +256,8 @@ const GraphPanel = (props: GraphPanelProps) => {
 }
 
 function snakeToTitle(string: String) {
+    string = string.replace(" ", "_");
+    string = string.replace(":", "_");
     let parts = string.split("_");
     let ans: Array<String> = [];
     for (let p of parts) {
@@ -249,8 +266,4 @@ function snakeToTitle(string: String) {
     return ans.join(" ");
 }
 
-const shouldUpdate = (prevprops, nextprops) => {
-    return prevprops.data.version === nextprops.data.version;
-}
-
-export default memo(GraphPanel, shouldUpdate);
+export default GraphPanel;

@@ -44,6 +44,9 @@ const getGlobalData = async (country, startDate, endDate, graphData) => {
 
     for (const data of response) {
         let graphDataObj = {};
+        if (isNaN(new Date(data.data.date))) {
+            continue;
+        }
         graphDataObj[`date_${country}`] = `${new Date(data.data.date).toDateString()} 00:00:00`;
         graphDataObj[`total_cases_${country}`] = data.data.confirmed;
         graphDataObj[`total_deaths_${country}`] = data.data.deaths;

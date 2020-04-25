@@ -1,12 +1,12 @@
 const z = require('zebras');
 
-const handleEbola = () => {
+const handleEbola = (countries) => {
     const cases = getEbolaData('Ebola Confirmed Cases.csv');
     const deaths = getEbolaData('Ebola Confirmed Deaths.csv');
     const combined = z.concat(cases, deaths);
     const uniqueCountries = getUniqueCountries(combined);
     const graphData = getGraphData(combined, uniqueCountries);
-    const serverData = getServerData(graphData, uniqueCountries);
+    const serverData = getServerData(graphData, countries);
     // console.log('SERVER DATA: ', serverData);
     return serverData;
 };
@@ -44,6 +44,7 @@ const getServerData = (data, uniqueCountries) => {
     serverData['seriesTitles'] = uniqueCountries;
     serverData['graphData'] = [];
     for (var country of uniqueCountries) {
+        countryData = [];
         for (var date of Object.keys(data[country])) {
             const graphElement = {};
             graphElement['date_' + country] = formatDate(date); // TODO re-format date
@@ -51,8 +52,9 @@ const getServerData = (data, uniqueCountries) => {
             graphElement['new_deaths_' + country] = parseInt(data[country][date].new_deaths);
             graphElement['total_cases_' + country] = parseInt(data[country][date].cases_total);
             graphElement['total_deaths_' + country] = parseInt(data[country][date].deaths_total);
-            serverData['graphData'].push(graphElement);
+            countryData.push(graphElement);
         }
+        serverData['graphData'].push(countryData);
     }
     return serverData;
 };

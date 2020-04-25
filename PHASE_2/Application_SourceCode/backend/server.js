@@ -67,7 +67,7 @@ app.put("/get_data", cors(corsOptions), async (req, res) => {
             response = await handleCovid(data);
             break;
         case "ebola":
-            response = handleEbola();
+            response = handleEbola(data.countries);
             break;
     }
 
