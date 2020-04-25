@@ -79,7 +79,7 @@ const GraphPanel = (props: GraphPanelProps) => {
             series.events.on("shown", toggleAxes);
 
             // Display the current number in the legend
-            series.legendSettings.valueText = "{valueY.close}";
+            //series.legendSettings.valueText = "{valueY.close}";
             scrollbar.series.push(series);
 
             let interfaceColors = new am4core.InterfaceColorSet();
@@ -204,7 +204,7 @@ const GraphPanel = (props: GraphPanelProps) => {
             }
 
             data = data.concat(props.data.graphData[i]);
-            const bullet = bullets[i];
+            const bullet = bullets[+i % bullets.length];
 
 
             // Create each series for each country
