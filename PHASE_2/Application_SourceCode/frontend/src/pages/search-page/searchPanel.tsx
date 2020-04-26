@@ -33,8 +33,8 @@ interface SearchPanelProps {
 export const SearchPanel = (props: SearchPanelProps) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [keyTerms, setKeyTerms] = useState('');
-  const [location, setLocation] = useState('');
+  const [keyTerms, setKeyTerms] = useState([]);
+  const [location, setLocation] = useState([]);
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
