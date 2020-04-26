@@ -4,7 +4,7 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import config from '../../config';
 
-const style = { height: "93vh", width: "100%", backgroundColor: "#FFFFFF" };
+const style = { height: "81.5vh", width: "100%", backgroundColor: "#FFFFFF" };
 
 interface GraphPanelProps {
     data: any
