@@ -19,7 +19,6 @@ const GridContainer = styled.div`
   display: grid;
   padding: 10px;
   color: ${config.theme.primaryLight};
-  margin: auto;
   font-size: 12px;
   text-align: center;
 `;
