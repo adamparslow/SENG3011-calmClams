@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import config from '../../../config';
 import { BsGraphUp, BsQuestionDiamond } from 'react-icons/bs';
 import { GiEarthAmerica } from 'react-icons/gi';
+import EbolaImage from '../../../media/ebola.png';
+import CovidImage from '../../../media/covid.png';
 
 const StyledTab = styled.div`
   color: ${config.theme.primaryLight};
@@ -18,16 +20,22 @@ const StyledIcon = styled.span`
   right: 18px;
 `;
 
+const Logo = styled.img`
+  width: 32px;
+  position: absolute;
+  left: -26px;
+`;
+
 interface tabType {
   tab: number;
   setTab: Dispatch<SetStateAction<number>>;
 }
 
 const determineIcon = (tabName: String) => {
-  if (tabName === 'Graph Page') {
+  if (tabName === 'Ebola Graph') {
     return (
       <StyledIcon>
-        <BsGraphUp />
+        <Logo src={EbolaImage} />
       </StyledIcon>
     );
   }
@@ -40,7 +48,7 @@ const determineIcon = (tabName: String) => {
   } else {
     return (
       <StyledIcon>
-        <BsGraphUp />
+        <Logo src={CovidImage} />
       </StyledIcon>
     );
   }
