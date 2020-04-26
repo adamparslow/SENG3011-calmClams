@@ -3,8 +3,10 @@ const predict = (series, country, additionalDays) => {
 
     // Clean data
     for (const entry of series) {
+        let dateString = entry["date_" + country];
+
         data.push({
-            date: entry["date_" + country],
+            date: Date.parse(dateString.substring(0, dateString.length - " 00:00:00".length)),
             value: entry["total_cases_" + country]
         });
     }
@@ -37,12 +39,25 @@ const predict = (series, country, additionalDays) => {
 
     // console.log(`k: ${k}, L: ${L}, xOff: ${xOff}`);
 
-    for (let i = 0; i < n; i++) {
-        series[i][`predict_cases_${country}`] = curve[i];
-    }
+    // for (let i = 0; i < n; i++) {
+    //     series[i][`predict_cases_${country}`] = curve[i];
+    // }
+
+    // Align with final point on curve
+    yOff = curve[n - 1] - data[n - 1].value;
+    series[n - 1][`predict_cases_${country}`] = curve[n - 1] - yOff;
+
+    lastDate = data[n - 1].date;
 
     for (let i = n; i < n + additionalDays; i++) {
-        // TODO Add new dates for series entries
+        date = new Date(lastDate);
+        date.setDate(date.getDate() + i - n + 1);
+
+        entry = {};
+        entry["date"] = `${date.toDateString()} 00:00:00`;
+        entry[`predict_cases_${country}`] = curve[i] - yOff;
+
+        series.push(entry);
     }
 }
 
