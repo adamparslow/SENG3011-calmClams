@@ -11,6 +11,7 @@ const StyledTab = styled.div`
   padding: 20px;
   font-size: 20px;
   text-align: center;
+  padding-right: 55px;
 `;
 const StyledIcon = styled.span`
   position: absolute;
@@ -30,7 +31,7 @@ const determineIcon = (tabName: String) => {
       </StyledIcon>
     );
   }
-  if (tabName === 'Map Page') {
+  if (tabName === 'World Map') {
     return (
       <StyledIcon>
         <GiEarthAmerica />
@@ -39,7 +40,7 @@ const determineIcon = (tabName: String) => {
   } else {
     return (
       <StyledIcon>
-        <BsQuestionDiamond />
+        <BsGraphUp />
       </StyledIcon>
     );
   }
