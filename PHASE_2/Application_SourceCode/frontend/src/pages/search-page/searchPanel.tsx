@@ -12,15 +12,22 @@ const FlexContainer = styled.div`
   display: flex;
   background: ${config.theme.darkColor};
   align-items: center;
-  padding-left: 100px;
+  justify-content: space-around;
 `;
+
 const GridContainer = styled.div`
   display: grid;
   padding: 10px;
   color: ${config.theme.primaryLight};
-  margin: auto;
   font-size: 12px;
   text-align: center;
+`;
+
+const DateContainer = styled.div`
+  background: white;
+  color: grey;
+  border-radius: 5px 5px 0px 0px;
+  text-align: left;
 `;
 
 interface SearchPanelProps {
@@ -34,7 +41,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [keyTerms, setKeyTerms] = useState([]);
-  const [location, setLocation] = useState(['Global']);
+  const [location, setLocation] = useState([] as string[]);
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
@@ -93,25 +100,21 @@ export const SearchPanel = (props: SearchPanelProps) => {
     <FlexContainer id="top">
       <Modal></Modal>
       <GridContainer>
-        START DATE
+        <DateContainer>START DATE</DateContainer>
         <DateInput onChange={handleStartDateChange} width={200} />
       </GridContainer>
       <GridContainer>
-        END DATE
+        <DateContainer>END DATE</DateContainer>
         <DateInput onChange={handleEndDateChange} width={200} />
       </GridContainer>
-      <GridContainer>
-        <div>
-          <Autocomplete onChange={handleKeyTerms} options={'key_terms'} label={'KEY TERMS'} placeholder={'Key Terms'} defaultValue={[]} />
-          <HelpButton toolTipMessage={'Type out your key terms separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'} toolTipTitle={"Help"}></HelpButton>
-        </div>
-      </GridContainer>
-      <GridContainer>
-        <div>
-          <Autocomplete onChange={handleLocation} options={'countries'} label={'COUNTRIES'} placeholder={'Countries'} defaultValue={['Global']} />
-          <HelpButton toolTipMessage={'Type out your countries separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'} toolTipTitle={"Help"}></HelpButton>
-        </div>
-      </GridContainer>
+      <FlexContainer>
+        <Autocomplete onChange={handleKeyTerms} options={'key_terms'} label={'KEY TERMS'} placeholder={'Key Terms'} defaultValue={[]} />
+        <HelpButton toolTipMessage={'Type out your key terms separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'} toolTipTitle={"Help"}></HelpButton>
+      </FlexContainer>
+      <FlexContainer>
+        <Autocomplete onChange={handleLocation} options={'countries'} label={'COUNTRIES'} placeholder={'Countries'} defaultValue={[]} />
+        <HelpButton toolTipMessage={'Type out your countries separated by commas.\nAll reports relating to those countries will be displayed on the map and below in the reports section.\nIf left blank, it will search for all reports.'} toolTipTitle={"Help"}></HelpButton>
+      </FlexContainer>
       <GridContainer>
         <Button hover={true} onClick={santitisedDataFetch}>
           SUBMIT

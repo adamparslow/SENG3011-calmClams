@@ -137,24 +137,18 @@ export const SearchPanel = (props: SearchPanelProps) => {
           onChange={(event) => handleSwitch(event, setPredict)}
         />
       </GridContainer>
-      <GridContainer>
-        <div>
-          <Autocomplete onChange={handleGoogleTerms} options={'none'} label={'Google Search Terms'} placeholder={'Google Search Terms'} defaultValue={[]} />
-          <HelpButton toolTipMessage={'Type out your search terms separated by commas.\nEach search term will be a new graph.\nType [seachTerm]:[country] to narrow the search down to an individual country'} toolTipTitle={"Help"}></HelpButton>
-        </div>
-      </GridContainer>
-      <GridContainer>
-        <div>
-          <Autocomplete onChange={handleTwitterTags} options={'none'} label={'Twitter Hashtags'} placeholder={'Twitter Hashtags'} defaultValue={[]} />
-          <HelpButton toolTipMessage={'Not Yet Implemented'} toolTipTitle={"Help"}></HelpButton>
-        </div>
-      </GridContainer>
-      <GridContainer>
-        <div>
+      <FlexContainer>
+        <Autocomplete onChange={handleGoogleTerms} options={'none'} label={'Google Search Terms'} placeholder={'Google Search Terms'} defaultValue={[]} />
+        <HelpButton toolTipMessage={'Type out your search terms separated by commas.\nEach search term will be a new graph.\nType [seachTerm]:[country] to narrow the search down to an individual country'} toolTipTitle={"Help"}></HelpButton>
+      </FlexContainer>
+      <FlexContainer>
+        <Autocomplete onChange={handleTwitterTags} options={'none'} label={'Twitter Hashtags'} placeholder={'Twitter Hashtags'} defaultValue={[]} />
+        <HelpButton toolTipMessage={'Not Yet Implemented'} toolTipTitle={"Help"}></HelpButton>
+      </FlexContainer>
+      <FlexContainer>
           <Autocomplete onChange={handleCountry} options={'countries'} label={'COUNTRIES'} placeholder={'Countries'} defaultValue={['Global']} />
           <HelpButton toolTipMessage={'Type out your countries separated by commas.\nEach country will be a new graph.'} toolTipTitle={"Help"}></HelpButton>
-        </div>
-      </GridContainer>
+      </FlexContainer>
       <GridContainer>
         <Button hover={true} onClick={santitisedDataFetch}>
           SUBMIT

@@ -6,7 +6,8 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 
 const HelpButtonStyled = styled.button`
-  width: 30px;
+  width: 55px;
+  height: 55px;
   background: ${config.theme.mediumColor};
   border-radius: 0px 5px 5px 0px;
   border: none;
