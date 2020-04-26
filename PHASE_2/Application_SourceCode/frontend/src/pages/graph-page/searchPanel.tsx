@@ -108,41 +108,47 @@ export const SearchPanel = (props: SearchPanelProps) => {
   return (
     <FlexContainer>
       <Modal error={() => props.error}></Modal>
-      <GridContainer>
-        Total Cases
-        <Switch
-          checked={totalCases}
-          onChange={(event) => handleSwitch(event, setTotalCases)}
-        />
-      </GridContainer>
-      <GridContainer>
-        Total Deaths
-        <Switch
-          checked={totalDeaths}
-          onChange={(event) => handleSwitch(event, setTotalDeaths)}
-        />
-      </GridContainer>
-      <GridContainer>
-        New Cases
-        <Switch
-          checked={newCases}
-          onChange={(event) => handleSwitch(event, setNewCases)}
-        />
-      </GridContainer>
-      <GridContainer>
-        New Deaths
-        <Switch
-          checked={newDeaths}
-          onChange={(event) => handleSwitch(event, setNewDeaths)}
-        />
-      </GridContainer>
-      <GridContainer>
-        Predict
-        <Switch
-          checked={predict}
-          onChange={(event) => handleSwitch(event, setPredict)}
-        />
-      </GridContainer>
+      <div style={{display:'flex', flexDirection: 'column'}}>
+        <GridContainer>
+          Total Cases
+          <Switch
+            checked={totalCases}
+            onChange={(event) => handleSwitch(event, setTotalCases)}
+          />
+        </GridContainer>
+        <GridContainer>
+          New Cases
+          <Switch
+            checked={newCases}
+            onChange={(event) => handleSwitch(event, setNewCases)}
+          />
+        </GridContainer>
+      </div>
+      <div style={{display:'flex', flexDirection: 'column'}}>
+        <GridContainer>
+          Total Deaths
+          <Switch
+            checked={totalDeaths}
+            onChange={(event) => handleSwitch(event, setTotalDeaths)}
+          />
+        </GridContainer>
+        <GridContainer>
+          New Deaths
+          <Switch
+            checked={newDeaths}
+            onChange={(event) => handleSwitch(event, setNewDeaths)}
+          />
+        </GridContainer>
+      </div>
+      <div style={{display:'flex', flexDirection: 'column', justifyContent: 'start'}}>
+        <GridContainer>
+          Predict
+          <Switch
+            checked={predict}
+            onChange={(event) => handleSwitch(event, setPredict)}
+          />
+        </GridContainer>
+      </div>
       <FlexContainer>
         <Autocomplete onChange={handleGoogleTerms} options={'none'} label={'Google Search Terms'} placeholder={'Google Search Terms'} defaultValue={[]} />
         <HelpButton toolTipMessage={'Type out your search terms separated by commas.\nEach search term will be a new graph.\nType [seachTerm]:[country] to narrow the search down to an individual country'} toolTipTitle={"Help"}></HelpButton>
