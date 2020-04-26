@@ -43,7 +43,6 @@ interface SearchPanelProps {
 
 
 export const SearchPanel = (props: SearchPanelProps) => {
-  let firstLoad = true;
   const {
     totalCases,
     setTotalCases,
@@ -75,11 +74,6 @@ export const SearchPanel = (props: SearchPanelProps) => {
     console.log("COUNTRIES: ", countries);
     return props.fetchData(googleTerms, [], countries);
   };
-
-  if (firstLoad) {
-    firstLoad = false;
-    props.fetchData([],[],["Global"]);
-  }
 
   const handleSwitch = (event, setSwitch) => {
     setSwitch(event);
