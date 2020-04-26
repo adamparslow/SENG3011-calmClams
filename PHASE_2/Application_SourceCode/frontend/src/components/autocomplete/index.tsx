@@ -7,10 +7,15 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 500,
+    width: 300,
+    backgroundColor: 'white',
+    borderRadius: '5px 5px 5px 5px',
     '& > * + *': {
       marginTop: theme.spacing(3),
     },
+  },
+  inputRoot: {
+    
   },
 }));
 
@@ -18,25 +23,26 @@ const ReactAutocomplete = (props) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Autocomplete
-          autoComplete
-          multiple
-          freeSolo
-          options={optionsDict[props.options]}
-          getOptionLabel={(option) => option}
-          defaultValue={props.defaultValue}
-          onChange={props.onChange}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label={props.label}
-              placeholder={props.placeholder}
-              />
-          )}
-        />
-      </div>
+    <div>
+      <Autocomplete 
+        classes={ classes }
+        autoComplete
+        multiple
+        freeSolo
+        options={optionsDict[props.options]}
+        getOptionLabel={(option) => option}
+        defaultValue={props.defaultValue}
+        onChange={props.onChange}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="standard"
+            label={props.label}
+            placeholder={props.placeholder}
+            />
+        )}
+      />
+    </div>
   );
 };
 
