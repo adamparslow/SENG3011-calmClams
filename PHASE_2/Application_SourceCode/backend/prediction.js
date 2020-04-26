@@ -100,20 +100,27 @@ const determinePOI = (data, keyD1, keyD2) => {
     let bestInflectionScore = 0;
     
     for (let i = 1; i < n; i++) {
-        if (
-            data[i][keyD2] > 0 && data[i - 1][keyD2] < 0
-            || data[i][keyD2] < 0 && data[i - 1][keyD2] > 0
-        ) {
-            let score = data[i][keyD1] + data[i - 1][keyD1];
-            // console.log(`Between ${i - 1} and ${i}, score: ${score}`);
+        // if (
+        //     data[i][keyD2] > 0 && data[i - 1][keyD2] < 0
+        //     || data[i][keyD2] < 0 && data[i - 1][keyD2] > 0
+        // ) {
+        //     let score = data[i][keyD1] + data[i - 1][keyD1];
+        //     // console.log(`Between ${i - 1} and ${i}, score: ${score}`);
 
-            if (score > bestInflectionScore) {
-                bestInflectionScore = score;
+        //     if (score > bestInflectionScore) {
+        //         bestInflectionScore = score;
 
-                let w1 = Math.abs(data[i][keyD2]);
-                let w2 = Math.abs(data[i - 1][keyD2]);
-                inflection = (w1 * i + w2 * (i - 1)) / (w1 + w2);
-            }
+        //         let w1 = Math.abs(data[i][keyD2]);
+        //         let w2 = Math.abs(data[i - 1][keyD2]);
+        //         inflection = (w1 * i + w2 * (i - 1)) / (w1 + w2);
+        //     }
+        // }
+
+        let score = data[i][keyD1];
+            
+        if (score > bestInflectionScore) {
+            bestInflectionScore = score;
+            inflection = i;
         }
     }
 

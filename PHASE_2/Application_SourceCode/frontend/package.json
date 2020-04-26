@@ -16,6 +16,7 @@
     "apollo-boost": "^0.4.7",
     "bootstrap": "^4.4.1",
     "graphql": "^14.6.0",
+    "material-ui": "^0.20.2",
     "prettier": "^2.0.2",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.1",
