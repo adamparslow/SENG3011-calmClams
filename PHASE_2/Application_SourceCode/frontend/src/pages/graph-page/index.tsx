@@ -19,11 +19,11 @@ interface GraphDataInterface {
 }
 
 export const SearchPage = (props: GraphPageProps) => {
-  console.log(props);
   const [totalCases, setTotalCases] = useState(true);
   const [totalDeaths, setTotalDeaths] = useState(true);
   const [newCases, setNewCases] = useState(true);
   const [newDeaths, setNewDeaths] = useState(true);
+  const [predict, setPredict] = useState(false);
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -102,6 +102,8 @@ export const SearchPage = (props: GraphPageProps) => {
         setNewCases={setNewCases}
         newDeaths={newDeaths}
         setNewDeaths={setNewDeaths}
+        predict={predict}
+        setPredict={setPredict}
       />
       <>
         {loading && <Spinner loading={loading} />}
@@ -112,6 +114,7 @@ export const SearchPage = (props: GraphPageProps) => {
             newCases={newCases}
             totalCases={totalCases}
             newDeaths={newDeaths}
+            predict={predict}
           />
         </>
       </>

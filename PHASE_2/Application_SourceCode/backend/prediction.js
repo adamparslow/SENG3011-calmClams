@@ -44,17 +44,18 @@ const predict = (series, country, additionalDays) => {
     // }
 
     // Align with final point on curve
+    lastDate = data[n - 1].date;
     yOff = curve[n - 1] - data[n - 1].value;
+    series[n - 1][`pdate_${country}`] = lastDate;
     series[n - 1][`predict_cases_${country}`] = curve[n - 1] - yOff;
 
-    lastDate = data[n - 1].date;
 
     for (let i = n; i < n + additionalDays; i++) {
         date = new Date(lastDate);
         date.setDate(date.getDate() + i - n + 1);
 
         entry = {};
-        entry["date"] = `${date.toDateString()} 00:00:00`;
+        entry[`pdate_${country}`] = `${date.toDateString()} 00:00:00`;
         entry[`predict_cases_${country}`] = curve[i] - yOff;
 
         series.push(entry);

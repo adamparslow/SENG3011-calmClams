@@ -12,6 +12,7 @@ interface GraphPanelProps {
     totalDeaths: boolean;
     newCases: boolean;
     newDeaths: boolean;
+    predict: boolean;
 };
 
 const GraphPanel = (props: GraphPanelProps) => {
@@ -205,7 +206,7 @@ const GraphPanel = (props: GraphPanelProps) => {
 
         //console.log(props.data);
 
-        let tCasesColour, tDeathsColour, nCasesColour, nDeathsColour, googleColour, twitterColour;
+        let tCasesColour, tDeathsColour, nCasesColour, nDeathsColour, googleColour, predictionColour;
         const colourSet = new am4core.ColorSet();
         colourSet.step = 3;
         tCasesColour = colourSet.next();
@@ -213,38 +214,40 @@ const GraphPanel = (props: GraphPanelProps) => {
         nCasesColour = colourSet.next();
         nDeathsColour = colourSet.next();
         googleColour = colourSet.next();
-        twitterColour = colourSet.next();
+        predictionColour = colourSet.next();
 
         const bullets = ["circle", "rectangle", "triangle", "trapizoid", "rrectangle", "rrectangle2", "cone"];
 
         // Combine all the data and create each series
         for (let i in props.data.seriesTitles) {
-            const titles = props.data.seriesTitles[i];
+            const title = props.data.seriesTitles[i];
 
             data = data.concat(props.data.graphData[i]);
             const bullet = bullets[+i % bullets.length];
 
+            for (let seriesName in props.data.graphData[i][props.data.graphData[i].length - 1]) {
+                if (seriesName.includes("predict") && props.predict) {
+                    createSeries(tCasesAxis, "pdate_" + title, seriesName, bullet, predictionColour);
+                }
+            }
+
             // Create each series for each country
             for (let seriesName in props.data.graphData[i][0]) {
                 if (seriesName.includes("total_cases") && props.totalCases) {
-                    createSeries(tCasesAxis, "date_" + titles, seriesName, bullet, tCasesColour);
+                    createSeries(tCasesAxis, "date_" + title, seriesName, bullet, tCasesColour);
                 }
                 if (seriesName.includes("total_deaths") && props.totalDeaths) {
-                    createSeries(tDeathsAxis, "date_" + titles, seriesName, bullet, tDeathsColour);
+                    createSeries(tDeathsAxis, "date_" + title, seriesName, bullet, tDeathsColour);
                 }
                 if (seriesName.includes("new_cases") && props.newCases) {
-                    createSeries(nCasesAxis, "date_" + titles, seriesName, bullet, nCasesColour);
+                    createSeries(nCasesAxis, "date_" + title, seriesName, bullet, nCasesColour);
                 }
                 if (seriesName.includes("new_deaths") && props.newDeaths) {
-                    createSeries(nDeathsAxis, "date_" + titles, seriesName, bullet, nDeathsColour);
+                    createSeries(nDeathsAxis, "date_" + title, seriesName, bullet, nDeathsColour);
                 }
                 if (seriesName.includes("google")) {
-                    createSeries(googleAxis, "gdate_" + titles, seriesName, bullet, googleColour);
+                    createSeries(googleAxis, "gdate_" + title, seriesName, bullet, googleColour);
                 }
-                if (seriesName.includes("twitter")) {
-                    createSeries(twitterAxis, "tdate_" + titles, seriesName, bullet, twitterColour);
-                }
-
             }
         }
 
