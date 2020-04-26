@@ -16,6 +16,11 @@ interface GraphPanelProps {
 
 const GraphPanel = (props: GraphPanelProps) => {
     useEffect(() => {
+        if (props.data.seriesTitles.length == 0) {
+            return;
+        }
+
+        //console.log(props);
         // Themes begin
         am4core.useTheme(am4themes_animated);
         // Themes end
@@ -39,6 +44,15 @@ const GraphPanel = (props: GraphPanelProps) => {
         chart.scrollbarX = scrollbar;
         chart.scrollbarX.parent = chart.bottomAxesContainer;
 
+        // Add legend
+        chart.legend = new am4charts.Legend();
+        chart.legend.position = "top";
+        //chart.legend.labels.template.text = '[bold {color}]{name}[\]';
+
+        // Add cursor
+        chart.cursor = new am4charts.XYCursor();
+        chart.cursor.behavior = "zoomXY";
+
 
         function createAxis(name) {
             let axis = chart.yAxes.push(new am4charts.ValueAxis());
@@ -53,6 +67,7 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.title.fontWeight = "600";
             axis.paddingRight = 10;
             */
+            axis.paddingLeft = 5;
             axis.disabled = true;
             axis.title.text = name;
             axis.min = 1;
@@ -120,8 +135,8 @@ const GraphPanel = (props: GraphPanelProps) => {
                     break;
                 case "trapizoid":
                     shape = bullet.createChild(am4core.Trapezoid);
-                    shape.topSide = 5;
-                    shape.botSide = 10;
+                    shape.topSide = 10;
+                    shape.botSide = 5;
                     break;
                 case "cone":
                     shape = bullet.createChild(am4core.Cone);
@@ -176,7 +191,7 @@ const GraphPanel = (props: GraphPanelProps) => {
         nDeathsAxis.extraMax = 0.8;
 
 
-        console.log(props.data);
+        //console.log(props.data);
 
         let tCasesColour, tDeathsColour, nCasesColour, nDeathsColour, googleColour, twitterColour;
         const colourSet = new am4core.ColorSet();
@@ -191,62 +206,39 @@ const GraphPanel = (props: GraphPanelProps) => {
         const bullets = ["circle", "rectangle", "triangle", "trapizoid", "rrectangle", "rrectangle2", "cone"];
 
         // Combine all the data and create each series
-        for (let i in props.data.countries) {
-            const country = props.data.countries[i];
-
-            // Convert the string dates to actual dates
-            for (let k of props.data.graphData[i]) {
-                for (let n in k) {
-                    if (n.includes("date_")) {
-                        k[n] = new Date(k[n]);
-                    } else {
-                        if (k[n] <= 0) {
-                            k[n] = 0.0000000001;
-                        }
-                    }
-                }
-            }
+        for (let i in props.data.seriesTitles) {
+            const titles = props.data.seriesTitles[i];
 
             data = data.concat(props.data.graphData[i]);
             const bullet = bullets[+i % bullets.length];
 
-
             // Create each series for each country
             for (let seriesName in props.data.graphData[i][0]) {
                 if (seriesName.includes("total_cases") && props.totalCases) {
-                    createSeries(tCasesAxis, "date_" + country, seriesName, bullet, tCasesColour);
+                    createSeries(tCasesAxis, "date_" + titles, seriesName, bullet, tCasesColour);
                 }
                 if (seriesName.includes("total_deaths") && props.totalDeaths) {
-                    createSeries(tDeathsAxis, "date_" + country, seriesName, bullet, tDeathsColour);
+                    createSeries(tDeathsAxis, "date_" + titles, seriesName, bullet, tDeathsColour);
                 }
                 if (seriesName.includes("new_cases") && props.newCases) {
-                    createSeries(nCasesAxis, "date_" + country, seriesName, bullet, nCasesColour);
+                    createSeries(nCasesAxis, "date_" + titles, seriesName, bullet, nCasesColour);
                 }
                 if (seriesName.includes("new_deaths") && props.newDeaths) {
-                    createSeries(nDeathsAxis, "date_" + country, seriesName, bullet, nDeathsColour);
+                    createSeries(nDeathsAxis, "date_" + titles, seriesName, bullet, nDeathsColour);
                 }
                 if (seriesName.includes("google")) {
-                    createSeries(googleAxis, "gdate_" + country, seriesName, bullet, googleColour);
+                    createSeries(googleAxis, "gdate_" + titles, seriesName, bullet, googleColour);
                 }
                 if (seriesName.includes("twitter")) {
-                    createSeries(twitterAxis, "tdate_" + country, seriesName, bullet, twitterColour);
+                    createSeries(twitterAxis, "tdate_" + titles, seriesName, bullet, twitterColour);
                 }
 
             }
         }
 
         chart.data = data;
-        console.log(chart.data);
 
-        // Add legend
-        chart.legend = new am4charts.Legend();
-        chart.legend.position = "top";
-        //chart.legend.labels.template.text = '[bold {color}]{name}[\]';
-
-        // Add cursor
-        chart.cursor = new am4charts.XYCursor();
-        chart.cursor.behavior = "zoomXY";
-
+        //console.log(chart.data);
         return function cleanup() {
             chart.dispose();
         };
