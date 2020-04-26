@@ -12,6 +12,7 @@ const FlexContainer = styled.div`
   display: flex;
   background: ${config.theme.darkColor};
   align-items: center;
+  padding: 5px;
 `;
 const GridContainer = styled.div`
   display: grid;
