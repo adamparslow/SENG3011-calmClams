@@ -25,21 +25,23 @@ export const SearchPage = (props: GraphPageProps) => {
   const [newDeaths, setNewDeaths] = useState(true);
   const [predict, setPredict] = useState(false);
 
-
-  const [firstLoad, setFirstLoad] = useState(true);
+  const [firstLoad, setFirstLoad] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<GraphDataInterface>({
     seriesTitles: [],
     graphData: [],
   });
+  useEffect(() => {
+    setFirstLoad(true);
+  }, [props]);
 
   const fetchData = async (
     google: Array<string>,
     twitter: Array<string>,
     countries: Array<string>,
   ) => {
-      console.log("Fetched");
+    console.log('Fetched', props.disease);
     fetch('http://localhost:8080/get_data', {
       method: 'PUT',
       headers: {
@@ -89,12 +91,13 @@ export const SearchPage = (props: GraphPageProps) => {
         setError(true);
         console.log(error);
       });
-    
+
     setLoading(true);
   };
+  console.log('firstLoad', firstLoad);
   if (firstLoad) {
-    console.log("loading");
-    setFirstLoad(false)
+    console.log('loading');
+    setFirstLoad(false);
     fetchData([], [], ['Global']);
   }
   return (
@@ -114,17 +117,20 @@ export const SearchPage = (props: GraphPageProps) => {
         setPredict={setPredict}
       />
       <>
-        {loading && <Spinner loading={loading} />}
-        <>
-          <GraphPanel
-            data={data}
-            totalDeaths={totalDeaths}
-            newCases={newCases}
-            totalCases={totalCases}
-            newDeaths={newDeaths}
-            predict={predict}
-          />
-        </>
+        {loading ? (
+          <Spinner loading={loading} />
+        ) : (
+          <>
+            <GraphPanel
+              data={data}
+              totalDeaths={totalDeaths}
+              newCases={newCases}
+              totalCases={totalCases}
+              newDeaths={newDeaths}
+              predict={predict}
+            />
+          </>
+        )}
       </>
     </PageContainer>
   );
