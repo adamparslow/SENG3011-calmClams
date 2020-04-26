@@ -17,7 +17,7 @@ export const StyledMenu = styled.div`
   transition: transform 0.3s ease-in-out;
   transform: ${({ open }) => open ? 'translateX(0%)' : 'translateX(-75%)'};
   width: 225px;
-  z-index:1;
+  z-index:30;
 
   a {
     font-size: 2rem;

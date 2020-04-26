@@ -11,7 +11,7 @@ const Logo = styled.img`
   position: fixed;
   top: 15px;
   left: 7px;
-  z-index: 2;
+  z-index: 31;
 `;
 interface menuTypes {
   tab: number;

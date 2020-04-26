@@ -61,7 +61,7 @@ export const SearchPage = (props: GraphPageProps) => {
           seriesTitles: json.seriesTitles,
           graphData: json.graphData,
         };
-
+        
         // Combine all the data and create each series
         for (let i in newData.seriesTitles) {
           const country = newData.seriesTitles[i];
