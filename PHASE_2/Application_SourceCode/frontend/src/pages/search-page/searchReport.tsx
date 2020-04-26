@@ -16,6 +16,7 @@ const HeaderContainer = styled.div`
     background: ${config.theme.lightColor};
   }
   margin-bottom: ${({ expanded }) => (expanded ? '0px' : '15px')};
+  cursor: pointer;
 `;
 const ContextContainer = styled.div`
   color: ${config.theme.primaryDark};
@@ -119,6 +120,7 @@ const SearchReport = (props: SearchReportProps) => {
               onClick={() => {
                 window.open(article.url, '_blank');
               }}
+              style={{cursor: 'pointer'}}
             >
               <FaLink />
               <OptionsTextStyle>See Full Report</OptionsTextStyle>
@@ -127,6 +129,7 @@ const SearchReport = (props: SearchReportProps) => {
               onClick={() => {
                 window.location.href = '#top';
               }}
+              style={{cursor: 'pointer'}}
             >
               <FaRegArrowAltCircleUp />
               <OptionsTextStyle>Back To Top</OptionsTextStyle>
