@@ -154,13 +154,13 @@ const GraphPanel = (props: GraphPanelProps) => {
                     break;
                 case "trapizoid":
                     shape = bullet.createChild(am4core.Trapezoid);
-                    shape.topSide = 10;
-                    shape.botSide = 5;
+                    shape.topSide = 5;
+                    shape.botSide = 3;
+                    bullet.rotation = 180;
                     break;
                 case "cone":
                     shape = bullet.createChild(am4core.Cone);
                     break;
-
                 default:
                     console.log("error", bulletType);
                     break;

@@ -17,7 +17,7 @@ const App = () => {
   const tabList = ['World Map', 'COVID19 Graph', 'Ebola Graph'];
   const pageList = [
     <SearchPage />,
-    <GraphPage disease={'covid19'} start={'2020-01-20'} end={'2020-04-20'} />,
+    <GraphPage disease={'covid19'} start={'2020-01-20'} end={'2020-04-25'} />,
     <GraphPage disease={'ebola'} start={'2014-08-29'} end={'2015-08-29'} />,
   ];
   console.log('TAB:', tab);
