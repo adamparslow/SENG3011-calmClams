@@ -30,11 +30,11 @@ const ReactAutocomplete = (props) => {
 
   return (
     <div>
-      <Autocomplete 
+      <Autocomplete
         style={{height: props.height, width: props.width}}
         classes={ classes }
-        autoComplete
         multiple
+        limitTags={3}
         freeSolo
         options={optionsDict[props.options].sort()}
         getOptionLabel={(option) => option}
@@ -45,7 +45,7 @@ const ReactAutocomplete = (props) => {
             {...params}
             variant="standard"
             label={props.label}
-            placeholder={props.placeholder}
+            //placeholder={props.placeholder}
             InputProps={{
               ...params.InputProps,
               disableUnderline: true
