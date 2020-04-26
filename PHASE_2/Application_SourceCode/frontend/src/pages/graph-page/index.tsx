@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchPanel from './searchPanel';
 import styled from 'styled-components';
 import Spinner from '../../components/spinner';
@@ -11,7 +11,7 @@ interface GraphPageProps {
   disease: string;
   start: string;
   end: string;
-};
+}
 
 interface GraphDataInterface {
   seriesTitles: Array<string>;
@@ -25,6 +25,8 @@ export const SearchPage = (props: GraphPageProps) => {
   const [newDeaths, setNewDeaths] = useState(true);
   const [predict, setPredict] = useState(false);
 
+
+  const [firstLoad, setFirstLoad] = useState(true);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<GraphDataInterface>({
@@ -37,7 +39,7 @@ export const SearchPage = (props: GraphPageProps) => {
     twitter: Array<string>,
     countries: Array<string>,
   ) => {
-
+      console.log("Fetched");
     fetch('http://localhost:8080/get_data', {
       method: 'PUT',
       headers: {
@@ -61,23 +63,23 @@ export const SearchPage = (props: GraphPageProps) => {
           seriesTitles: json.seriesTitles,
           graphData: json.graphData,
         };
-        
+
         // Combine all the data and create each series
         for (let i in newData.seriesTitles) {
           const country = newData.seriesTitles[i];
-          
+
           for (let k of newData.graphData[i]) {
-              for (let n in k) {
-                  if (n.includes("date_")) {
-                      // Convert the string dates to actual dates
-                      k[n] = new Date(k[n]);
-                  } else {
-                      // Can't use zero if we try to do a log scale
-                      if (k[n] <= 0) {
-                          k[n] = 0.0000000001;
-                      }
-                  }
+            for (let n in k) {
+              if (n.includes('date_')) {
+                // Convert the string dates to actual dates
+                k[n] = new Date(k[n]);
+              } else {
+                // Can't use zero if we try to do a log scale
+                if (k[n] <= 0) {
+                  k[n] = 0.0000000001;
+                }
               }
+            }
           }
         }
         setData(newData);
@@ -87,8 +89,14 @@ export const SearchPage = (props: GraphPageProps) => {
         setError(true);
         console.log(error);
       });
+    
     setLoading(true);
   };
+  if (firstLoad) {
+    console.log("loading");
+    setFirstLoad(false)
+    fetchData([], [], ['Global']);
+  }
   return (
     <PageContainer>
       <SearchPanel
