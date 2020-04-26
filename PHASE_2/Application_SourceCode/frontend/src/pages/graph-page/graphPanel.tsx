@@ -227,7 +227,12 @@ const GraphPanel = (props: GraphPanelProps) => {
 
             for (let seriesName in props.data.graphData[i][props.data.graphData[i].length - 1]) {
                 if (seriesName.includes("predict") && props.predict) {
-                    createSeries(tCasesAxis, "pdate_" + title, seriesName, bullet, predictionColour);
+                    if (seriesName.includes("cases") && props.totalCases) {
+                        createSeries(tCasesAxis, "pdate_" + title, seriesName, bullet, predictionColour);
+                    }
+                    if (seriesName.includes("deaths") && props.totalDeaths) {
+                        createSeries(tDeathsAxis, "pdate_" + title, seriesName, bullet, predictionColour);
+                    }
                 }
             }
 
