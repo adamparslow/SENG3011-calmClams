@@ -1,5 +1,5 @@
 Country,Date,Cumulative,New Cases
-uinea,29-08-14,482,482
+Guinea,29-08-14,482,482
 Guinea,05-09-14,604,122
 Guinea,08-09-14,664,60
 Guinea,12-09-14,678,14
@@ -9,7 +9,7 @@ Guinea,22-09-14,818,68
 Guinea,24-09-14,832,14
 Guinea,26-09-14,876,44
 Guinea,01-10-14,950,74
-uinea,03-10-14,977,27
+Guinea,03-10-14,977,27
 Guinea,08-10-14,1044,67
 Guinea,10-10-14,1097,53
 Guinea,15-10-14,1184,87
@@ -99,7 +99,7 @@ Guinea,13-04-15,3112,19
 Guinea,14-04-15,3117,5
 Guinea,15-04-15,3117,0
 Guinea,16-04-15,3124,7
-uinea,17-04-15,3126,2
+Guinea,17-04-15,3126,2
 Guinea,20-04-15,3133,7
 Guinea,21-04-15,3136,3
 Guinea,22-04-15,3136,0
@@ -235,29 +235,6 @@ Guinea,27-10-15,3350,0
 Guinea,29-10-15,3350,0
 Guinea,30-10-15,3350,0
 Guinea,03-11-15,3351,1
-Guinea,05-11-15,3351,0
-Guinea,06-11-15,3351,0
-Guinea,10-11-15,3351,0
-Guinea,11-11-15,3351,0
-Guinea,12-11-15,3351,0
-Guinea,16-11-15,3351,0
-Guinea,17-11-15,3351,0
-Guinea,20-11-15,3351,0
-Guinea,24-11-15,3351,0
-Guinea,26-11-15,3351,0
-Guinea,01-12-15,3351,0
-Guinea,02-12-15,3351,0
-Guinea,03-12-15,3351,0
-Guinea,09-12-15,3351,0
-Guinea,10-12-15,3351,0
-Guinea,11-12-15,3351,0
-Guinea,15-12-15,3351,0
-Guinea,16-12-15,3351,0
-Guinea,17-12-15,3351,0
-Guinea,22-12-15,3351,0
-Guinea,23-12-15,3351,0
-Guinea,29-12-15,3351,0
-Guinea,23-03-16,3351,0
 Italy,14-05-15,1,1
 Italy,15-05-15,1,0
 Italy,18-05-15,1,0
@@ -377,28 +354,6 @@ Italy,29-10-15,1,0
 Italy,30-10-15,1,0
 Italy,03-11-15,1,0
 Italy,05-11-15,1,0
-Italy,06-11-15,1,0
-Italy,10-11-15,1,0
-Italy,11-11-15,1,0
-Italy,12-11-15,1,0
-Italy,16-11-15,1,0
-Italy,17-11-15,1,0
-Italy,20-11-15,1,0
-Italy,24-11-15,1,0
-Italy,26-11-15,1,0
-Italy,01-12-15,1,0
-Italy,02-12-15,1,0
-Italy,03-12-15,1,0
-Italy,09-12-15,1,0
-Italy,10-12-15,1,0
-Italy,11-12-15,1,0
-Italy,15-12-15,1,0
-Italy,16-12-15,1,0
-Italy,17-12-15,1,0
-Italy,22-12-15,1,0
-Italy,23-12-15,1,0
-Italy,29-12-15,1,0
-Italy,23-03-16,1,0
 Liberia,29-08-14,322,322
 Liberia,05-09-14,614,292
 Liberia,08-09-14,634,20
@@ -417,8 +372,6 @@ Liberia,22-10-14,965,15
 Liberia,25-10-14,965,0
 Liberia,29-10-14,2515,1550
 Liberia,31-10-14,2515,0
-Liberia,05-11-14,2451,-64
-Liberia,07-11-14,2514,63
 Liberia,12-11-14,2553,39
 Liberia,14-11-14,2562,9
 Liberia,19-11-14,2643,81
@@ -635,28 +588,6 @@ Liberia,29-10-15,3151,0
 Liberia,30-10-15,3151,0
 Liberia,03-11-15,3151,0
 Liberia,05-11-15,3151,0
-Liberia,06-11-15,3151,0
-Liberia,10-11-15,3151,0
-Liberia,11-11-15,3151,0
-Liberia,12-11-15,3151,0
-Liberia,16-11-15,3151,0
-Liberia,17-11-15,3151,0
-Liberia,20-11-15,3151,0
-Liberia,24-11-15,3151,0
-Liberia,26-11-15,3151,0
-Liberia,01-12-15,3151,0
-Liberia,02-12-15,3151,0
-Liberia,03-12-15,3151,0
-Liberia,09-12-15,3151,0
-Liberia,10-12-15,3151,0
-Liberia,11-12-15,3151,0
-Liberia,15-12-15,3151,0
-Liberia,16-12-15,3151,0
-Liberia,17-12-15,3151,0
-Liberia,22-12-15,3151,0
-Liberia,23-12-15,3151,0
-Liberia,29-12-15,3151,0
-Liberia,23-03-16,3151,0
 Mali,25-10-14,1,1
 Mali,29-10-14,1,0
 Mali,31-10-14,1,0
@@ -878,28 +809,6 @@ Mali,29-10-15,7,0
 Mali,30-10-15,7,0
 Mali,03-11-15,7,0
 Mali,05-11-15,7,0
-Mali,06-11-15,7,0
-Mali,10-11-15,7,0
-Mali,11-11-15,7,0
-Mali,12-11-15,7,0
-Mali,16-11-15,7,0
-Mali,17-11-15,7,0
-Mali,20-11-15,7,0
-Mali,24-11-15,7,0
-Mali,26-11-15,7,0
-Mali,01-12-15,7,0
-Mali,02-12-15,7,0
-Mali,03-12-15,7,0
-Mali,09-12-15,7,0
-Mali,10-12-15,7,0
-Mali,11-12-15,7,0
-Mali,15-12-15,7,0
-Mali,16-12-15,7,0
-Mali,17-12-15,7,0
-Mali,22-12-15,7,0
-Mali,23-12-15,7,0
-Mali,29-12-15,7,0
-Mali,23-03-16,7,0
 Nigeria,29-08-14,15,15
 Nigeria,05-09-14,18,3
 Nigeria,08-09-14,19,1
@@ -1133,28 +1042,6 @@ Nigeria,29-10-15,19,0
 Nigeria,30-10-15,19,0
 Nigeria,03-11-15,19,0
 Nigeria,05-11-15,19,0
-Nigeria,06-11-15,19,0
-Nigeria,10-11-15,19,0
-Nigeria,11-11-15,19,0
-Nigeria,12-11-15,19,0
-Nigeria,16-11-15,19,0
-Nigeria,17-11-15,19,0
-Nigeria,20-11-15,19,0
-Nigeria,24-11-15,19,0
-Nigeria,26-11-15,19,0
-Nigeria,01-12-15,19,0
-Nigeria,02-12-15,19,0
-Nigeria,03-12-15,19,0
-Nigeria,09-12-15,19,0
-Nigeria,10-12-15,19,0
-Nigeria,11-12-15,19,0
-Nigeria,15-12-15,19,0
-Nigeria,16-12-15,19,0
-Nigeria,17-12-15,19,0
-Nigeria,22-12-15,19,0
-Nigeria,23-12-15,19,0
-Nigeria,29-12-15,19,0
-Nigeria,23-03-16,19,0
 Senegal,05-09-14,1,1
 Senegal,08-09-14,1,0
 Senegal,12-09-14,1,0
@@ -1387,28 +1274,6 @@ Senegal,29-10-15,1,0
 Senegal,30-10-15,1,0
 Senegal,03-11-15,1,0
 Senegal,05-11-15,1,0
-Senegal,06-11-15,1,0
-Senegal,10-11-15,1,0
-Senegal,11-11-15,1,0
-Senegal,12-11-15,1,0
-Senegal,16-11-15,1,0
-Senegal,17-11-15,1,0
-Senegal,20-11-15,1,0
-Senegal,24-11-15,1,0
-Senegal,26-11-15,1,0
-Senegal,01-12-15,1,0
-Senegal,02-12-15,1,0
-Senegal,03-12-15,1,0
-Senegal,09-12-15,1,0
-Senegal,10-12-15,1,0
-Senegal,11-12-15,1,0
-Senegal,15-12-15,1,0
-Senegal,16-12-15,1,0
-Senegal,17-12-15,1,0
-Senegal,22-12-15,1,0
-Senegal,23-12-15,1,0
-Senegal,29-12-15,1,0
-Senegal,23-03-16,1,0
 Sierra Leone,29-08-14,935,935
 Sierra Leone,05-09-14,1146,211
 Sierra Leone,08-09-14,1234,88
@@ -1646,28 +1511,6 @@ Sierra Leone,29-10-15,8704,0
 Sierra Leone,30-10-15,8704,0
 Sierra Leone,03-11-15,8704,0
 Sierra Leone,05-11-15,8704,0
-Sierra Leone,06-11-15,8704,0
-Sierra Leone,10-11-15,8704,0
-Sierra Leone,11-11-15,8704,0
-Sierra Leone,12-11-15,8704,0
-Sierra Leone,16-11-15,8704,0
-Sierra Leone,17-11-15,8704,0
-Sierra Leone,20-11-15,8704,0
-Sierra Leone,24-11-15,8704,0
-Sierra Leone,26-11-15,8704,0
-Sierra Leone,01-12-15,8704,0
-Sierra Leone,02-12-15,8704,0
-Sierra Leone,03-12-15,8704,0
-Sierra Leone,09-12-15,8704,0
-Sierra Leone,10-12-15,8704,0
-Sierra Leone,11-12-15,8704,0
-Sierra Leone,15-12-15,8704,0
-Sierra Leone,16-12-15,8704,0
-Sierra Leone,17-12-15,8704,0
-Sierra Leone,22-12-15,8704,0
-Sierra Leone,23-12-15,8704,0
-Sierra Leone,29-12-15,8704,0
-Sierra Leone,23-03-16,8704,0
 Spain,10-10-14,1,1
 Spain,15-10-14,1,0
 Spain,17-10-14,1,0
@@ -1889,28 +1732,6 @@ Spain,29-10-15,1,0
 Spain,30-10-15,1,0
 Spain,03-11-15,1,0
 Spain,05-11-15,1,0
-Spain,06-11-15,1,0
-Spain,10-11-15,1,0
-Spain,11-11-15,1,0
-Spain,12-11-15,1,0
-Spain,16-11-15,1,0
-Spain,17-11-15,1,0
-Spain,20-11-15,1,0
-Spain,24-11-15,1,0
-Spain,26-11-15,1,0
-Spain,01-12-15,1,0
-Spain,02-12-15,1,0
-Spain,03-12-15,1,0
-Spain,09-12-15,1,0
-Spain,10-12-15,1,0
-Spain,11-12-15,1,0
-Spain,15-12-15,1,0
-Spain,16-12-15,1,0
-Spain,17-12-15,1,0
-Spain,22-12-15,1,0
-Spain,23-12-15,1,0
-Spain,29-12-15,1,0
-Spain,23-03-16,1,0
 United Kingdom,02-01-15,1,1
 United Kingdom,05-01-15,1,0
 United Kingdom,06-01-15,1,0
@@ -2110,28 +1931,6 @@ United Kingdom,29-10-15,1,0
 United Kingdom,30-10-15,1,0
 United Kingdom,03-11-15,1,0
 United Kingdom,05-11-15,1,0
-United Kingdom,06-11-15,1,0
-United Kingdom,10-11-15,1,0
-United Kingdom,11-11-15,1,0
-United Kingdom,12-11-15,1,0
-United Kingdom,16-11-15,1,0
-United Kingdom,17-11-15,1,0
-United Kingdom,20-11-15,1,0
-United Kingdom,24-11-15,1,0
-United Kingdom,26-11-15,1,0
-United Kingdom,01-12-15,1,0
-United Kingdom,02-12-15,1,0
-United Kingdom,03-12-15,1,0
-United Kingdom,09-12-15,1,0
-United Kingdom,10-12-15,1,0
-United Kingdom,11-12-15,1,0
-United Kingdom,15-12-15,1,0
-United Kingdom,16-12-15,1,0
-United Kingdom,17-12-15,1,0
-United Kingdom,22-12-15,1,0
-United Kingdom,23-12-15,1,0
-United Kingdom,29-12-15,1,0
-United Kingdom,23-03-16,1,0
 United States of America,03-10-14,1,1
 United States of America,08-10-14,1,0
 United States of America,10-10-14,1,0
@@ -2355,134 +2154,6 @@ United States of America,29-10-15,4,0
 United States of America,30-10-15,4,0
 United States of America,03-11-15,4,0
 United States of America,05-11-15,4,0
-United States of America,06-11-15,4,0
-United States of America,10-11-15,4,0
-United States of America,11-11-15,4,0
-United States of America,12-11-15,4,0
-United States of America,16-11-15,4,0
-United States of America,17-11-15,4,0
-United States of America,20-11-15,4,0
-United States of America,24-11-15,4,0
-United States of America,26-11-15,4,0
-United States of America,01-12-15,4,0
-United States of America,02-12-15,4,0
-United States of America,03-12-15,4,0
-United States of America,09-12-15,4,0
-United States of America,10-12-15,4,0
-United States of America,11-12-15,4,0
-United States of America,15-12-15,4,0
-United States of America,16-12-15,4,0
-United States of America,17-12-15,4,0
-United States of America,22-12-15,4,0
-United States of America,23-12-15,4,0
-United States of America,29-12-15,4,0
-United States of America,23-03-16,4,0
-United States of America,23-03-16,4,0
-United States of America,06-07-15,4,0
-United States of America,07-07-15,4,0
-United States of America,08-07-15,4,0
-United States of America,09-07-15,4,0
-United States of America,10-07-15,4,0
-United States of America,13-07-15,4,0
-United States of America,14-07-15,4,0
-United States of America,15-07-15,4,0
-United States of America,16-07-15,4,0
-United States of America,17-07-15,4,0
-United States of America,20-07-15,4,0
-United States of America,21-07-15,4,0
-United States of America,22-07-15,4,0
-United States of America,23-07-15,4,0
-United States of America,24-07-15,4,0
-United States of America,27-07-15,4,0
-United States of America,28-07-15,4,0
-United States of America,29-07-15,4,0
-United States of America,30-07-15,4,0
-United States of America,31-07-15,4,0
-United States of America,03-08-15,4,0
-United States of America,04-08-15,4,0
-United States of America,05-08-15,4,0
-United States of America,06-08-15,4,0
-United States of America,07-08-15,4,0
-United States of America,10-08-15,4,0
-United States of America,11-08-15,4,0
-United States of America,12-08-15,4,0
-United States of America,13-08-15,4,0
-United States of America,14-08-15,4,0
-United States of America,17-08-15,4,0
-United States of America,18-08-15,4,0
-United States of America,19-08-15,4,0
-United States of America,20-08-15,4,0
-United States of America,21-08-15,4,0
-United States of America,24-08-15,4,0
-United States of America,25-08-15,4,0
-United States of America,26-08-15,4,0
-United States of America,27-08-15,4,0
-United States of America,28-08-15,4,0
-United States of America,31-08-15,4,0
-United States of America,01-09-15,4,0
-United States of America,02-09-15,4,0
-United States of America,03-09-15,4,0
-United States of America,04-09-15,4,0
-United States of America,07-09-15,4,0
-United States of America,08-09-15,4,0
-United States of America,09-09-15,4,0
-United States of America,10-09-15,4,0
-United States of America,11-09-15,4,0
-United States of America,14-09-15,4,0
-United States of America,15-09-15,4,0
-United States of America,16-09-15,4,0
-United States of America,17-09-15,4,0
-United States of America,18-09-15,4,0
-United States of America,21-09-15,4,0
-United States of America,22-09-15,4,0
-United States of America,23-09-15,4,0
-United States of America,24-09-15,4,0
-United States of America,25-09-15,4,0
-United States of America,28-09-15,4,0
-United States of America,29-09-15,4,0
-United States of America,30-09-15,4,0
-United States of America,01-10-15,4,0
-United States of America,02-10-15,4,0
-United States of America,05-10-15,4,0
-United States of America,06-10-15,4,0
-United States of America,07-10-15,4,0
-United States of America,08-10-15,4,0
-United States of America,09-10-15,4,0
-United States of America,13-10-15,4,0
-United States of America,15-10-15,4,0
-United States of America,16-10-15,4,0
-United States of America,20-10-15,4,0
-United States of America,22-10-15,4,0
-United States of America,23-10-15,4,0
-United States of America,26-10-15,4,0
-United States of America,27-10-15,4,0
-United States of America,29-10-15,4,0
-United States of America,30-10-15,4,0
-United States of America,03-11-15,4,0
-United States of America,05-11-15,4,0
-United States of America,06-11-15,4,0
-United States of America,10-11-15,4,0
-United States of America,11-11-15,4,0
-United States of America,12-11-15,4,0
-United States of America,16-11-15,4,0
-United States of America,17-11-15,4,0
-United States of America,20-11-15,4,0
-United States of America,24-11-15,4,0
-United States of America,26-11-15,4,0
-United States of America,01-12-15,4,0
-United States of America,02-12-15,4,0
-United States of America,03-12-15,4,0
-United States of America,09-12-15,4,0
-United States of America,10-12-15,4,0
-United States of America,11-12-15,4,0
-United States of America,15-12-15,4,0
-United States of America,16-12-15,4,0
-United States of America,17-12-15,4,0
-United States of America,22-12-15,4,0
-United States of America,23-12-15,4,0
-United States of America,29-12-15,4,0
-United States of America,23-03-16,4,0
-United States of America,23-03-16,4,0
 Global,29-08-14,1754,1754
 Global,05-09-14,2383,629
 Global,08-09-14,2552,169
@@ -2497,7 +2168,7 @@ Global,03-10-14,4108,135
 Global,08-10-14,4461,353
 Global,10-10-14,4655,194
 Global,15-10-14,5006,351
-Global,17-10-14,4218,162
+Global,17-10-14,5168,162
 Global,22-10-14,5501,333
 Global,25-10-14,5692,191
 Global,29-10-14,7632,1940
@@ -2525,10 +2196,10 @@ Global,02-01-15,13054,161
 Global,05-01-15,13184,130
 Global,06-01-15,13224,40
 Global,07-01-15,13224,0
-Global,08-01-15,13362,163
-Global,09-01-15,13383,21
-Global,12-01-15,13405,22
-Global,13-01-15,13405,0
+Global,08-01-15,13387,163
+Global,09-01-15,13408,21
+Global,12-01-15,13430,22
+Global,13-01-15,13430,0
 Global,14-01-15,13460,30
 Global,15-01-15,13484,24
 Global,16-01-15,13510,26
@@ -2638,107 +2309,85 @@ Global,30-06-15,15119,2
 Global,01-07-15,15119,0
 Global,02-07-15,15130,11
 Global,03-07-15,15135,5
-Global,06-07-15,15149,10
-Global,07-07-15,15150,1
-Global,08-07-15,15150,0
-Global,09-07-15,15154,4
-Global,10-07-15,15158,4
-Global,13-07-15,15175,17
-Global,14-07-15,15177,2
-Global,15-07-15,15177,0
-Global,16-07-15,15181,4
-Global,17-07-15,15187,6
-Global,20-07-15,15203,16
-Global,21-07-15,15203,0
-Global,22-07-15,15203,0
-Global,23-07-15,15207,4
-Global,24-07-15,15207,0
-Global,27-07-15,15208,1
-Global,28-07-15,15209,1
-Global,29-07-15,15209,0
-Global,30-07-15,15209,0
-Global,31-07-15,15209,0
-Global,03-08-15,15211,2
-Global,04-08-15,15211,0
-Global,05-08-15,15211,0
-Global,06-08-15,15214,3
-Global,07-08-15,15214,0
-Global,10-08-15,15215,1
-Global,11-08-15,15215,0
-Global,12-08-15,15215,0
-Global,13-08-15,15216,1
-Global,14-08-15,15216,0
-Global,17-08-15,15218,2
-Global,18-08-15,15218,0
-Global,19-08-15,15218,0
-Global,20-08-15,15220,2
-Global,21-08-15,15220,0
-Global,24-08-15,15220,0
-Global,25-08-15,15221,1
-Global,26-08-15,15221,0
-Global,27-08-15,15222,1
-Global,28-08-15,15222,0
-Global,31-08-15,15224,2
-Global,01-09-15,15224,0
-Global,02-09-15,15224,0
-Global,03-09-15,15225,1
-Global,04-09-15,15225,0
-Global,07-09-15,15226,1
-Global,08-09-15,15226,0
-Global,09-09-15,15226,0
-Global,10-09-15,15229,3
-Global,11-09-15,15230,1
-Global,14-09-15,15230,0
-Global,15-09-15,15231,1
-Global,16-09-15,15231,0
-Global,17-09-15,15231,0
-Global,18-09-15,15232,1
-Global,21-09-15,15233,1
-Global,22-09-15,15233,0
-Global,23-09-15,15233,0
-Global,24-09-15,15233,0
-Global,25-09-15,15233,0
-Global,28-09-15,15235,2
-Global,29-09-15,15237,2
-Global,30-09-15,15237,0
-Global,01-10-15,15237,0
-Global,02-10-15,15237,0
-Global,05-10-15,15237,0
-Global,06-10-15,15237,0
-Global,07-10-15,15237,0
-Global,08-10-15,15237,0
-Global,09-10-15,15237,0
-Global,13-10-15,15237,0
-Global,15-10-15,15238,1
-Global,16-10-15,15239,1
-Global,20-10-15,15240,1
-Global,22-10-15,15240,0
-Global,23-10-15,15240,0
-Global,26-10-15,15243,3
-Global,27-10-15,15243,0
-Global,29-10-15,15243,0
-Global,30-10-15,15243,0
-Global,03-11-15,15244,1
-Global,05-11-15,15244,0
-Global,06-11-15,15244,0
-Global,10-11-15,15244,0
-Global,11-11-15,15244,0
-Global,12-11-15,15244,0
-Global,16-11-15,15244,0
-Global,17-11-15,15244,0
-Global,20-11-15,15244,0
-Global,24-11-15,15244,0
-Global,26-11-15,15244,0
-Global,01-12-15,15244,0
-Global,02-12-15,15244,0
-Global,03-12-15,15244,0
-Global,09-12-15,15244,0
-Global,10-12-15,15244,0
-Global,11-12-15,15244,0
-Global,15-12-15,15244,0
-Global,16-12-15,15244,0
-Global,17-12-15,15244,0
-Global,22-12-15,15244,0
-Global,23-12-15,15244,0
-Global,29-12-15,15244,0
-Global,23-03-16,15252,0
+Global,06-07-15,15145,10
+Global,07-07-15,15146,1
+Global,08-07-15,15146,0
+Global,09-07-15,15150,4
+Global,10-07-15,15154,4
+Global,13-07-15,15171,17
+Global,14-07-15,15173,2
+Global,15-07-15,15173,0
+Global,16-07-15,15177,4
+Global,17-07-15,15183,6
+Global,20-07-15,15199,16
+Global,21-07-15,15199,0
+Global,22-07-15,15199,0
+Global,23-07-15,15203,4
+Global,24-07-15,15203,0
+Global,27-07-15,15204,1
+Global,28-07-15,15205,1
+Global,29-07-15,15205,0
+Global,30-07-15,15205,0
+Global,31-07-15,15205,0
+Global,03-08-15,15207,2
+Global,04-08-15,15207,0
+Global,05-08-15,15207,0
+Global,06-08-15,15210,3
+Global,07-08-15,15210,0
+Global,10-08-15,15211,1
+Global,11-08-15,15211,0
+Global,12-08-15,15211,0
+Global,13-08-15,15212,1
+Global,14-08-15,15212,0
+Global,17-08-15,15214,2
+Global,18-08-15,15214,0
+Global,19-08-15,15214,0
+Global,20-08-15,15216,2
+Global,21-08-15,15216,0
+Global,24-08-15,15216,0
+Global,25-08-15,15217,1
+Global,26-08-15,15217,0
+Global,27-08-15,15218,1
+Global,28-08-15,15218,0
+Global,31-08-15,15220,2
+Global,01-09-15,15220,0
+Global,02-09-15,15220,0
+Global,03-09-15,15221,1
+Global,04-09-15,15221,0
+Global,07-09-15,15222,1
+Global,08-09-15,15222,0
+Global,09-09-15,15222,0
+Global,10-09-15,15225,3
+Global,11-09-15,15226,1
+Global,14-09-15,15226,0
+Global,15-09-15,15227,1
+Global,16-09-15,15227,0
+Global,17-09-15,15227,0
+Global,18-09-15,15228,1
+Global,21-09-15,15229,1
+Global,22-09-15,15229,0
+Global,23-09-15,15229,0
+Global,24-09-15,15229,0
+Global,25-09-15,15229,0
+Global,28-09-15,15231,2
+Global,29-09-15,15233,2
+Global,30-09-15,15233,0
+Global,01-10-15,15233,0
+Global,02-10-15,15233,0
+Global,05-10-15,15233,0
+Global,06-10-15,15233,0
+Global,07-10-15,15233,0
+Global,08-10-15,15233,0
+Global,09-10-15,15233,0
+Global,13-10-15,15233,0
+Global,15-10-15,15234,1
+Global,16-10-15,15235,1
+Global,20-10-15,15236,1
+Global,22-10-15,15236,0
+Global,23-10-15,15236,0
+Global,26-10-15,15239,3
+Global,27-10-15,15239,0
+Global,29-10-15,15239,0
+Global,30-10-15,15239,0
+Global,03-11-15,15240,1
+Global,05-11-15,15240,0

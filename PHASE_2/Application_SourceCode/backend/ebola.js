@@ -6,6 +6,7 @@ const handleEbola = (countries) => {
     const combined = z.concat(cases, deaths);
     const uniqueCountries = getUniqueCountries(combined);
     const graphData = getGraphData(combined, uniqueCountries);
+    console.log(uniqueCountries, countries);
     const serverData = getServerData(graphData, countries);
     // console.log('SERVER DATA: ', serverData);
     return serverData;
@@ -45,13 +46,21 @@ const getServerData = (data, uniqueCountries) => {
     serverData['graphData'] = [];
     for (var country of uniqueCountries) {
         countryData = [];
+        let ptd = 0;
         for (var date of Object.keys(data[country])) {
             const graphElement = {};
             graphElement['date_' + country] = formatDate(date); // TODO re-format date
             graphElement['new_cases_' + country] = parseInt(data[country][date].new_cases);
             graphElement['new_deaths_' + country] = parseInt(data[country][date].new_deaths);
+            
             graphElement['total_cases_' + country] = parseInt(data[country][date].cases_total);
-            graphElement['total_deaths_' + country] = parseInt(data[country][date].deaths_total);
+            let deaths = parseInt(data[country][date].deaths_total);
+            if (isNaN(deaths)) {
+                deaths = ptd;
+            }
+            graphElement['total_deaths_' + country] = deaths;
+            ptd = deaths;
+
             countryData.push(graphElement);
         }
         serverData['graphData'].push(countryData);
