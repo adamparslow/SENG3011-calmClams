@@ -1,63 +1,72 @@
-const predict = (series, country, additionalDays) => {
+const predict = (series, country, inKeys, outKeys, additionalDays) => {
     let data = [];
 
     // Clean data
     for (const entry of series) {
         let dateString = entry["date_" + country];
 
-        data.push({
-            date: Date.parse(dateString.substring(0, dateString.length - " 00:00:00".length)),
-            value: entry["total_cases_" + country]
-        });
+        let obj = {}
+        obj["date"] = Date.parse(dateString.substring(0, dateString.length - " 00:00:00".length))
+        for (const inKey of inKeys) obj[`value_${inKey}`] = entry[`${inKey}_${country}`];
+        
+        data.push(obj);
     }
 
     const n = data.length;
-
-    // Determine 1st derivative
-    differentiate(data, "value", "rawD1");
-    smooth(data, 4, "rawD1", "d1");
-
-    // Determine 2nd derivative
-    differentiate(data, "d1", "rawD2");
-    smooth(data, 3, "rawD2", "d2");
-
-    // Get inflection point
-    const inflectionX = determinePOI(data, "d1", "d2");
-    if (inflectionX < 0) return; // TODO Handle no inflection point
-
-    const inflectionY = getY(data, "value", inflectionX);
-    const inflectionD1 = getY(data, "d1", inflectionX);
-
-    // console.log(`POI: (${inflectionX}, ${inflectionY})`);
-
-    const L = inflectionY * 2;
-    const k = 4 * inflectionD1 / L;
-    const xOff = inflectionX;
-
-    curve = logisticCurve(k, L, xOff, n + additionalDays);
-    // for (const y of curve) console.log(y);
-
-    // console.log(`k: ${k}, L: ${L}, xOff: ${xOff}`);
-
-    // for (let i = 0; i < n; i++) {
-    //     series[i][`predict_cases_${country}`] = curve[i];
-    // }
-
-    // Align with final point on curve
-    yOff = curve[n - 1] - data[n - 1].value;
-    series[n - 1][`predict_cases_${country}`] = curve[n - 1] - yOff;
-
-    lastDate = data[n - 1].date;
+    const lastDate = data[n - 1].date;
+    series[n - 1][`pdate_${country}`] = `${new Date(lastDate).toDateString()} 00:00:00`;
 
     for (let i = n; i < n + additionalDays; i++) {
         date = new Date(lastDate);
         date.setDate(date.getDate() + i - n + 1);
 
         entry = {};
-        entry["date"] = `${date.toDateString()} 00:00:00`;
-        entry[`predict_cases_${country}`] = curve[i] - yOff;
+        entry[`pdate_${country}`] = `${date.toDateString()} 00:00:00`;
 
         series.push(entry);
+    }
+
+    for (let keyIdx = 0; keyIdx < inKeys.length; keyIdx++) {
+        const inKey = inKeys[keyIdx];
+        const outKey = outKeys[keyIdx];
+
+        // Determine 1st derivative
+        differentiate(data, `value_${inKey}`, `rawD1_${inKey}`);
+        smooth(data, 4, `rawD1_${inKey}`, `d1_${inKey}`);
+
+        // Determine 2nd derivative
+        differentiate(data, `d1_${inKey}`, `rawD2_${inKey}`);
+        smooth(data, 3, `rawD2_${inKey}`, `d2_${inKey}`);
+
+        // Get inflection point
+        const inflectionX = determinePOI(data, `d1_${inKey}`, `d2_${inKey}`);
+        if (inflectionX < 0) break; // TODO Handle no inflection point
+
+        const inflectionY = getY(data, `value_${inKey}`, inflectionX);
+        const inflectionD1 = getY(data, `d1_${inKey}`, inflectionX);
+
+        // console.log(`POI: (${inflectionX}, ${inflectionY})`);
+
+        const L = inflectionY * 2;
+        const k = 4 * inflectionD1 / L;
+        const xOff = inflectionX;
+
+        curve = logisticCurve(k, L, xOff, n + additionalDays);
+        // for (const y of curve) console.log(y);
+
+        // console.log(`k: ${k}, L: ${L}, xOff: ${xOff}`);
+
+        // for (let i = 0; i < n; i++) {
+        //     series[i][`${outKey}_${country}`] = curve[i];
+        // }
+
+        // Align with final point on curve
+        const yOff = curve[n - 1] - data[n - 1][`value_${inKey}`];
+        series[n - 1][`${outKey}_${country}`] = curve[n - 1] - yOff;
+
+        for (let i = n; i < n + additionalDays; i++) {
+            series[i][`${outKey}_${country}`] = curve[i] - yOff;
+        }
     }
 }
 

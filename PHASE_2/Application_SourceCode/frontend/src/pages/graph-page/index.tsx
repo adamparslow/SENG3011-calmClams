@@ -7,16 +7,23 @@ import Switch from '../../components/switch';
 
 const PageContainer = styled.div``;
 
+interface GraphPageProps {
+  disease: string;
+  start: string;
+  end: string;
+};
+
 interface GraphDataInterface {
   seriesTitles: Array<string>;
   graphData: Array<any>;
 }
 
-export const SearchPage = () => {
+export const SearchPage = (props: GraphPageProps) => {
   const [totalCases, setTotalCases] = useState(true);
   const [totalDeaths, setTotalDeaths] = useState(true);
   const [newCases, setNewCases] = useState(true);
   const [newDeaths, setNewDeaths] = useState(true);
+  const [predict, setPredict] = useState(false);
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -38,11 +45,11 @@ export const SearchPage = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        start_date: "2020-01-20",
-        end_date: "2020-04-20",
+        start_date: props.start,
+        end_date: props.end,
         countries: countries,
         google: google,
-        disease: 'covid19',
+        disease: props.disease,
       }),
     })
       .then((response) => {
@@ -95,6 +102,8 @@ export const SearchPage = () => {
         setNewCases={setNewCases}
         newDeaths={newDeaths}
         setNewDeaths={setNewDeaths}
+        predict={predict}
+        setPredict={setPredict}
       />
       <>
         {loading && <Spinner loading={loading} />}
@@ -105,6 +114,7 @@ export const SearchPage = () => {
             newCases={newCases}
             totalCases={totalCases}
             newDeaths={newDeaths}
+            predict={predict}
           />
         </>
       </>

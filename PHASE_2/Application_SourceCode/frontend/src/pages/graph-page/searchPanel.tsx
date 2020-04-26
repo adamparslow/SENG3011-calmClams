@@ -37,6 +37,8 @@ interface SearchPanelProps {
   setNewCases: (value: boolean) => void;
   newDeaths: boolean;
   setNewDeaths: (value: boolean) => void;
+  predict: boolean;
+  setPredict: (value: boolean) => void;
 }
 let firstLoad = true;
 
@@ -50,6 +52,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
     setNewCases,
     newDeaths,
     setNewDeaths,
+    predict,
+    setPredict
   } = props;
   const [googleTerms, setGoogleTerms] = useState([]);
   const [twitterTags, setTwitterTags] = useState([]);
@@ -73,7 +77,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
 
   if (firstLoad) {
     firstLoad = false;
-    props.fetchData([],[],["global"]);
+    props.fetchData([],[],["Global"]);
   }
 
   const handleSwitch = (event, setSwitch) => {
@@ -129,6 +133,13 @@ export const SearchPanel = (props: SearchPanelProps) => {
         <Switch
           checked={newDeaths}
           onChange={(event) => handleSwitch(event, setNewDeaths)}
+        />
+      </GridContainer>
+      <GridContainer>
+        Predict
+        <Switch
+          checked={predict}
+          onChange={(event) => handleSwitch(event, setPredict)}
         />
       </GridContainer>
       <GridContainer>
