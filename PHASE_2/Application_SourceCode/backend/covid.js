@@ -1,4 +1,5 @@
 const request = require('request-promise');
+const predict = require('./prediction');
 
 const apiUrl = "https://api.covid19api.com/country/";
 const globalUrl = "https://covid-api.com/api/reports/total?";
@@ -10,6 +11,13 @@ const handleCovid = async (body) => {
         } else {
             await getCountryData(country, body.start_date, body.end_date, graphData);
         }
+    }
+
+    // Make predictions
+    const additionalDays = 60;
+
+    for (let i = 0; i < graphData.length; i++) {
+        predict(graphData[i], body.countries[i], additionalDays);
     }
 
     return {
