@@ -23,6 +23,13 @@ const GridContainer = styled.div`
   text-align: center;
 `;
 
+const DateContainer = styled.div`
+  background: white;
+  color: grey;
+  border-radius: 5px 5px 0px 0px;
+  text-align: left;
+`;
+
 interface SearchPanelProps {
   fetchData: (
     searchquery: string,
@@ -93,11 +100,11 @@ export const SearchPanel = (props: SearchPanelProps) => {
     <FlexContainer id="top">
       <Modal></Modal>
       <GridContainer>
-        START DATE
+        <DateContainer>START DATE</DateContainer>
         <DateInput onChange={handleStartDateChange} width={200} />
       </GridContainer>
       <GridContainer>
-        END DATE
+        <DateContainer>END DATE</DateContainer>
         <DateInput onChange={handleEndDateChange} width={200} />
       </GridContainer>
       <FlexContainer>
