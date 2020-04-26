@@ -76,7 +76,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
         throw new Error("Please enter an End Date");
       }
 
-      if (location && location != ['Global']) {
+      if (location.length > 0 && !location.includes("Global")) {
         searchquery += '&location=' + location.join();
       }
       
