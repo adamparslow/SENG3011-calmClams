@@ -104,7 +104,7 @@ const GraphPanel = (props: GraphPanelProps) => {
             series.yAxis = axis;
 
             series.name = snakeToTitle(yField);
-            series.tooltipText = "{name}:{valueY}";
+            series.tooltipText = "{name}: {valueY}";
             series.tensionX = 0.9;
             series.showOnInit = true;
             series.fill = colour;
@@ -222,7 +222,7 @@ const GraphPanel = (props: GraphPanelProps) => {
         googleColour = colourSet.next();
         predictionColour = colourSet.next();
 
-        const bullets = ["circle", "rectangle", "triangle", "trapizoid", "rrectangle", "rrectangle2", "cone"];
+        const bullets = ["circle", "rectangle", "triangle", "rrectangle", "trapizoid", "rrectangle2", "cone"];
 
         // Combine all the data and create each series
         for (let i in props.data.seriesTitles) {

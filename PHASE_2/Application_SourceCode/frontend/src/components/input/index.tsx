@@ -26,7 +26,7 @@ const ReactInput = (props) => {
       className={`input ${props.className}`}
       placeholder = {props.placeholder}
     />
-    {props.enableButton && <HelpButton toolTipMessage={props.toolTipMessage} toolTipTitle={props.toolTipTitle}></HelpButton>}
+    {props.enableButton && <HelpButton height="55px" toolTipMessage={props.toolTipMessage} toolTipTitle={props.toolTipTitle}></HelpButton>}
     </InputContainer>
   );
 };

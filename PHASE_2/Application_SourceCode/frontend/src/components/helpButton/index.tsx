@@ -7,7 +7,6 @@ import Popover from 'react-bootstrap/Popover';
 
 const HelpButtonStyled = styled.button`
   width: 55px;
-  height: 55px;
   background: ${config.theme.mediumColor};
   border-radius: 0px 5px 5px 0px;
   border: none;
@@ -17,7 +16,8 @@ const HelpButtonStyled = styled.button`
 
 interface HelpButtonProps {
   toolTipTitle: string,
-  toolTipMessage: string
+  toolTipMessage: string,
+  height: string
 };
 
 //TODO: Add typescript typing
@@ -37,7 +37,7 @@ const HelpButton = (props: HelpButtonProps) => {
   return (
     <>
           <OverlayTrigger delay={{ show: 100, hide: 400 }} placement="bottom" overlay={popover}>
-        <HelpButtonStyled ref={target} onClick={() => setShow(!show)}>?</HelpButtonStyled>
+        <HelpButtonStyled ref={target} onClick={() => setShow(!show)} style={{height: props.height}}>?</HelpButtonStyled>
         {/* <Button variant="success">Click me to see</Button> */}
       </OverlayTrigger>
     </>
