@@ -53,7 +53,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
   } = props;
   const [googleTerms, setGoogleTerms] = useState([]);
   const [twitterTags, setTwitterTags] = useState([]);
-  const [countries, setCountries] = useState([]);
+  const [countries, setCountries] = useState(['Global']);
 
   const santitisedDataFetch = () => {
     let searchquery = '';
@@ -67,6 +67,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
       showModal(err);
       return null;
     }
+    console.log("COUNTRIES: ", countries);
     return props.fetchData(googleTerms, [], countries);
   };
 

@@ -20,8 +20,8 @@ const ReactAutocomplete = (props) => {
   return (
     <div className={classes.root}>
       <Autocomplete
+          autoComplete
           multiple
-          id="tags-standard"
           freeSolo
           options={optionsDict[props.options]}
           getOptionLabel={(option) => option}
