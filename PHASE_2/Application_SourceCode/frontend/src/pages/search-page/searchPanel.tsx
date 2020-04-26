@@ -12,13 +12,13 @@ const FlexContainer = styled.div`
   display: flex;
   background: ${config.theme.darkColor};
   align-items: center;
-  padding-left: 100px;
+  justify-content: space-around;
 `;
+
 const GridContainer = styled.div`
   display: grid;
   padding: 10px;
   color: ${config.theme.primaryLight};
-  margin: auto;
   font-size: 12px;
   text-align: center;
 `;
