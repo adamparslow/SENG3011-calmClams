@@ -8,8 +8,9 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 300,
+    height: '55px',
     backgroundColor: 'white',
-    borderRadius: '5px 5px 5px 5px',
+    borderRadius: '5px 0px 0px 5px',
     '& > * + *': {
       marginTop: theme.spacing(3),
     },
