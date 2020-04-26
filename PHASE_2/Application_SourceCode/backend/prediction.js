@@ -35,7 +35,7 @@ const predict = (series, country, additionalDays) => {
     const xOff = inflectionX;
 
     curve = logisticCurve(k, L, xOff, n + additionalDays);
-    for (const y of curve) console.log(y);
+    // for (const y of curve) console.log(y);
 
     // console.log(`k: ${k}, L: ${L}, xOff: ${xOff}`);
 
