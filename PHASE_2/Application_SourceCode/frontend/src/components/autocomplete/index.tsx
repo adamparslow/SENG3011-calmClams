@@ -31,7 +31,7 @@ const ReactAutocomplete = (props) => {
   return (
     <div>
       <Autocomplete 
-        style={{height: props.height}}
+        style={{height: props.height, width: props.width}}
         classes={ classes }
         autoComplete
         multiple
