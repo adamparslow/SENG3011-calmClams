@@ -8,6 +8,7 @@ const Input = styled.input`
     enableButton ? '5px 0px 0px 5px' : '0px 0px 5px 5px'};
   border: none;
   font-size: 18px;
+  padding-left: 10px;
 `;
 const DateInput = (props) => {
   return (

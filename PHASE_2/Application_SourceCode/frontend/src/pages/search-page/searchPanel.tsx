@@ -28,6 +28,7 @@ const DateContainer = styled.div`
   color: grey;
   border-radius: 5px 5px 0px 0px;
   text-align: left;
+  padding-left: 10px;
 `;
 
 interface SearchPanelProps {
