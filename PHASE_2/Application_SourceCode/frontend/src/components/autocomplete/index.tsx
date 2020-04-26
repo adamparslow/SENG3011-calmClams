@@ -14,6 +14,14 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginTop: theme.spacing(3),
     },
+    underline: {
+      "&&&:before": {
+        borderBottom: "none"
+      },
+      "&&:after": {
+        borderBottom: "none"
+      }
+    }
   },
 }));
 
@@ -37,6 +45,10 @@ const ReactAutocomplete = (props) => {
             variant="standard"
             label={props.label}
             placeholder={props.placeholder}
+            InputProps={{
+              ...params.InputProps,
+              disableUnderline: true
+             }}
             />
         )}
       />
