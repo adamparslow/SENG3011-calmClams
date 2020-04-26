@@ -4,7 +4,7 @@ import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 
-const style={height: "91.1vh", width: "100%", backgroundColor: "#00A8E8"};
+const style={height: "91.4vh", width: "100%", backgroundColor: "#00A8E8"};
 
 interface MapPanelProps {
     loading: boolean,
