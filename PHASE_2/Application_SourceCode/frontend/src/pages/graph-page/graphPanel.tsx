@@ -53,6 +53,7 @@ const GraphPanel = (props: GraphPanelProps) => {
         chart.cursor = new am4charts.XYCursor();
         chart.cursor.behavior = "zoomXY";
 
+        //am4core.options.minPolylineStep = 5;
 
         function createAxis(name) {
             let axis = chart.yAxes.push(new am4charts.ValueAxis());
@@ -74,7 +75,16 @@ const GraphPanel = (props: GraphPanelProps) => {
             if (chart.yAxes.indexOf(axis) !== 0) {
                 axis.syncWithAxis = tCasesAxis;
             }
-            axis.title.events.on("hit", () => axis.logarithmic = !axis.logarithmic);
+            axis.title.events.on("hit", () => {
+                axis.logarithmic = !axis.logarithmic
+                axis.logarithmic ? axis.title.text = name + " (log scale)" : axis.title.text = name;
+            });
+            /*
+            chart.events.on("ready", function (ev) {
+                axis.min = axis.minZoomed;
+                axis.max = axis.maxZoomed;
+            });
+            */
             return axis;
         }
 
@@ -92,6 +102,8 @@ const GraphPanel = (props: GraphPanelProps) => {
             series.showOnInit = true;
             series.fill = colour;
             series.stroke = colour;
+
+            //series.minBulletDistance = 5;
 
             // Maybe remove/show the axis for this series when we toggle this axis
             series.events.on("hidden", toggleAxes);

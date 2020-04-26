@@ -73,7 +73,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
 
   if (firstLoad) {
     firstLoad = false;
-    props.fetchData([],[],["global"]);
+    props.fetchData([],[],["Global"]);
   }
 
   const handleSwitch = (event, setSwitch) => {
