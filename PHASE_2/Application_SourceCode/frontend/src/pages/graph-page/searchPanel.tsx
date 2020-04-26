@@ -84,8 +84,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
   const handleTwitterTags = (event) => {
     setTwitterTags(event.target.value);
   };
-  const handleCountry = (event) => {
-    setCountries(event.target.value);
+  const handleCountry = (event, value, reason) => {
+    setCountries(value);
   };
 
   const showModal = (error) => {

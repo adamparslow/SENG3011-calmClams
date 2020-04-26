@@ -84,7 +84,7 @@ export const SearchPage = () => {
         await Promise.all(promises);
 
         data.articles.push(...fsResponse);
-        console.log(fsResponse);
+        // console.log(fsResponse);
         // data.articles = fsResponse;
         data.version = dataVersion;
         setData(data);

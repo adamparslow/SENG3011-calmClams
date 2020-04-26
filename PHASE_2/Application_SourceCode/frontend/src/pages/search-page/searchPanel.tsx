@@ -43,11 +43,11 @@ export const SearchPanel = (props: SearchPanelProps) => {
     setEndDate(event.target.value);
   };
 
-  const handleKeyTerms = (event) => {
-    setKeyTerms(event.target.value);
+  const handleKeyTerms = (event, value, reason) => {
+    setKeyTerms(value);
   };
-  const handleLocation = (event) => {
-    setLocation(event.target.value);
+  const handleLocation = (event, value, reason) => {
+    setLocation(value);
   };
 
   const showModal = (error) => {
