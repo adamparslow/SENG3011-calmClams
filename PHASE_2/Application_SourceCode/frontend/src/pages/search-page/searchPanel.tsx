@@ -68,20 +68,24 @@ export const SearchPanel = (props: SearchPanelProps) => {
   const santitisedDataFetch = () => {
     let searchquery = '';
     try {
+      if (new Date(endDate) >= new Date()) {
+        throw "End Date must be earlier than current Date";
+      }
+      
       if (new Date(endDate) < new Date(startDate)) {
-        throw new Error("Start Date must be earlier than End Date");
+        throw "Start Date must be earlier than End Date";
       }
       
       if (startDate) {
         searchquery += 'start_date=' + startDate + 'T00:00:00';
       } else {
-        throw new Error("Please enter a Start Date");
+        throw "Please enter a Start Date";
       }
 
       if (endDate) {
         searchquery += '&end_date=' + endDate + 'T00:00:00';
       } else {
-        throw new Error("Please enter an End Date");
+        throw "Please enter an End Date";
       }
 
       if (location.length > 0 && !location.includes("Global")) {

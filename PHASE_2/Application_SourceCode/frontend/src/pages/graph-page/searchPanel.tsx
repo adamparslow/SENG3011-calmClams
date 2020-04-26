@@ -64,9 +64,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
     let searchquery = '';
     try {
       if (googleTerms.length + twitterTags.length + countries.length === 0) {
-        throw new Error(
-          'Please enter a Google search term, Twitter hashtag or Country',
-        );
+        throw 'Please enter a Google search term, Twitter hashtag or Country';
       }
     } catch (err) {
       showModal(err);
