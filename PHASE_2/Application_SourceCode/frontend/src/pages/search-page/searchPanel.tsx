@@ -33,8 +33,8 @@ interface SearchPanelProps {
 export const SearchPanel = (props: SearchPanelProps) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [keyTerms, setKeyTerms] = useState('');
-  const [location, setLocation] = useState('');
+  const [keyTerms, setKeyTerms] = useState([]);
+  const [location, setLocation] = useState(['Global']);
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
@@ -43,11 +43,11 @@ export const SearchPanel = (props: SearchPanelProps) => {
     setEndDate(event.target.value);
   };
 
-  const handleKeyTerms = (event) => {
-    setKeyTerms(event.target.value);
+  const handleKeyTerms = (event, value, reason) => {
+    setKeyTerms(value);
   };
-  const handleLocation = (event) => {
-    setLocation(event.target.value);
+  const handleLocation = (event, value, reason) => {
+    setLocation(value);
   };
 
   const showModal = (error) => {
@@ -76,11 +76,11 @@ export const SearchPanel = (props: SearchPanelProps) => {
         throw new Error("Please enter an End Date");
       }
 
-      if (location) {
-        searchquery += '&location=' + location;
+      if (location.length > 0 && !location.includes("Global")) {
+        searchquery += '&location=' + location.join();
       }
       
-      keyTerms && (searchquery += '&key_terms=' + keyTerms);
+      keyTerms && (searchquery += '&key_terms=' + keyTerms.join());
     } catch (err) {
       console.error(err);
       showModal(err);

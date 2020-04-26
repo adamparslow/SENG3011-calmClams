@@ -51,9 +51,9 @@ export const SearchPanel = (props: SearchPanelProps) => {
     newDeaths,
     setNewDeaths,
   } = props;
-  const [googleTerms, setGoogleTerms] = useState('');
-  const [twitterTags, setTwitterTags] = useState('');
-  const [countries, setCountries] = useState('');
+  const [googleTerms, setGoogleTerms] = useState([]);
+  const [twitterTags, setTwitterTags] = useState([]);
+  const [countries, setCountries] = useState(['Global']);
 
   const santitisedDataFetch = () => {
     let searchquery = '';
@@ -67,7 +67,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
       showModal(err);
       return null;
     }
-    return props.fetchData(googleTerms === '' ? [] : googleTerms.split(','), [], countries === '' ? [] : countries.split(','));
+    console.log("COUNTRIES: ", countries);
+    return props.fetchData(googleTerms, [], countries);
   };
 
   if (firstLoad) {
@@ -78,14 +79,14 @@ export const SearchPanel = (props: SearchPanelProps) => {
   const handleSwitch = (event, setSwitch) => {
     setSwitch(event);
   };
-  const handleGoogleTerms = (event) => {
-    setGoogleTerms(event.target.value);
+  const handleGoogleTerms = (event, value, reason) => {
+    setGoogleTerms(value);
   };
-  const handleTwitterTags = (event) => {
-    setTwitterTags(event.target.value);
+  const handleTwitterTags = (event, value, reason) => {
+    setTwitterTags(value);
   };
-  const handleCountry = (event) => {
-    setCountries(event.target.value);
+  const handleCountry = (event, value, reason) => {
+    setCountries(value);
   };
 
   const showModal = (error) => {
@@ -131,27 +132,16 @@ export const SearchPanel = (props: SearchPanelProps) => {
         />
       </GridContainer>
       <GridContainer>
-        Google Search Terms
-        <Input
-          enableButton={true}
-          placeholder={'Google Search Terms'}
-          onChange={handleGoogleTerms}
-          width={300}
-          className=""
-          toolTipTitle={'Help'}
-          toolTipMessage={'Type out your search terms separated by commas.\nEach search term will be a new graph.\nType [seachTerm]:[country] to narrow the search down to an individual country'}
-        />
+        <div>
+          <Autocomplete onChange={handleGoogleTerms} options={'none'} label={'Google Search Terms'} placeholder={'Google Search Terms'} defaultValue={[]} />
+          <HelpButton toolTipMessage={'Type out your search terms separated by commas.\nEach search term will be a new graph.\nType [seachTerm]:[country] to narrow the search down to an individual country'} toolTipTitle={"Help"}></HelpButton>
+        </div>
       </GridContainer>
       <GridContainer>
-        Twitter Hashtags
-        <Input
-          enableButton={true}
-          placeholder={'Twitter Hashtags'}
-          onChange={handleTwitterTags}
-          width={300}
-          toolTipTitle={'Help'}
-          toolTipMessage={'Not Yet Implemented'}
-        />
+        <div>
+          <Autocomplete onChange={handleTwitterTags} options={'none'} label={'Twitter Hashtags'} placeholder={'Twitter Hashtags'} defaultValue={[]} />
+          <HelpButton toolTipMessage={'Not Yet Implemented'} toolTipTitle={"Help"}></HelpButton>
+        </div>
       </GridContainer>
       <GridContainer>
         <div>
