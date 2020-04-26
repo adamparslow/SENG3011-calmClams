@@ -17,7 +17,7 @@ const handleCovid = async (body) => {
     const additionalDays = 60;
 
     for (let i = 0; i < graphData.length; i++) {
-        predict(graphData[i], body.countries[i], additionalDays);
+        predict(graphData[i], body.countries[i], ["total_cases", "total_deaths"], ["predict_cases", "predict_deaths"], additionalDays);
     }
 
     return {
