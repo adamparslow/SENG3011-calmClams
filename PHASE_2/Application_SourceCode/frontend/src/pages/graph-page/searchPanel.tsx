@@ -40,9 +40,10 @@ interface SearchPanelProps {
   predict: boolean;
   setPredict: (value: boolean) => void;
 }
-let firstLoad = true;
+
 
 export const SearchPanel = (props: SearchPanelProps) => {
+  let firstLoad = true;
   const {
     totalCases,
     setTotalCases,
