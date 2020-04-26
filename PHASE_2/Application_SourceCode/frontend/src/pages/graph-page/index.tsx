@@ -7,12 +7,19 @@ import Switch from '../../components/switch';
 
 const PageContainer = styled.div``;
 
+interface GraphPageProps {
+  disease: string;
+  start: string;
+  end: string;
+};
+
 interface GraphDataInterface {
   seriesTitles: Array<string>;
   graphData: Array<any>;
 }
 
-export const SearchPage = () => {
+export const SearchPage = (props: GraphPageProps) => {
+  console.log(props);
   const [totalCases, setTotalCases] = useState(true);
   const [totalDeaths, setTotalDeaths] = useState(true);
   const [newCases, setNewCases] = useState(true);
@@ -38,11 +45,11 @@ export const SearchPage = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        start_date: "2020-01-20",
-        end_date: "2020-04-20",
+        start_date: props.start,
+        end_date: props.end,
         countries: countries,
         google: google,
-        disease: 'covid19',
+        disease: props.disease,
       }),
     })
       .then((response) => {
