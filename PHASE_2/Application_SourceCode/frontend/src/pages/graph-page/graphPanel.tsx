@@ -13,6 +13,7 @@ interface GraphPanelProps {
     newCases: boolean;
     newDeaths: boolean;
     predict: boolean;
+    title: string;
 };
 
 const GraphPanel = (props: GraphPanelProps) => {
@@ -44,6 +45,11 @@ const GraphPanel = (props: GraphPanelProps) => {
 
         chart.scrollbarX = scrollbar;
         chart.scrollbarX.parent = chart.bottomAxesContainer;
+
+        let title = chart.titles.create();
+        title.text = props.title.toUpperCase();
+        title.fontSize = 25;
+        title.marginBottom = 30;
 
         // Add legend
         chart.legend = new am4charts.Legend();
@@ -135,16 +141,16 @@ const GraphPanel = (props: GraphPanelProps) => {
                 case "rrectangle":
                     shape = bullet.createChild(am4core.RoundedRectangle);
                     shape.cornerRadiusBottomLeft = 0;
-                    shape.cornerRadiusBottomRight = 30;
-                    shape.cornerRadiusTopLeft = 30;
+                    shape.cornerRadiusBottomRight = 35;
+                    shape.cornerRadiusTopLeft = 35;
                     shape.cornerRadiusTopRight = 0;
                     break;
                 case "rrectangle2":
                     shape = bullet.createChild(am4core.RoundedRectangle);
-                    shape.cornerRadiusBottomLeft = 30;
+                    shape.cornerRadiusBottomLeft = 35;
                     shape.cornerRadiusBottomRight = 0;
                     shape.cornerRadiusTopLeft = 0;
-                    shape.cornerRadiusTopRight = 30;
+                    shape.cornerRadiusTopRight = 35;
                     break;
                 case "trapizoid":
                     shape = bullet.createChild(am4core.Trapezoid);

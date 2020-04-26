@@ -128,6 +128,7 @@ export const SearchPage = (props: GraphPageProps) => {
               totalCases={totalCases}
               newDeaths={newDeaths}
               predict={predict}
+              title={props.disease}
             />
           </>
         )}
