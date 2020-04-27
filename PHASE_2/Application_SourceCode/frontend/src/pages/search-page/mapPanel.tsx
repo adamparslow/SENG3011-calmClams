@@ -79,11 +79,15 @@ const MapPanel = (props: MapPanelProps) => {
         circle.events.on('hit', (event) => {
             const id = Math.floor(Number((event.target.parent && event.target.parent.id) || ""));
             props.toggleReport(id); 
+
+            console.log(event.target);
         });
 
         // Mapping multi-locations to single locations
         const imageData : any[] = [];
         let dataNumber = 0;
+        let prev1 = "";
+        let prev2 = "";
 
         for (const article of props.data.articles) {
             const locations = article.reports[0].locations;
@@ -107,9 +111,21 @@ const MapPanel = (props: MapPanelProps) => {
 
                 const [lat, long] = location.coords.split(", ");
 
+                let url;
+                if (prev1 === "" || prev2 == "") {
+                    url = `#${article._id}`;
+                }
+                else {
+                    url = prev1;
+                }
+                prev1 = prev2;
+                prev2 = `#${article._id}`;
+                // const url = `#${dataNumber >= 2 ? article._id - 2 : article._id}`;
+                console.log(url);
+
                 imageData.push({
                     "title": article.headline,
-                    "url": `#${dataNumber >= 2 ? article._id - 2 : article._id}`,
+                    "url": url,
                     "click": `console.log(${article._id})`,
                     "latitude": Number(lat),
                     "longitude": Number(long),
