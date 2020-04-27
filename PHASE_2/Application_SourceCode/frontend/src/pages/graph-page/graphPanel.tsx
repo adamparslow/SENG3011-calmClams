@@ -30,11 +30,10 @@ const GraphPanel = (props: GraphPanelProps) => {
         // Create chart instance
         let chart = am4core.create("chartdiv", am4charts.XYChart);
 
-        //chart.paddingTop = 40; // Leave some room for the axis titles
-
         // Create axes
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         dateAxis.renderer.minGridDistance = 50;
+        dateAxis.tooltipDateFormat = "d MMM yyyy";
 
         // Add scrollbar
         let scrollbar = new am4charts.XYChartScrollbar();
