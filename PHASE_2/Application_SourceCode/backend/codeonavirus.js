@@ -1,3 +1,8 @@
+/**
+ * This file is not used. It is from when we attempted to use the codeonavirus APi for covid19 data
+ * We ran into some issues using this API and ultimately decided to change to another API. 
+ */
+
 const request = require('request-promise');
 
 const apiUrl = "https://www.codeonavirus.com/jhu/daily_reports";
