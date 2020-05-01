@@ -39,7 +39,7 @@ const getGlobalData = async (country, startDate, endDate, graphData) => {
         const options = {
             method: 'GET',
             uri: globalUrl + requestData,
-            json: true 
+            json: true
         }
 
         promises.push(request(options));
@@ -72,8 +72,10 @@ const getCountryData = async (country, startDate, endDate, graphData) => {
     const options = {
         method: 'GET',
         uri: apiUrl + requestData,
-        json: true 
+        json: true
     }
+
+    console.log(requestData, options);
 
     const response = await request(options);
 
@@ -97,7 +99,7 @@ const getCountryData = async (country, startDate, endDate, graphData) => {
         }
 
         grouped.push({
-            date: currentDate, 
+            date: currentDate,
             entries: currGroup
         });
 

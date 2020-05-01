@@ -21,7 +21,7 @@ const predict = (series, country, inKeys, outKeys, additionalDays) => {
         let obj = {}
         obj["date"] = Date.parse(dateString.substring(0, dateString.length - " 00:00:00".length))
         for (const inKey of inKeys) obj[`value_${inKey}`] = entry[`${inKey}_${country}`];
-        
+
         data.push(obj);
     }
 
@@ -121,7 +121,7 @@ const determinePOI = (data, keyD1, keyD2, useMaxGradient) => {
         // Determine inflection point based on steepest gradient
         for (let i = 1; i < n; i++) {
             let score = data[i][keyD1];
-                
+
             if (score > bestInflectionScore) {
                 bestInflectionScore = score;
                 inflection = i;
@@ -136,10 +136,10 @@ const determinePOI = (data, keyD1, keyD2, useMaxGradient) => {
                 || data[i][keyD2] < 0 && data[i - 1][keyD2] > 0
             ) {
                 let score = data[i][keyD1] + data[i - 1][keyD1];
-    
+
                 if (score > bestInflectionScore) {
                     bestInflectionScore = score;
-    
+
                     let w1 = Math.abs(data[i][keyD2]);
                     let w2 = Math.abs(data[i - 1][keyD2]);
                     inflection = (w1 * i + w2 * (i - 1)) / (w1 + w2);
@@ -173,6 +173,6 @@ const logisticCurve = (k, L, xOff, xMax) => {
     }
 
     return values;
-} 
+}
 
 module.exports = predict;
