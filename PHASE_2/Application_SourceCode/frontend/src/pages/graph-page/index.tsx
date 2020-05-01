@@ -40,7 +40,6 @@ export const SearchPage = (props: GraphPageProps) => {
     twitter: Array<string>,
     countries: Array<string>,
   ) => {
-    console.log('Fetched', props.disease);
     fetch('http://localhost:8080/get_data', {
       method: 'PUT',
       headers: {
@@ -59,7 +58,6 @@ export const SearchPage = (props: GraphPageProps) => {
         return response.json();
       })
       .then((json) => {
-        console.log(json);
         let newData: GraphDataInterface = {
           seriesTitles: json.seriesTitles,
           graphData: json.graphData,
@@ -91,12 +89,12 @@ export const SearchPage = (props: GraphPageProps) => {
 
     setLoading(true);
   };
-  console.log('firstLoad', firstLoad);
+
   if (firstLoad) {
-    console.log('loading');
     setFirstLoad(false);
     fetchData([], [], ['Global']);
   }
+
   return (
     <PageContainer>
       <SearchPanel
@@ -117,18 +115,18 @@ export const SearchPage = (props: GraphPageProps) => {
         {loading ? (
           <Spinner loading={loading} />
         ) : (
-          <>
-            <GraphPanel
-              data={data}
-              totalDeaths={totalDeaths}
-              newCases={newCases}
-              totalCases={totalCases}
-              newDeaths={newDeaths}
-              predict={predict}
-              title={props.disease}
-            />
-          </>
-        )}
+            <>
+              <GraphPanel
+                data={data}
+                totalDeaths={totalDeaths}
+                newCases={newCases}
+                totalCases={totalCases}
+                newDeaths={newDeaths}
+                predict={predict}
+                title={props.disease}
+              />
+            </>
+          )}
       </>
     </PageContainer>
   );

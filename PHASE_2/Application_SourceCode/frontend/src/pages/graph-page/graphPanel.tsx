@@ -22,10 +22,8 @@ const GraphPanel = (props: GraphPanelProps) => {
             return;
         }
 
-        //console.log(props);
-        // Themes begin
+        // Themes 
         am4core.useTheme(am4themes_animated);
-        // Themes end
 
         // Create chart instance
         let chart = am4core.create("chartdiv", am4charts.XYChart);
@@ -33,7 +31,7 @@ const GraphPanel = (props: GraphPanelProps) => {
         // Create axes
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         dateAxis.renderer.minGridDistance = 50;
-        dateAxis.tooltipDateFormat = "d MMM yyyy";
+        dateAxis.tooltipDateFormat = "d MMM yyyy"; // Show the year in the tooltip
 
         // Add scrollbar
         let scrollbar = new am4charts.XYChartScrollbar();
@@ -41,10 +39,10 @@ const GraphPanel = (props: GraphPanelProps) => {
         scrollbar.background.fill = am4core.color(config.theme.mediumColor);
         scrollbar.startGrip.background.fill = am4core.color(config.theme.mediumColor);
         scrollbar.endGrip.background.fill = am4core.color(config.theme.mediumColor);
-
         chart.scrollbarX = scrollbar;
-        chart.scrollbarX.parent = chart.bottomAxesContainer;
+        chart.scrollbarX.parent = chart.bottomAxesContainer; // move it below the chart
 
+        // Create a title. Centered at the top
         let title = chart.titles.create();
         title.text = props.title.toUpperCase();
         title.fontSize = 25;
@@ -53,27 +51,13 @@ const GraphPanel = (props: GraphPanelProps) => {
         // Add legend
         chart.legend = new am4charts.Legend();
         chart.legend.position = "top";
-        //chart.legend.labels.template.text = '[bold {color}]{name}[\]';
 
         // Add cursor
         chart.cursor = new am4charts.XYCursor();
         chart.cursor.behavior = "zoomXY";
 
-        //am4core.options.minPolylineStep = 5;
-
         function createAxis(name) {
             let axis = chart.yAxes.push(new am4charts.ValueAxis());
-            // Move the axis titles to the top
-            /*
-            axis.layout = "absolute";
-            axis.title.text = name;
-            axis.title.align = "center";
-            axis.title.valign = "top";
-            axis.title.rotation = 0;
-            axis.title.dy = -40;
-            axis.title.fontWeight = "600";
-            axis.paddingRight = 10;
-            */
             axis.paddingLeft = 5;
             axis.disabled = true;
             axis.title.text = name;
@@ -81,16 +65,12 @@ const GraphPanel = (props: GraphPanelProps) => {
             if (chart.yAxes.indexOf(axis) !== 0) {
                 axis.syncWithAxis = tCasesAxis;
             }
+
+            // Toggle log scale
             axis.title.events.on("hit", () => {
                 axis.logarithmic = !axis.logarithmic
                 axis.logarithmic ? axis.title.text = name + " (log scale)" : axis.title.text = name;
             });
-            /*
-            chart.events.on("ready", function (ev) {
-                axis.min = axis.minZoomed;
-                axis.max = axis.maxZoomed;
-            });
-            */
             return axis;
         }
 
@@ -108,8 +88,6 @@ const GraphPanel = (props: GraphPanelProps) => {
             series.showOnInit = true;
             series.fill = colour;
             series.stroke = colour;
-
-            //series.minBulletDistance = 5;
 
             // Maybe remove/show the axis for this series when we toggle this axis
             series.events.on("hidden", toggleAxes);
@@ -186,6 +164,7 @@ const GraphPanel = (props: GraphPanelProps) => {
 
         }
 
+        // turn the axes off if all it's series are diabled
         function toggleAxes(ev) {
             let axis = ev.target.yAxis;
             let disabled = true;
@@ -197,19 +176,16 @@ const GraphPanel = (props: GraphPanelProps) => {
             axis.disabled = disabled;
         }
 
-        let data = [];
+        let combinedData = [];
 
         let tCasesAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Total Cases");
         let tDeathsAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Total Deaths");
         let nCasesAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("New Cases");
         let nDeathsAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("New Deaths");
         let googleAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Google Search Terms (Percentage of Peak Traffic)");
-        //let twitterAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Twitter");
+        //let twitterAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Twitter"); // We needed an enterprise twitter account
         nCasesAxis.extraMax = 0.8;
         nDeathsAxis.extraMax = 0.8;
-
-
-        //console.log(props.data);
 
         let tCasesColour, tDeathsColour, nCasesColour, nDeathsColour, googleColour, predictionColour;
         const colourSet = new am4core.ColorSet();
@@ -227,9 +203,10 @@ const GraphPanel = (props: GraphPanelProps) => {
         for (let i in props.data.seriesTitles) {
             const title = props.data.seriesTitles[i];
 
-            data = data.concat(props.data.graphData[i]);
-            const bullet = bullets[+i % bullets.length];
+            combinedData = combinedData.concat(props.data.graphData[i]);
+            const bullet = bullets[+i % bullets.length]; // Choose a bullet
 
+            // Get the predictions data from the end of the data
             for (let seriesName in props.data.graphData[i][props.data.graphData[i].length - 1]) {
                 if (seriesName.includes("predict") && props.predict) {
                     if (seriesName.includes("cases") && props.totalCases) {
@@ -261,9 +238,8 @@ const GraphPanel = (props: GraphPanelProps) => {
             }
         }
 
-        chart.data = data;
+        chart.data = combinedData;
 
-        //console.log(chart.data);
         return function cleanup() {
             chart.dispose();
         };

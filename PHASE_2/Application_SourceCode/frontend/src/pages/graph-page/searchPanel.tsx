@@ -68,7 +68,6 @@ export const SearchPanel = (props: SearchPanelProps) => {
       showModal(err);
       return null;
     }
-    console.log("COUNTRIES: ", countries);
     return props.fetchData(googleTerms, [], countries);
   };
 
@@ -99,7 +98,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
   return (
     <FlexContainer>
       <Modal error={() => props.error}></Modal>
-      <div style={{display:'flex', flexDirection: 'column'}}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         <GridContainer>
           Total Cases
           <Switch
@@ -115,7 +114,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
           />
         </GridContainer>
       </div>
-      <div style={{display:'flex', flexDirection: 'column'}}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         <GridContainer>
           Total Deaths
           <Switch
@@ -131,7 +130,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
           />
         </GridContainer>
       </div>
-      <div style={{display:'flex', flexDirection: 'column', justifyContent: 'start'}}>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'start' }}>
         <GridContainer>
           Predict
           <Switch
@@ -149,8 +148,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
         <HelpButton height="100px" toolTipMessage={'Not Yet Implemented'} toolTipTitle={"Help"}></HelpButton>
       </FlexContainer>
       <FlexContainer>
-          <Autocomplete height="100px" width="300px" onChange={handleCountry} options={'countries'} label={'COUNTRIES'} placeholder={'Countries'} defaultValue={['Global']} />
-          <HelpButton height="100px" toolTipMessage={'Type out your countries separated by commas.\nEach country will be a new graph.'} toolTipTitle={"Help"}></HelpButton>
+        <Autocomplete height="100px" width="300px" onChange={handleCountry} options={'countries'} label={'COUNTRIES'} placeholder={'Countries'} defaultValue={['Global']} />
+        <HelpButton height="100px" toolTipMessage={'Type out your countries separated by commas.\nEach country will be a new graph.'} toolTipTitle={"Help"}></HelpButton>
       </FlexContainer>
       <GridContainer>
         <Button hover={true} onClick={santitisedDataFetch}>
