@@ -6,4 +6,4 @@ The backend correlates time series data and constructs predicitons both of which
 cd into the frontend and backend directories in seperate terminals and run `yarn install && yarn start`
 
 or alternatively just run the following from this directory
-`xterm -hold -title "backend" -e "cd backend; yarn install && yarn start" & xterm -hold -title "frontend" -e "cd frontend; yarn install && yarn start"`
+`cd ../Application_SourceCode; xterm -hold -title "backend" -e "cd backend; yarn install && yarn start" & xterm -hold -title "frontend" -e "cd frontend; yarn install && yarn start"; cd ../Application_Documentation`
