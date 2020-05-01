@@ -3,7 +3,6 @@ import SearchPanel from './searchPanel';
 import styled from 'styled-components';
 import Spinner from '../../components/spinner';
 import GraphPanel from './graphPanel';
-import Switch from '../../components/switch';
 
 const PageContainer = styled.div``;
 
@@ -68,8 +67,6 @@ export const SearchPage = (props: GraphPageProps) => {
 
         // Combine all the data and create each series
         for (let i in newData.seriesTitles) {
-          const country = newData.seriesTitles[i];
-
           for (let k of newData.graphData[i]) {
             for (let n in k) {
               if (n.includes('date_')) {

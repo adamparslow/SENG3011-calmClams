@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../components/button';
-import Input from '../../components/input';
 import config from '../../config';
 import Switch from '../../components/switch';
 import Modal from '../../components/modal';
@@ -61,10 +60,9 @@ export const SearchPanel = (props: SearchPanelProps) => {
   const [countries, setCountries] = useState(['Global']);
 
   const santitisedDataFetch = () => {
-    let searchquery = '';
     try {
       if (googleTerms.length + twitterTags.length + countries.length === 0) {
-        throw 'Please enter a Google search term, Twitter hashtag or Country';
+        throw new Error('Please enter a Google search term, Twitter hashtag or Country');
       }
     } catch (err) {
       showModal(err);

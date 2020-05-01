@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from 'react'
+import React, { useEffect } from 'react'
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
@@ -18,7 +18,7 @@ interface GraphPanelProps {
 
 const GraphPanel = (props: GraphPanelProps) => {
     useEffect(() => {
-        if (props.data.seriesTitles.length == 0) {
+        if (props.data.seriesTitles.length === 0) {
             return;
         }
 
@@ -204,7 +204,7 @@ const GraphPanel = (props: GraphPanelProps) => {
         let nCasesAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("New Cases");
         let nDeathsAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("New Deaths");
         let googleAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Google Search Terms (Percentage of Peak Traffic)");
-        let twitterAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Twitter");
+        //let twitterAxis: am4charts.ValueAxis<am4charts.AxisRenderer> = createAxis("Twitter");
         nCasesAxis.extraMax = 0.8;
         nDeathsAxis.extraMax = 0.8;
 

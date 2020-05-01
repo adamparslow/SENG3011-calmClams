@@ -1,7 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import config from '../../../config';
-import { BsGraphUp, BsQuestionDiamond } from 'react-icons/bs';
 import { GiEarthAmerica } from 'react-icons/gi';
 import EbolaImage from '../../../media/ebola.png';
 import CovidImage from '../../../media/covid.png';

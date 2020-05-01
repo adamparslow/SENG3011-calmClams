@@ -85,7 +85,6 @@ const MapPanel = (props: MapPanelProps) => {
 
         // Mapping multi-locations to single locations
         const imageData : any[] = [];
-        let dataNumber = 0;
         let prev1 = "";
         let prev2 = "";
 
@@ -112,7 +111,7 @@ const MapPanel = (props: MapPanelProps) => {
                 const [lat, long] = location.coords.split(", ");
 
                 let url;
-                if (prev1 === "" || prev2 == "") {
+                if (prev1 === "" || prev2 === "") {
                     url = `#${article._id}`;
                 }
                 else {
@@ -131,7 +130,6 @@ const MapPanel = (props: MapPanelProps) => {
                     "longitude": Number(long),
                     "id": id
                 });
-                dataNumber++;
             }
         }
 

@@ -70,13 +70,13 @@ export const SearchPanel = (props: SearchPanelProps) => {
     try {
       
       if (new Date(endDate) < new Date(startDate)) {
-        throw "Start Date must be earlier than End Date";
+        throw new Error("Start Date must be earlier than End Date");
       }
       
       if (startDate) {
         searchquery += 'start_date=' + startDate + 'T00:00:00';
       } else {
-        throw "Please enter a Start Date";
+        throw new Error("Please enter a Start Date");
       }
       
       var date2 = new Date();
@@ -89,7 +89,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
           searchquery += '&end_date=' + endDate + 'T00:00:00';
         }
       } else {
-        throw "Please enter an End Date";
+        throw new Error("Please enter an End Date");
       }
 
       if (location.length > 0 && !location.includes("Global")) {
