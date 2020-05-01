@@ -1,6 +1,6 @@
 # CalmClams
 
-**Documentation for D4**
+**Documentation for D4**<p>
 The final report can be found at [Final Report](./Reports/Final%20Report.pdf). We have also included the relevant parts of the final report in the Design Details and Management Information documents.
 
 **Team members:**
